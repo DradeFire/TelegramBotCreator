@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".view.fragments.modification_bot.ModificationBotFragment">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:orientation="vertical"
+        android:padding="8dp">
+
+        <TextView
+            android:id="@+id/txNameOfBot"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="4dp"
+            android:text="Name of bot:"
+            android:textSize="16sp" />
+
+        <EditText
+            android:id="@+id/inputNameOfBot"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="4dp"
+            android:background="@drawable/input_background"
+            android:ems="10"
+            android:hint="bot"
+            android:inputType="textPersonName"
+            android:textSize="20sp" />
+
+        <TextView
+            android:id="@+id/txDescriptionOfCommand"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="4dp"
+            android:text="Description of bot:"
+            android:textSize="16sp" />
+
+        <EditText
+            android:id="@+id/inputDescriptionOfCommand"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="4dp"
+            android:background="@drawable/input_background"
+            android:ems="10"
+            android:hint="about bot..."
+            android:inputType="textPersonName"
+            android:textSize="20sp" />
+
+        <TextView
+            android:id="@+id/txTokenOfBot"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="4dp"
+            android:text="Token:"
+            android:textSize="16sp" />
+
+        <EditText
+            android:id="@+id/inputTokenOfBot"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="4dp"
+            android:background="@drawable/input_background"
+            android:ems="10"
+            android:hint="HASH-TOKEN"
+            android:inputType="textPersonName"
+            android:textSize="20sp" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btCreateBot"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="16dp"
+            android:background="@drawable/create_button"
+            android:text="Modify bot"
+            android:textColor="#FFFFFF"
+            android:textSize="18sp"
+            android:textStyle="normal" />
+
+    </LinearLayout>
+
+</FrameLayout>

@@ -1,0 +1,188 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".view.fragments.creator_command.CreatorCommandFragment">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:orientation="vertical"
+            android:padding="8dp">
+
+            <TextView
+                android:id="@+id/txTypeOfCommand"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="4dp"
+                android:text="Type of command:"
+                android:textSize="16sp" />
+
+            <Spinner
+                android:id="@+id/spinnerTypeOfCommand"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="4dp"
+                android:ems="10"
+                android:text="Name" />
+
+            <TextView
+                android:id="@+id/txCommand"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="4dp"
+                android:text="Command:"
+                android:textSize="16sp" />
+
+            <EditText
+                android:id="@+id/inputCommand"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="4dp"
+                android:background="@drawable/input_background"
+                android:ems="10"
+                android:hint="command"
+                android:inputType="textPersonName" />
+
+            <TextView
+                android:id="@+id/txTypeOfAnswer"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="4dp"
+                android:text="Type of answer:"
+                android:textSize="16sp" />
+
+            <Spinner
+                android:id="@+id/spinnerTypeOfAnswer"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="4dp"
+                android:ems="10"
+                android:inputType="textPersonName"
+                android:text="Name" />
+
+            <TextView
+                android:id="@+id/txAnswer"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="4dp"
+                android:text="Answer:"
+                android:textSize="16sp" />
+
+            <Button
+                android:id="@+id/btAddSrc"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="8dp"
+                android:text="Add image"
+                android:visibility="gone" />
+
+            <EditText
+                android:id="@+id/inputQuestion"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="4dp"
+                android:background="@drawable/input_background"
+                android:ems="10"
+                android:hint="question"
+                android:inputType="textPersonName"
+                android:visibility="gone" />
+
+            <EditText
+                android:id="@+id/inputAnswer"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="4dp"
+                android:background="@drawable/input_background"
+                android:ems="10"
+                android:hint="answer"
+                android:inputType="textPersonName"
+                android:visibility="visible" />
+
+            <EditText
+                android:id="@+id/inputPhone"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="4dp"
+                android:background="@drawable/input_background"
+                android:ems="10"
+                android:hint="phone"
+                android:inputType="phone"
+                android:visibility="gone" />
+
+            <EditText
+                android:id="@+id/inputFirstName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="4dp"
+                android:background="@drawable/input_background"
+                android:ems="10"
+                android:hint="first name"
+                android:inputType="textPersonName"
+                android:visibility="gone" />
+
+            <EditText
+                android:id="@+id/inputLat"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="4dp"
+                android:background="@drawable/input_background"
+                android:ems="10"
+                android:hint="lat"
+                android:inputType="textPersonName"
+                android:visibility="gone" />
+
+            <EditText
+                android:id="@+id/inputLon"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="4dp"
+                android:background="@drawable/input_background"
+                android:ems="10"
+                android:hint="lon"
+                android:inputType="textPersonName"
+                android:visibility="gone" />
+
+            <EditText
+                android:id="@+id/inputAddress"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="4dp"
+                android:background="@drawable/input_background"
+                android:ems="10"
+                android:hint="address"
+                android:inputType="textPersonName"
+                android:visibility="gone" />
+
+            <EditText
+                android:id="@+id/inputTitle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="4dp"
+                android:background="@drawable/input_background"
+                android:ems="10"
+                android:hint="title"
+                android:inputType="textPersonName"
+                android:visibility="gone" />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btCreateCommand"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="16dp"
+                android:background="@drawable/create_button"
+                android:text="Create command"
+                android:textColor="#FFFFFF"
+                android:textSize="18sp" />
+
+        </LinearLayout>
+
+    </ScrollView>
+
+</FrameLayout>
