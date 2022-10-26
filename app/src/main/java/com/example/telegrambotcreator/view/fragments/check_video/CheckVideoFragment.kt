@@ -12,31 +12,37 @@ import com.example.telegrambotcreator.viewmodel.TelegramViewModel
 
 class CheckVideoFragment : Fragment() {
 
-    private lateinit var binding: FragmentCheckVideoBinding
+    private var binding: FragmentCheckVideoBinding? = null
+    private var viewModel: TelegramViewModel? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View {
+    ): View? {
         binding = FragmentCheckVideoBinding.inflate(inflater, container, false)
-        val viewModel = ViewModelProvider(requireActivity())[TelegramViewModel::class.java].also {
+        return binding?.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        viewModel = ViewModelProvider(requireActivity())[TelegramViewModel::class.java].also {
             it.isCreatingCommand = true
         }
 
-        binding.videoView.apply {
-            setVideoPath(viewModel.commandsDeque.peek()!!.answerTGFile)
+        binding?.videoView?.apply {
+            setVideoPath(viewModel?.commandsDeque?.peek()?.answerTGFile)
             setMediaController(MediaController(requireContext()).apply {
-                setAnchorView(binding.videoView)
+                setAnchorView(binding?.videoView)
             })
         }
-
-        return binding.root
     }
 
     override fun onDestroyView() {
-        ViewModelProvider(requireActivity())[TelegramViewModel::class.java].also {
-            it.isCreatingCommand = false
-        }
+        viewModel?.isCreatingCommand = false
+        viewModel = null
+        binding = null
+
         super.onDestroyView()
     }
 

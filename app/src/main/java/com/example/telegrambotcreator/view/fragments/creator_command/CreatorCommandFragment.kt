@@ -18,7 +18,6 @@ import com.example.telegrambotcreator.databinding.FragmentCreatorCommandBinding
 import com.example.telegrambotcreator.model.creator.BotCreator
 import com.example.telegrambotcreator.model.creator.helper.findFather
 import com.example.telegrambotcreator.model.creator.helper.saveBot
-import com.example.telegrambotcreator.view.cicerone.App
 import com.example.telegrambotcreator.view.fragments.creator_command.helper.*
 import com.example.telegrambotcreator.viewmodel.TelegramViewModel
 import com.hbisoft.pickit.PickiT
@@ -30,24 +29,24 @@ class CreatorCommandFragment : Fragment(), PickiTCallbacks {
     private var pickiT: PickiT? = null
     internal var isSuccess = false
     internal lateinit var uriSrc: String
-    internal lateinit var bindingCreatorCommandFragment: FragmentCreatorCommandBinding
-    internal lateinit var viewModelCreatorCommandFragment: TelegramViewModel
+    internal var binding: FragmentCreatorCommandBinding? = null
+    internal var viewModel: TelegramViewModel? = null
     internal val btClickListenerCreatorCommandFragment = View.OnClickListener {
-        val cur = if(viewModelCreatorCommandFragment.commandsDeque.isEmpty())
+        val cur = if(viewModel?.commandsDeque.isNullOrEmpty())
                 null
             else
-                viewModelCreatorCommandFragment.commandsDeque.peek()
+                viewModel?.commandsDeque?.peek()
 
         when(cur){
             null -> // Bot
-                when(bindingCreatorCommandFragment.spinnerTypeOfCommand.selectedItem as BotCreator.TypeCommand) {
+                when(binding?.spinnerTypeOfCommand?.selectedItem as BotCreator.TypeCommand) {
                     BotCreator.TypeCommand.COMMAND -> {
-                        if(bindingCreatorCommandFragment.inputCommand.text.isNullOrEmpty() || bindingCreatorCommandFragment.inputCommand.text.contains(' '))
+                        if(binding?.inputCommand?.text.isNullOrEmpty() || binding?.inputCommand?.text.toString().contains(' '))
                             return@OnClickListener
                         commandAnswer()
                     }
                     BotCreator.TypeCommand.TEXT -> {
-                        if(bindingCreatorCommandFragment.inputCommand.text.isNullOrEmpty())
+                        if(binding?.inputCommand?.text.isNullOrEmpty())
                             return@OnClickListener
                         textAnswer()
                     }
@@ -62,28 +61,28 @@ class CreatorCommandFragment : Fragment(), PickiTCallbacks {
                     BotCreator.TypeCommand.STICKER -> stickerAnswer()
                 }
             else ->  // Command
-                if (viewModelCreatorCommandFragment.isCreatingCallbackButton)
-                    when(bindingCreatorCommandFragment.spinnerTypeOfCommand.selectedItem as BotCreator.TypeCallback){
+                if (viewModel?.isCreatingCallbackButton == true)
+                    when(binding?.spinnerTypeOfCommand?.selectedItem as BotCreator.TypeCallback){
                         BotCreator.TypeCallback.INLINE -> {
-                            if(bindingCreatorCommandFragment.inputCommand.text.isNullOrEmpty())
+                            if(binding?.inputCommand?.text.isNullOrEmpty())
                                 return@OnClickListener
                             child_inlineAnswer()
                         }
                         BotCreator.TypeCallback.REPLY -> {
-                            if(bindingCreatorCommandFragment.inputCommand.text.isNullOrEmpty())
+                            if(binding?.inputCommand?.text.isNullOrEmpty())
                                 return@OnClickListener
                             child_replyAnswer()
                         }
                     }
                 else
-                    when(bindingCreatorCommandFragment.spinnerTypeOfCommand.selectedItem as BotCreator.TypeCommand) {
+                    when(binding?.spinnerTypeOfCommand?.selectedItem as BotCreator.TypeCommand) {
                         BotCreator.TypeCommand.COMMAND -> {
-                            if(bindingCreatorCommandFragment.inputCommand.text.isNullOrEmpty() || bindingCreatorCommandFragment.inputCommand.text.contains(' '))
+                            if(binding?.inputCommand?.text.isNullOrEmpty() || binding?.inputCommand?.text.toString().contains(' '))
                                 return@OnClickListener
                             child_commandAnswer()
                         }
                         BotCreator.TypeCommand.TEXT -> {
-                            if(bindingCreatorCommandFragment.inputCommand.text.isNullOrEmpty())
+                            if(binding?.inputCommand?.text.isNullOrEmpty())
                                 return@OnClickListener
                             child_textAnswer()
                         }
@@ -100,57 +99,67 @@ class CreatorCommandFragment : Fragment(), PickiTCallbacks {
         }
 
         if(isSuccess)
-            viewModelCreatorCommandFragment.updateBot(viewModelCreatorCommandFragment.chosenBot.saveBot())
+            viewModel?.updateBot(viewModel?.chosenBot?.saveBot())
     }
 
-    @SuppressLint("SetTextI18n")
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View {
-        initStartVars(inflater, container)
-
-        if(viewModelCreatorCommandFragment.isCreatingCallbackButton){
-            bindingCreatorCommandFragment.inputCommand.hint = "button text"
-            bindingCreatorCommandFragment.txTypeOfCommand.text = "Type of button:"
-            bindingCreatorCommandFragment.txCommand.text = "Text on button:"
-            bindingCreatorCommandFragment.btCreateCommand.text = "Create button"
-        }
-
-        bindSpinners()
-        bindButton()
-
-        return bindingCreatorCommandFragment.root
+    ): View? {
+        binding = FragmentCreatorCommandBinding.inflate(inflater, container, false)
+        return binding?.root
     }
 
-    private fun initStartVars(inflater: LayoutInflater, container: ViewGroup?) {
-        bindingCreatorCommandFragment = FragmentCreatorCommandBinding.inflate(inflater, container, false)
-        viewModelCreatorCommandFragment = ViewModelProvider(requireActivity())[TelegramViewModel::class.java]
-        viewModelCreatorCommandFragment.isCreatingCommand = true
-        viewModelCreatorCommandFragment.updateTrigger.observe(viewLifecycleOwner){
+    @SuppressLint("SetTextI18n")
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        initStartVars()
+
+        if(viewModel?.isCreatingCallbackButton == true){
+            binding?.inputCommand?.hint = "button text"
+            binding?.txTypeOfCommand?.text = "Type of button:"
+            binding?.txCommand?.text = "Text on button:"
+            binding?.btCreateCommand?.text = "Create button"
+        }
+
+        bindObservers()
+        bindSpinners()
+        bindButton()
+    }
+
+    private fun bindObservers() {
+        viewModel?.updateTrigger?.observe(viewLifecycleOwner){
             it?.let {
-                viewModelCreatorCommandFragment.apply {
+                viewModel?.run {
+                    updateTrigger.call()
+
                     if (choosenCommand > 0){
-                        val id = viewModelCreatorCommandFragment.commandsDeque.peek().id
+                        val id = commandsDeque.peek()?.id ?: -1
                         commandsDeque.pop()
-                        commandsDeque.push(viewModelCreatorCommandFragment.chosenBot.findFather(id))
+                        commandsDeque.push(chosenBot.findFather(id))
                     }
+
+                    isCreatingCommand = false
+                    isCreatingCallbackButton = false
+
+                    Toast.makeText(requireContext(), "Command created", Toast.LENGTH_SHORT).show()
+                    router?.exit()
                 }
-                viewModelCreatorCommandFragment.isCreatingCommand = false
-                viewModelCreatorCommandFragment.isCreatingCallbackButton = false
-                viewModelCreatorCommandFragment.updateTrigger.call()
-                Toast.makeText(requireContext(), "Command created", Toast.LENGTH_SHORT).show()
-                App.INSTANCE.router.exit()
             }
 
         }
+    }
+
+    private fun initStartVars() {
+        viewModel = ViewModelProvider(requireActivity())[TelegramViewModel::class.java]
+        viewModel?.isCreatingCommand = true
         pickiT = PickiT(requireContext(), this, requireActivity())
     }
 
     private fun bindButton() {
-        bindingCreatorCommandFragment.btCreateCommand.setOnClickListener(btClickListenerCreatorCommandFragment)
-        bindingCreatorCommandFragment.btAddSrc.setOnClickListener {
-            when(bindingCreatorCommandFragment.spinnerTypeOfAnswer.selectedItem as BotCreator.TypeAnswer){
+        binding?.btCreateCommand?.setOnClickListener(btClickListenerCreatorCommandFragment)
+        binding?.btAddSrc?.setOnClickListener {
+            when(binding?.spinnerTypeOfAnswer?.selectedItem as BotCreator.TypeAnswer){
                 BotCreator.TypeAnswer.AUDIO -> {
                     openGalleryForSomething("audio/*")
                 }
@@ -175,16 +184,16 @@ class CreatorCommandFragment : Fragment(), PickiTCallbacks {
     }
 
     private fun bindSpinners() {
-        val adapterCommands = if (viewModelCreatorCommandFragment.isCreatingCallbackButton)
+        val adapterCommands = if (viewModel?.isCreatingCallbackButton == true)
             ArrayAdapter(requireContext(), android.R.layout.simple_spinner_dropdown_item, BotCreator.TypeCallback.values())
         else
             ArrayAdapter(requireContext(), android.R.layout.simple_spinner_dropdown_item, BotCreator.TypeCommand.values())
         val adapterAnswers = ArrayAdapter(requireContext(), android.R.layout.simple_spinner_dropdown_item, BotCreator.TypeAnswer.values())
-        bindingCreatorCommandFragment.spinnerTypeOfCommand.apply {
-            this.adapter = adapterCommands
-            onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+        binding?.spinnerTypeOfCommand.apply {
+            this?.adapter = adapterCommands
+            this?.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
                 override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
-                    when(viewModelCreatorCommandFragment.isCreatingCallbackButton){
+                    when(viewModel?.isCreatingCallbackButton){
                         true -> {
                             simpleTextCommand()
                         }
@@ -223,12 +232,13 @@ class CreatorCommandFragment : Fragment(), PickiTCallbacks {
                                 BotCreator.TypeCommand.STICKER -> simpleCommand()
                             }
                         }
+                        else -> throw Exception()
                     }
 
                 }
 
                 private fun simpleTextCommand() {
-                    bindingCreatorCommandFragment.apply {
+                    binding?.apply {
                         btCreateCommand.isEnabled = true
                         txCommand.visibility = View.VISIBLE
                         inputCommand.visibility = View.VISIBLE
@@ -237,7 +247,7 @@ class CreatorCommandFragment : Fragment(), PickiTCallbacks {
                 }
 
                 private fun simpleCommand(){
-                    bindingCreatorCommandFragment.apply {
+                    binding?.apply {
                         btCreateCommand.isEnabled = true
                         txCommand.visibility = View.GONE
                         inputCommand.visibility = View.GONE
@@ -246,7 +256,7 @@ class CreatorCommandFragment : Fragment(), PickiTCallbacks {
                 }
 
                 override fun onNothingSelected(p0: AdapterView<*>?) {
-                    bindingCreatorCommandFragment.apply {
+                    binding?.apply {
                         btCreateCommand.isEnabled = false
                         btCreateCommand.setOnClickListener(null)
                     }
@@ -254,9 +264,9 @@ class CreatorCommandFragment : Fragment(), PickiTCallbacks {
 
             }
         }
-        bindingCreatorCommandFragment.spinnerTypeOfAnswer.apply {
+        binding?.spinnerTypeOfAnswer?.apply {
             this.adapter = adapterAnswers
-            onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            this.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
                 @SuppressLint("SetTextI18n")
                 override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
                     when(BotCreator.TypeAnswer.values()[position]){
@@ -311,25 +321,27 @@ class CreatorCommandFragment : Fragment(), PickiTCallbacks {
                     inputTitleV: Int,
                     inputAnswerH: String,
                     btAddSrcT: String
-                ) = with(bindingCreatorCommandFragment){
-                    btCreateCommand.isEnabled = true
-                    inputQuestion.visibility = inputQuestionV
-                    inputAnswer.visibility = inputAnswerV
-                    btAddSrc.visibility = btAddSrcV
-                    inputFirstName.visibility = inputFirstNameV
-                    inputPhone.visibility = inputPhoneV
-                    inputLat.visibility = inputLatV
-                    inputLon.visibility = inputLonV
-                    inputAddress.visibility = inputAddressV
-                    inputTitle.visibility = inputTitleV
-                    inputAnswer.hint = inputAnswerH
-                    btAddSrc.text = btAddSrcT
-                    btCreateCommand.setOnClickListener(btClickListenerCreatorCommandFragment)
+                ) {
+                    binding?.apply {
+                        btCreateCommand.isEnabled = true
+                        inputQuestion.visibility = inputQuestionV
+                        inputAnswer.visibility = inputAnswerV
+                        btAddSrc.visibility = btAddSrcV
+                        inputFirstName.visibility = inputFirstNameV
+                        inputPhone.visibility = inputPhoneV
+                        inputLat.visibility = inputLatV
+                        inputLon.visibility = inputLonV
+                        inputAddress.visibility = inputAddressV
+                        inputTitle.visibility = inputTitleV
+                        inputAnswer.hint = inputAnswerH
+                        btAddSrc.text = btAddSrcT
+                        btCreateCommand.setOnClickListener(btClickListenerCreatorCommandFragment)
+                    }
                 }
 
                 private fun notImplemented(){
                     Toast.makeText(requireContext(), "Not implemented", Toast.LENGTH_SHORT).show()
-                    bindingCreatorCommandFragment.apply{
+                    binding?.apply{
                         btCreateCommand.isEnabled = false
                         btCreateCommand.setOnClickListener(null)
                         inputQuestion.visibility = View.GONE
@@ -345,7 +357,7 @@ class CreatorCommandFragment : Fragment(), PickiTCallbacks {
                 }
 
                 override fun onNothingSelected(p0: AdapterView<*>?) {
-                    bindingCreatorCommandFragment.apply{
+                    binding?.apply{
                         btCreateCommand.isEnabled = false
                         btCreateCommand.setOnClickListener(null)
                         inputQuestion.visibility = View.GONE
@@ -381,15 +393,12 @@ class CreatorCommandFragment : Fragment(), PickiTCallbacks {
     }
 
     override fun PickiTonUriReturned() {
-
     }
 
     override fun PickiTonStartListener() {
-
     }
 
     override fun PickiTonProgressUpdate(progress: Int) {
-
     }
 
     override fun PickiTonCompleteListener(
@@ -400,8 +409,8 @@ class CreatorCommandFragment : Fragment(), PickiTCallbacks {
         Reason: String?
     ) {
         if(wasSuccessful){
-            uriSrc = path!!
-            bindingCreatorCommandFragment.btAddSrc.text = path.toString().substring(path.lastIndexOf('/') + 1)
+            uriSrc = path.toString()
+            binding?.btAddSrc?.text = uriSrc.substring(uriSrc.lastIndexOf('/') + 1)
         } else
             Toast.makeText(requireContext(), "Problem with pick file", Toast.LENGTH_SHORT).show()
     }
@@ -411,11 +420,12 @@ class CreatorCommandFragment : Fragment(), PickiTCallbacks {
         wasSuccessful: Boolean,
         Reason: String?
     ) {
-
     }
 
     override fun onDestroyView() {
         pickiT = null
+        binding = null
+        viewModel = null
         super.onDestroyView()
     }
 

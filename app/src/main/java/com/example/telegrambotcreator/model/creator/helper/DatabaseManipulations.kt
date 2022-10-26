@@ -21,7 +21,8 @@ fun BotCreator.saveBot(): BotDbModel = BotDbModel(
     if(botId == null) 0 else botId!!,
     nameOfBot,
     description,
-    animations.size + commands.size + contacts.size + documents.size + locations.size + photos.size + stickers.size+ texts.size + videoNotes.size + videos.size + voices.size,
+    animations.size + commands.size + contacts.size + documents.size + locations.size
+            + photos.size + stickers.size+ texts.size + videoNotes.size + videos.size + voices.size,
     bot.token,
     isPolling,
     Gson().toJson(animations),

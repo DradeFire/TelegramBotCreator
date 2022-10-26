@@ -13,8 +13,8 @@ import com.example.telegrambotcreator.model.creator.helper.addChildCommandListen
 import com.example.telegrambotcreator.model.creator.helper.addCommandListener
 import com.example.telegrambotcreator.model.creator.helper.saveBot
 import com.example.telegrambotcreator.model.repository.Repository
-import com.example.telegrambotcreator.view.cicerone.App
-import com.example.telegrambotcreator.view.cicerone.screens.Screens
+import com.example.telegrambotcreator.App
+import com.example.telegrambotcreator.view.screens.Screens
 import com.example.telegrambotcreator.viewmodel.TelegramViewModel
 import com.github.terrakok.cicerone.androidx.AppNavigator
 import kotlinx.coroutines.CoroutineScope
@@ -41,15 +41,20 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
         navigator = AppNavigator(this, binding.fragContainer.id)
         viewModel = ViewModelProvider(this)[TelegramViewModel::class.java]
         viewModel.initDatabase(this)
 
-        ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE), 1)
+        ActivityCompat.requestPermissions(
+            this,
+            arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE),
+            1
+        )
 
 //        addTestBots()
 //        testBotPhoto()
-        App.INSTANCE.router.newRootScreen(Screens.ListOfBotsFrag())
+        viewModel.router?.newRootScreen(Screens.ListOfBotsFrag())
     }
 
     private fun testBotPhoto() {
@@ -68,13 +73,13 @@ class MainActivity : AppCompatActivity() {
                 choosenCommand--
                 commandsDeque.pop()
             }
-            App.INSTANCE.router.exit()
+            viewModel.router?.exit()
         } else {
             viewModel.apply {
                 isCreatingCommand = false
                 isCreatingCallbackButton = false
             }
-            App.INSTANCE.router.exit()
+            viewModel.router?.exit()
         }
     }
 

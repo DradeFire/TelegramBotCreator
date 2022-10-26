@@ -20,86 +20,86 @@ import java.io.File
 
 // region Answers
 
-internal fun CreatorCommandFragment.stickerAnswer() {
-    when(bindingCreatorCommandFragment.spinnerTypeOfAnswer.selectedItem as BotCreator.TypeAnswer){
+internal fun CreatorCommandFragment.stickerAnswer() = with(binding!!) {
+    when(this.spinnerTypeOfAnswer.selectedItem as BotCreator.TypeAnswer){
         BotCreator.TypeAnswer.TEXT -> {
-            if(isNotGoodText(bindingCreatorCommandFragment, requireContext()))
+            if(isNotGoodText(this, requireContext()))
                 return
-            viewModelCreatorCommandFragment.chosenBot.addStickerListener(
+            viewModel?.chosenBot?.addStickerListener(
                 typeAnswer = BotCreator.TypeAnswer.TEXT,
-                answerText = bindingCreatorCommandFragment.inputAnswer.text.toString()
+                answerText = this.inputAnswer.text.toString()
             )
         }
         BotCreator.TypeAnswer.ANIMATION -> {
-            if(isNotGoodAnimation(bindingCreatorCommandFragment, requireContext()))
+            if(isNotGoodAnimation(this, requireContext()))
                 return
-            viewModelCreatorCommandFragment.chosenBot.addStickerListener(
+            viewModel?.chosenBot?.addStickerListener(
                 typeAnswer = BotCreator.TypeAnswer.ANIMATION,
-                answerTGFile = TelegramFile.ByUrl(bindingCreatorCommandFragment.inputAnswer.text.toString())
+                answerTGFile = TelegramFile.ByUrl(this.inputAnswer.text.toString())
             )
         }
         BotCreator.TypeAnswer.AUDIO -> {
-            if(isNotGoodAudio(bindingCreatorCommandFragment, requireContext()))
+            if(isNotGoodAudio(this, requireContext()))
                 return
-            viewModelCreatorCommandFragment.chosenBot.addStickerListener(
+            viewModel?.chosenBot?.addStickerListener(
                 typeAnswer = BotCreator.TypeAnswer.AUDIO,
                 answerTGFile = TelegramFile.ByFile(File(uriSrc))
             )
         }
         BotCreator.TypeAnswer.DOCUMENT -> {
-            if(isNotGoodDocument(bindingCreatorCommandFragment, requireContext()))
+            if(isNotGoodDocument(this, requireContext()))
                 return
-            viewModelCreatorCommandFragment.chosenBot.addStickerListener(
+            viewModel?.chosenBot?.addStickerListener(
                 typeAnswer = BotCreator.TypeAnswer.DOCUMENT,
                 answerTGFile = TelegramFile.ByFile(File(uriSrc))
             )
         }
         BotCreator.TypeAnswer.PHOTO -> {
-            if(isNotGoodPhoto(bindingCreatorCommandFragment, requireContext()))
+            if(isNotGoodPhoto(this, requireContext()))
                 return
-            viewModelCreatorCommandFragment.chosenBot.addStickerListener(
+            viewModel?.chosenBot?.addStickerListener(
                 typeAnswer = BotCreator.TypeAnswer.PHOTO,
                 answerTGFile = TelegramFile.ByFile(File(uriSrc))
             )
         }
         BotCreator.TypeAnswer.VIDEO -> {
-            if(isNotGoodVideo(bindingCreatorCommandFragment, requireContext()))
+            if(isNotGoodVideo(this, requireContext()))
                 return
-            viewModelCreatorCommandFragment.chosenBot.addStickerListener(
+            viewModel?.chosenBot?.addStickerListener(
                 typeAnswer = BotCreator.TypeAnswer.VIDEO,
                 answerTGFile = TelegramFile.ByFile(File(uriSrc))
             )
         }
         BotCreator.TypeAnswer.VOICE -> {
-            if(isNotGoodVoice(bindingCreatorCommandFragment, requireContext()))
+            if(isNotGoodVoice(this, requireContext()))
                 return
-            viewModelCreatorCommandFragment.chosenBot.addStickerListener(
+            viewModel?.chosenBot?.addStickerListener(
                 typeAnswer = BotCreator.TypeAnswer.VOICE,
                 answerTGFile = TelegramFile.ByFile(File(uriSrc))
             )
         }
         BotCreator.TypeAnswer.CONTACT -> {
-            if(isNotGoodContact(bindingCreatorCommandFragment, requireContext()))
+            if(isNotGoodContact(this, requireContext()))
                 return
-            viewModelCreatorCommandFragment.chosenBot.addStickerListener(
+            viewModel?.chosenBot?.addStickerListener(
                 typeAnswer = BotCreator.TypeAnswer.CONTACT,
-                phoneNumber = bindingCreatorCommandFragment.inputPhone.text.toString(),
-                firstName = bindingCreatorCommandFragment.inputFirstName.text.toString()
+                phoneNumber = this.inputPhone.text.toString(),
+                firstName = this.inputFirstName.text.toString()
             )
         }
         BotCreator.TypeAnswer.LOCATION -> {
-            if(isNotGoodLocation(bindingCreatorCommandFragment, requireContext()))
+            if(isNotGoodLocation(this, requireContext()))
                 return
-            viewModelCreatorCommandFragment.chosenBot.addStickerListener(
+            viewModel?.chosenBot?.addStickerListener(
                 typeAnswer = BotCreator.TypeAnswer.LOCATION,
-                lat = bindingCreatorCommandFragment.inputLat.text.toString().toFloat(),
-                lon = bindingCreatorCommandFragment.inputLon.text.toString().toFloat()
+                lat = this.inputLat.text.toString().toFloat(),
+                lon = this.inputLon.text.toString().toFloat()
             )
         }
         BotCreator.TypeAnswer.POLL -> {
-            if(isNotGoodPoll(bindingCreatorCommandFragment, requireContext()))
+            if(isNotGoodPoll(this, requireContext()))
                 return
-            val pollList = (bindingCreatorCommandFragment.inputAnswer.text.split(';') as ArrayList)
+            val pollList = (this.inputAnswer.text.split(';') as ArrayList)
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
                 pollList.removeIf { it.isBlank() || it.isEmpty() }
             } else {
@@ -108,27 +108,27 @@ internal fun CreatorCommandFragment.stickerAnswer() {
                 pollList.clear()
                 pollList.addAll(tmp)
             }
-            viewModelCreatorCommandFragment.chosenBot.addStickerListener(
+            viewModel?.chosenBot?.addStickerListener(
                 typeAnswer = BotCreator.TypeAnswer.POLL,
-                question = bindingCreatorCommandFragment.inputQuestion.text.toString(),
+                question = this.inputQuestion.text.toString(),
                 pollList = pollList
             )
         }
         BotCreator.TypeAnswer.VENUE -> {
-            if(isNotGoodVenue(bindingCreatorCommandFragment, requireContext()))
+            if(isNotGoodVenue(this, requireContext()))
                 return
-            viewModelCreatorCommandFragment.chosenBot.addStickerListener(
+            viewModel?.chosenBot?.addStickerListener(
                 typeAnswer = BotCreator.TypeAnswer.VENUE,
-                lat = bindingCreatorCommandFragment.inputLat.text.toString().toFloat(),
-                lon = bindingCreatorCommandFragment.inputLon.text.toString().toFloat(),
-                title = bindingCreatorCommandFragment.inputTitle.text.toString(),
-                address = bindingCreatorCommandFragment.inputAddress.text.toString()
+                lat = this.inputLat.text.toString().toFloat(),
+                lon = this.inputLon.text.toString().toFloat(),
+                title = this.inputTitle.text.toString(),
+                address = this.inputAddress.text.toString()
             )
         }
         BotCreator.TypeAnswer.VIDEO_NOTE -> {
-            if(isNotGoodVideo(bindingCreatorCommandFragment, requireContext()))
+            if(isNotGoodVideo(this, requireContext()))
                 return
-            viewModelCreatorCommandFragment.chosenBot.addStickerListener(
+            viewModel?.chosenBot?.addStickerListener(
                 typeAnswer = BotCreator.TypeAnswer.VIDEO_NOTE,
                 answerTGFile = TelegramFile.ByFile(File(uriSrc))
             )
@@ -136,86 +136,86 @@ internal fun CreatorCommandFragment.stickerAnswer() {
     }
     isSuccess = true
 }
-internal fun CreatorCommandFragment.videoNoteAnswer() {
-    when(bindingCreatorCommandFragment.spinnerTypeOfAnswer.selectedItem as BotCreator.TypeAnswer){
+internal fun CreatorCommandFragment.videoNoteAnswer() = with(binding!!)  {
+    when(this.spinnerTypeOfAnswer.selectedItem as BotCreator.TypeAnswer){
         BotCreator.TypeAnswer.TEXT -> {
-            if(isNotGoodText(bindingCreatorCommandFragment, requireContext()))
+            if(isNotGoodText(this, requireContext()))
                 return
-            viewModelCreatorCommandFragment.chosenBot.addVideoNotesListener(
+            viewModel?.chosenBot?.addVideoNotesListener(
                 typeAnswer = BotCreator.TypeAnswer.TEXT,
-                answerText = bindingCreatorCommandFragment.inputAnswer.text.toString()
+                answerText = this.inputAnswer.text.toString()
             )
         }
         BotCreator.TypeAnswer.ANIMATION -> {
-            if(isNotGoodAnimation(bindingCreatorCommandFragment, requireContext()))
+            if(isNotGoodAnimation(this, requireContext()))
                 return
-            viewModelCreatorCommandFragment.chosenBot.addVideoNotesListener(
+            viewModel?.chosenBot?.addVideoNotesListener(
                 typeAnswer = BotCreator.TypeAnswer.ANIMATION,
-                answerTGFile = TelegramFile.ByUrl(bindingCreatorCommandFragment.inputAnswer.text.toString())
+                answerTGFile = TelegramFile.ByUrl(this.inputAnswer.text.toString())
             )
         }
         BotCreator.TypeAnswer.AUDIO -> {
-            if(isNotGoodAudio(bindingCreatorCommandFragment, requireContext()))
+            if(isNotGoodAudio(this, requireContext()))
                 return
-            viewModelCreatorCommandFragment.chosenBot.addVideoNotesListener(
+            viewModel?.chosenBot?.addVideoNotesListener(
                 typeAnswer = BotCreator.TypeAnswer.AUDIO,
                 answerTGFile = TelegramFile.ByFile(File(uriSrc))
             )
         }
         BotCreator.TypeAnswer.DOCUMENT -> {
-            if(isNotGoodDocument(bindingCreatorCommandFragment, requireContext()))
+            if(isNotGoodDocument(this, requireContext()))
                 return
-            viewModelCreatorCommandFragment.chosenBot.addVideoNotesListener(
+            viewModel?.chosenBot?.addVideoNotesListener(
                 typeAnswer = BotCreator.TypeAnswer.DOCUMENT,
                 answerTGFile = TelegramFile.ByFile(File(uriSrc))
             )
         }
         BotCreator.TypeAnswer.PHOTO -> {
-            if(isNotGoodPhoto(bindingCreatorCommandFragment, requireContext()))
+            if(isNotGoodPhoto(this, requireContext()))
                 return
-            viewModelCreatorCommandFragment.chosenBot.addVideoNotesListener(
+            viewModel?.chosenBot?.addVideoNotesListener(
                 typeAnswer = BotCreator.TypeAnswer.PHOTO,
                 answerTGFile = TelegramFile.ByFile(File(uriSrc))
             )
         }
         BotCreator.TypeAnswer.VIDEO -> {
-            if(isNotGoodVideo(bindingCreatorCommandFragment, requireContext()))
+            if(isNotGoodVideo(this, requireContext()))
                 return
-            viewModelCreatorCommandFragment.chosenBot.addVideoNotesListener(
+            viewModel?.chosenBot?.addVideoNotesListener(
                 typeAnswer = BotCreator.TypeAnswer.VIDEO,
                 answerTGFile = TelegramFile.ByFile(File(uriSrc))
             )
         }
         BotCreator.TypeAnswer.VOICE -> {
-            if(isNotGoodVoice(bindingCreatorCommandFragment, requireContext()))
+            if(isNotGoodVoice(this, requireContext()))
                 return
-            viewModelCreatorCommandFragment.chosenBot.addVideoNotesListener(
+            viewModel?.chosenBot?.addVideoNotesListener(
                 typeAnswer = BotCreator.TypeAnswer.VOICE,
                 answerTGFile = TelegramFile.ByFile(File(uriSrc))
             )
         }
         BotCreator.TypeAnswer.CONTACT -> {
-            if(isNotGoodContact(bindingCreatorCommandFragment, requireContext()))
+            if(isNotGoodContact(this, requireContext()))
                 return
-            viewModelCreatorCommandFragment.chosenBot.addVideoNotesListener(
+            viewModel?.chosenBot?.addVideoNotesListener(
                 typeAnswer = BotCreator.TypeAnswer.CONTACT,
-                phoneNumber = bindingCreatorCommandFragment.inputPhone.text.toString(),
-                firstName = bindingCreatorCommandFragment.inputFirstName.text.toString()
+                phoneNumber = this.inputPhone.text.toString(),
+                firstName = this.inputFirstName.text.toString()
             )
         }
         BotCreator.TypeAnswer.LOCATION -> {
-            if(isNotGoodLocation(bindingCreatorCommandFragment, requireContext()))
+            if(isNotGoodLocation(this, requireContext()))
                 return
-            viewModelCreatorCommandFragment.chosenBot.addVideoNotesListener(
+            viewModel?.chosenBot?.addVideoNotesListener(
                 typeAnswer = BotCreator.TypeAnswer.LOCATION,
-                lat = bindingCreatorCommandFragment.inputLat.text.toString().toFloat(),
-                lon = bindingCreatorCommandFragment.inputLon.text.toString().toFloat()
+                lat = this.inputLat.text.toString().toFloat(),
+                lon = this.inputLon.text.toString().toFloat()
             )
         }
         BotCreator.TypeAnswer.POLL -> {
-            if(isNotGoodPoll(bindingCreatorCommandFragment, requireContext()))
+            if(isNotGoodPoll(this, requireContext()))
                 return
-            val pollList = (bindingCreatorCommandFragment.inputAnswer.text.split(';') as ArrayList)
+            val pollList = (this.inputAnswer.text.split(';') as ArrayList)
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
                 pollList.removeIf { it.isBlank() || it.isEmpty() }
             } else {
@@ -224,27 +224,27 @@ internal fun CreatorCommandFragment.videoNoteAnswer() {
                 pollList.clear()
                 pollList.addAll(tmp)
             }
-            viewModelCreatorCommandFragment.chosenBot.addVideoNotesListener(
+            viewModel?.chosenBot?.addVideoNotesListener(
                 typeAnswer = BotCreator.TypeAnswer.POLL,
-                question = bindingCreatorCommandFragment.inputQuestion.text.toString(),
+                question = this.inputQuestion.text.toString(),
                 pollList = pollList
             )
         }
         BotCreator.TypeAnswer.VENUE -> {
-            if(isNotGoodVenue(bindingCreatorCommandFragment, requireContext()))
+            if(isNotGoodVenue(this, requireContext()))
                 return
-            viewModelCreatorCommandFragment.chosenBot.addVideoNotesListener(
+            viewModel?.chosenBot?.addVideoNotesListener(
                 typeAnswer = BotCreator.TypeAnswer.VENUE,
-                lat = bindingCreatorCommandFragment.inputLat.text.toString().toFloat(),
-                lon = bindingCreatorCommandFragment.inputLon.text.toString().toFloat(),
-                title = bindingCreatorCommandFragment.inputTitle.text.toString(),
-                address = bindingCreatorCommandFragment.inputAddress.text.toString()
+                lat = this.inputLat.text.toString().toFloat(),
+                lon = this.inputLon.text.toString().toFloat(),
+                title = this.inputTitle.text.toString(),
+                address = this.inputAddress.text.toString()
             )
         }
         BotCreator.TypeAnswer.VIDEO_NOTE -> {
-            if(isNotGoodVideo(bindingCreatorCommandFragment, requireContext()))
+            if(isNotGoodVideo(this, requireContext()))
                 return
-            viewModelCreatorCommandFragment.chosenBot.addVideoNotesListener(
+            viewModel?.chosenBot?.addVideoNotesListener(
                 typeAnswer = BotCreator.TypeAnswer.VIDEO_NOTE,
                 answerTGFile = TelegramFile.ByFile(File(uriSrc))
             )
@@ -252,86 +252,86 @@ internal fun CreatorCommandFragment.videoNoteAnswer() {
     }
     isSuccess = true
 }
-internal fun CreatorCommandFragment.locationAnswer() {
-    when(bindingCreatorCommandFragment.spinnerTypeOfAnswer.selectedItem as BotCreator.TypeAnswer){
+internal fun CreatorCommandFragment.locationAnswer() = with(binding!!)  {
+    when(this.spinnerTypeOfAnswer.selectedItem as BotCreator.TypeAnswer){
         BotCreator.TypeAnswer.TEXT -> {
-            if(isNotGoodText(bindingCreatorCommandFragment, requireContext()))
+            if(isNotGoodText(this, requireContext()))
                 return
-            viewModelCreatorCommandFragment.chosenBot.addLocationsListener(
+            viewModel?.chosenBot?.addLocationsListener(
                 typeAnswer = BotCreator.TypeAnswer.TEXT,
-                answerText = bindingCreatorCommandFragment.inputAnswer.text.toString()
+                answerText = this.inputAnswer.text.toString()
             )
         }
         BotCreator.TypeAnswer.ANIMATION -> {
-            if(isNotGoodAnimation(bindingCreatorCommandFragment, requireContext()))
+            if(isNotGoodAnimation(this, requireContext()))
                 return
-            viewModelCreatorCommandFragment.chosenBot.addLocationsListener(
+            viewModel?.chosenBot?.addLocationsListener(
                 typeAnswer = BotCreator.TypeAnswer.ANIMATION,
-                answerTGFile = TelegramFile.ByUrl(bindingCreatorCommandFragment.inputAnswer.text.toString())
+                answerTGFile = TelegramFile.ByUrl(this.inputAnswer.text.toString())
             )
         }
         BotCreator.TypeAnswer.AUDIO -> {
-            if(isNotGoodAudio(bindingCreatorCommandFragment, requireContext()))
+            if(isNotGoodAudio(this, requireContext()))
                 return
-            viewModelCreatorCommandFragment.chosenBot.addLocationsListener(
+            viewModel?.chosenBot?.addLocationsListener(
                 typeAnswer = BotCreator.TypeAnswer.AUDIO,
                 answerTGFile = TelegramFile.ByFile(File(uriSrc))
             )
         }
         BotCreator.TypeAnswer.DOCUMENT -> {
-            if(isNotGoodDocument(bindingCreatorCommandFragment, requireContext()))
+            if(isNotGoodDocument(this, requireContext()))
                 return
-            viewModelCreatorCommandFragment.chosenBot.addLocationsListener(
+            viewModel?.chosenBot?.addLocationsListener(
                 typeAnswer = BotCreator.TypeAnswer.DOCUMENT,
                 answerTGFile = TelegramFile.ByFile(File(uriSrc))
             )
         }
         BotCreator.TypeAnswer.PHOTO -> {
-            if(isNotGoodPhoto(bindingCreatorCommandFragment, requireContext()))
+            if(isNotGoodPhoto(this, requireContext()))
                 return
-            viewModelCreatorCommandFragment.chosenBot.addLocationsListener(
+            viewModel?.chosenBot?.addLocationsListener(
                 typeAnswer = BotCreator.TypeAnswer.PHOTO,
                 answerTGFile = TelegramFile.ByFile(File(uriSrc))
             )
         }
         BotCreator.TypeAnswer.VIDEO -> {
-            if(isNotGoodVideo(bindingCreatorCommandFragment, requireContext()))
+            if(isNotGoodVideo(this, requireContext()))
                 return
-            viewModelCreatorCommandFragment.chosenBot.addLocationsListener(
+            viewModel?.chosenBot?.addLocationsListener(
                 typeAnswer = BotCreator.TypeAnswer.VIDEO,
                 answerTGFile = TelegramFile.ByFile(File(uriSrc))
             )
         }
         BotCreator.TypeAnswer.VOICE -> {
-            if(isNotGoodVoice(bindingCreatorCommandFragment, requireContext()))
+            if(isNotGoodVoice(this, requireContext()))
                 return
-            viewModelCreatorCommandFragment.chosenBot.addLocationsListener(
+            viewModel?.chosenBot?.addLocationsListener(
                 typeAnswer = BotCreator.TypeAnswer.VOICE,
                 answerTGFile = TelegramFile.ByFile(File(uriSrc))
             )
         }
         BotCreator.TypeAnswer.CONTACT -> {
-            if(isNotGoodContact(bindingCreatorCommandFragment, requireContext()))
+            if(isNotGoodContact(this, requireContext()))
                 return
-            viewModelCreatorCommandFragment.chosenBot.addLocationsListener(
+            viewModel?.chosenBot?.addLocationsListener(
                 typeAnswer = BotCreator.TypeAnswer.CONTACT,
-                phoneNumber = bindingCreatorCommandFragment.inputPhone.text.toString(),
-                firstName = bindingCreatorCommandFragment.inputFirstName.text.toString()
+                phoneNumber = this.inputPhone.text.toString(),
+                firstName = this.inputFirstName.text.toString()
             )
         }
         BotCreator.TypeAnswer.LOCATION -> {
-            if(isNotGoodLocation(bindingCreatorCommandFragment, requireContext()))
+            if(isNotGoodLocation(this, requireContext()))
                 return
-            viewModelCreatorCommandFragment.chosenBot.addLocationsListener(
+            viewModel?.chosenBot?.addLocationsListener(
                 typeAnswer = BotCreator.TypeAnswer.LOCATION,
-                lat = bindingCreatorCommandFragment.inputLat.text.toString().toFloat(),
-                lon = bindingCreatorCommandFragment.inputLon.text.toString().toFloat()
+                lat = this.inputLat.text.toString().toFloat(),
+                lon = this.inputLon.text.toString().toFloat()
             )
         }
         BotCreator.TypeAnswer.POLL -> {
-            if(isNotGoodPoll(bindingCreatorCommandFragment, requireContext()))
+            if(isNotGoodPoll(this, requireContext()))
                 return
-            val pollList = (bindingCreatorCommandFragment.inputAnswer.text.split(';') as ArrayList)
+            val pollList = (this.inputAnswer.text.split(';') as ArrayList)
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
                 pollList.removeIf { it.isBlank() || it.isEmpty() }
             } else {
@@ -340,27 +340,27 @@ internal fun CreatorCommandFragment.locationAnswer() {
                 pollList.clear()
                 pollList.addAll(tmp)
             }
-            viewModelCreatorCommandFragment.chosenBot.addLocationsListener(
+            viewModel?.chosenBot?.addLocationsListener(
                 typeAnswer = BotCreator.TypeAnswer.POLL,
-                question = bindingCreatorCommandFragment.inputQuestion.text.toString(),
+                question = this.inputQuestion.text.toString(),
                 pollList = pollList
             )
         }
         BotCreator.TypeAnswer.VENUE -> {
-            if(isNotGoodVenue(bindingCreatorCommandFragment, requireContext()))
+            if(isNotGoodVenue(this, requireContext()))
                 return
-            viewModelCreatorCommandFragment.chosenBot.addLocationsListener(
+            viewModel?.chosenBot?.addLocationsListener(
                 typeAnswer = BotCreator.TypeAnswer.VENUE,
-                lat = bindingCreatorCommandFragment.inputLat.text.toString().toFloat(),
-                lon = bindingCreatorCommandFragment.inputLon.text.toString().toFloat(),
-                title = bindingCreatorCommandFragment.inputTitle.text.toString(),
-                address = bindingCreatorCommandFragment.inputAddress.text.toString()
+                lat = this.inputLat.text.toString().toFloat(),
+                lon = this.inputLon.text.toString().toFloat(),
+                title = this.inputTitle.text.toString(),
+                address = this.inputAddress.text.toString()
             )
         }
         BotCreator.TypeAnswer.VIDEO_NOTE -> {
-            if(isNotGoodVideo(bindingCreatorCommandFragment, requireContext()))
+            if(isNotGoodVideo(this, requireContext()))
                 return
-            viewModelCreatorCommandFragment.chosenBot.addLocationsListener(
+            viewModel?.chosenBot?.addLocationsListener(
                 typeAnswer = BotCreator.TypeAnswer.VIDEO_NOTE,
                 answerTGFile = TelegramFile.ByFile(File(uriSrc))
             )
@@ -368,86 +368,86 @@ internal fun CreatorCommandFragment.locationAnswer() {
     }
     isSuccess = true
 }
-internal fun CreatorCommandFragment.contactAnswer() {
-    when(bindingCreatorCommandFragment.spinnerTypeOfAnswer.selectedItem as BotCreator.TypeAnswer){
+internal fun CreatorCommandFragment.contactAnswer() = with(binding!!)  {
+    when(this.spinnerTypeOfAnswer.selectedItem as BotCreator.TypeAnswer){
         BotCreator.TypeAnswer.TEXT -> {
-            if(isNotGoodText(bindingCreatorCommandFragment, requireContext()))
+            if(isNotGoodText(this, requireContext()))
                 return
-            viewModelCreatorCommandFragment.chosenBot.addContactsListener(
+            viewModel?.chosenBot?.addContactsListener(
                 typeAnswer = BotCreator.TypeAnswer.TEXT,
-                answerText = bindingCreatorCommandFragment.inputAnswer.text.toString()
+                answerText = this.inputAnswer.text.toString()
             )
         }
         BotCreator.TypeAnswer.ANIMATION -> {
-            if(isNotGoodAnimation(bindingCreatorCommandFragment, requireContext()))
+            if(isNotGoodAnimation(this, requireContext()))
                 return
-            viewModelCreatorCommandFragment.chosenBot.addContactsListener(
+            viewModel?.chosenBot?.addContactsListener(
                 typeAnswer = BotCreator.TypeAnswer.ANIMATION,
-                answerTGFile = TelegramFile.ByUrl(bindingCreatorCommandFragment.inputAnswer.text.toString())
+                answerTGFile = TelegramFile.ByUrl(this.inputAnswer.text.toString())
             )
         }
         BotCreator.TypeAnswer.AUDIO -> {
-            if(isNotGoodAudio(bindingCreatorCommandFragment, requireContext()))
+            if(isNotGoodAudio(this, requireContext()))
                 return
-            viewModelCreatorCommandFragment.chosenBot.addContactsListener(
+            viewModel?.chosenBot?.addContactsListener(
                 typeAnswer = BotCreator.TypeAnswer.AUDIO,
                 answerTGFile = TelegramFile.ByFile(File(uriSrc))
             )
         }
         BotCreator.TypeAnswer.DOCUMENT -> {
-            if(isNotGoodDocument(bindingCreatorCommandFragment, requireContext()))
+            if(isNotGoodDocument(this, requireContext()))
                 return
-            viewModelCreatorCommandFragment.chosenBot.addContactsListener(
+            viewModel?.chosenBot?.addContactsListener(
                 typeAnswer = BotCreator.TypeAnswer.DOCUMENT,
                 answerTGFile = TelegramFile.ByFile(File(uriSrc))
             )
         }
         BotCreator.TypeAnswer.PHOTO -> {
-            if(isNotGoodPhoto(bindingCreatorCommandFragment, requireContext()))
+            if(isNotGoodPhoto(this, requireContext()))
                 return
-            viewModelCreatorCommandFragment.chosenBot.addContactsListener(
+            viewModel?.chosenBot?.addContactsListener(
                 typeAnswer = BotCreator.TypeAnswer.PHOTO,
                 answerTGFile = TelegramFile.ByFile(File(uriSrc))
             )
         }
         BotCreator.TypeAnswer.VIDEO -> {
-            if(isNotGoodVideo(bindingCreatorCommandFragment, requireContext()))
+            if(isNotGoodVideo(this, requireContext()))
                 return
-            viewModelCreatorCommandFragment.chosenBot.addContactsListener(
+            viewModel?.chosenBot?.addContactsListener(
                 typeAnswer = BotCreator.TypeAnswer.VIDEO,
                 answerTGFile = TelegramFile.ByFile(File(uriSrc))
             )
         }
         BotCreator.TypeAnswer.VOICE -> {
-            if(isNotGoodVoice(bindingCreatorCommandFragment, requireContext()))
+            if(isNotGoodVoice(this, requireContext()))
                 return
-            viewModelCreatorCommandFragment.chosenBot.addContactsListener(
+            viewModel?.chosenBot?.addContactsListener(
                 typeAnswer = BotCreator.TypeAnswer.VOICE,
                 answerTGFile = TelegramFile.ByFile(File(uriSrc))
             )
         }
         BotCreator.TypeAnswer.CONTACT -> {
-            if(isNotGoodContact(bindingCreatorCommandFragment, requireContext()))
+            if(isNotGoodContact(this, requireContext()))
                 return
-            viewModelCreatorCommandFragment.chosenBot.addContactsListener(
+            viewModel?.chosenBot?.addContactsListener(
                 typeAnswer = BotCreator.TypeAnswer.CONTACT,
-                phoneNumber = bindingCreatorCommandFragment.inputPhone.text.toString(),
-                firstName = bindingCreatorCommandFragment.inputFirstName.text.toString()
+                phoneNumber = this.inputPhone.text.toString(),
+                firstName = this.inputFirstName.text.toString()
             )
         }
         BotCreator.TypeAnswer.LOCATION -> {
-            if(isNotGoodLocation(bindingCreatorCommandFragment, requireContext()))
+            if(isNotGoodLocation(this, requireContext()))
                 return
-            viewModelCreatorCommandFragment.chosenBot.addContactsListener(
+            viewModel?.chosenBot?.addContactsListener(
                 typeAnswer = BotCreator.TypeAnswer.LOCATION,
-                lat = bindingCreatorCommandFragment.inputLat.text.toString().toFloat(),
-                lon = bindingCreatorCommandFragment.inputLon.text.toString().toFloat()
+                lat = this.inputLat.text.toString().toFloat(),
+                lon = this.inputLon.text.toString().toFloat()
             )
         }
         BotCreator.TypeAnswer.POLL -> {
-            if(isNotGoodPoll(bindingCreatorCommandFragment, requireContext()))
+            if(isNotGoodPoll(this, requireContext()))
                 return
-            val pollList = (bindingCreatorCommandFragment.inputAnswer.text.split(';') as ArrayList)
+            val pollList = (this.inputAnswer.text.split(';') as ArrayList)
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
                 pollList.removeIf { it.isBlank() || it.isEmpty() }
             } else {
@@ -456,27 +456,27 @@ internal fun CreatorCommandFragment.contactAnswer() {
                 pollList.clear()
                 pollList.addAll(tmp)
             }
-            viewModelCreatorCommandFragment.chosenBot.addContactsListener(
+            viewModel?.chosenBot?.addContactsListener(
                 typeAnswer = BotCreator.TypeAnswer.POLL,
-                question = bindingCreatorCommandFragment.inputQuestion.text.toString(),
+                question = this.inputQuestion.text.toString(),
                 pollList = pollList
             )
         }
         BotCreator.TypeAnswer.VENUE -> {
-            if(isNotGoodVenue(bindingCreatorCommandFragment, requireContext()))
+            if(isNotGoodVenue(this, requireContext()))
                 return
-            viewModelCreatorCommandFragment.chosenBot.addContactsListener(
+            viewModel?.chosenBot?.addContactsListener(
                 typeAnswer = BotCreator.TypeAnswer.VENUE,
-                lat = bindingCreatorCommandFragment.inputLat.text.toString().toFloat(),
-                lon = bindingCreatorCommandFragment.inputLon.text.toString().toFloat(),
-                title = bindingCreatorCommandFragment.inputTitle.text.toString(),
-                address = bindingCreatorCommandFragment.inputAddress.text.toString()
+                lat = this.inputLat.text.toString().toFloat(),
+                lon = this.inputLon.text.toString().toFloat(),
+                title = this.inputTitle.text.toString(),
+                address = this.inputAddress.text.toString()
             )
         }
         BotCreator.TypeAnswer.VIDEO_NOTE -> {
-            if(isNotGoodVideo(bindingCreatorCommandFragment, requireContext()))
+            if(isNotGoodVideo(this, requireContext()))
                 return
-            viewModelCreatorCommandFragment.chosenBot.addContactsListener(
+            viewModel?.chosenBot?.addContactsListener(
                 typeAnswer = BotCreator.TypeAnswer.VIDEO_NOTE,
                 answerTGFile = TelegramFile.ByFile(File(uriSrc))
             )
@@ -484,86 +484,86 @@ internal fun CreatorCommandFragment.contactAnswer() {
     }
     isSuccess = true
 }
-internal fun CreatorCommandFragment.voiceAnswer() {
-    when(bindingCreatorCommandFragment.spinnerTypeOfAnswer.selectedItem as BotCreator.TypeAnswer){
+internal fun CreatorCommandFragment.voiceAnswer() = with(binding!!)  {
+    when(this.spinnerTypeOfAnswer.selectedItem as BotCreator.TypeAnswer){
         BotCreator.TypeAnswer.TEXT -> {
-            if(isNotGoodText(bindingCreatorCommandFragment, requireContext()))
+            if(isNotGoodText(this, requireContext()))
                 return
-            viewModelCreatorCommandFragment.chosenBot.addVoicesListener(
+            viewModel?.chosenBot?.addVoicesListener(
                 typeAnswer = BotCreator.TypeAnswer.TEXT,
-                answerText = bindingCreatorCommandFragment.inputAnswer.text.toString()
+                answerText = this.inputAnswer.text.toString()
             )
         }
         BotCreator.TypeAnswer.ANIMATION -> {
-            if(isNotGoodAnimation(bindingCreatorCommandFragment, requireContext()))
+            if(isNotGoodAnimation(this, requireContext()))
                 return
-            viewModelCreatorCommandFragment.chosenBot.addVoicesListener(
+            viewModel?.chosenBot?.addVoicesListener(
                 typeAnswer = BotCreator.TypeAnswer.ANIMATION,
-                answerTGFile = TelegramFile.ByUrl(bindingCreatorCommandFragment.inputAnswer.text.toString())
+                answerTGFile = TelegramFile.ByUrl(this.inputAnswer.text.toString())
             )
         }
         BotCreator.TypeAnswer.AUDIO -> {
-            if(isNotGoodAudio(bindingCreatorCommandFragment, requireContext()))
+            if(isNotGoodAudio(this, requireContext()))
                 return
-            viewModelCreatorCommandFragment.chosenBot.addVoicesListener(
+            viewModel?.chosenBot?.addVoicesListener(
                 typeAnswer = BotCreator.TypeAnswer.AUDIO,
                 answerTGFile = TelegramFile.ByFile(File(uriSrc))
             )
         }
         BotCreator.TypeAnswer.DOCUMENT -> {
-            if(isNotGoodDocument(bindingCreatorCommandFragment, requireContext()))
+            if(isNotGoodDocument(this, requireContext()))
                 return
-            viewModelCreatorCommandFragment.chosenBot.addVoicesListener(
+            viewModel?.chosenBot?.addVoicesListener(
                 typeAnswer = BotCreator.TypeAnswer.DOCUMENT,
                 answerTGFile = TelegramFile.ByFile(File(uriSrc))
             )
         }
         BotCreator.TypeAnswer.PHOTO -> {
-            if(isNotGoodPhoto(bindingCreatorCommandFragment, requireContext()))
+            if(isNotGoodPhoto(this, requireContext()))
                 return
-            viewModelCreatorCommandFragment.chosenBot.addVoicesListener(
+            viewModel?.chosenBot?.addVoicesListener(
                 typeAnswer = BotCreator.TypeAnswer.PHOTO,
                 answerTGFile = TelegramFile.ByFile(File(uriSrc))
             )
         }
         BotCreator.TypeAnswer.VIDEO -> {
-            if(isNotGoodVideo(bindingCreatorCommandFragment, requireContext()))
+            if(isNotGoodVideo(this, requireContext()))
                 return
-            viewModelCreatorCommandFragment.chosenBot.addVoicesListener(
+            viewModel?.chosenBot?.addVoicesListener(
                 typeAnswer = BotCreator.TypeAnswer.VIDEO,
                 answerTGFile = TelegramFile.ByFile(File(uriSrc))
             )
         }
         BotCreator.TypeAnswer.VOICE -> {
-            if(isNotGoodVoice(bindingCreatorCommandFragment, requireContext()))
+            if(isNotGoodVoice(this, requireContext()))
                 return
-            viewModelCreatorCommandFragment.chosenBot.addVoicesListener(
+            viewModel?.chosenBot?.addVoicesListener(
                 typeAnswer = BotCreator.TypeAnswer.VOICE,
                 answerTGFile = TelegramFile.ByFile(File(uriSrc))
             )
         }
         BotCreator.TypeAnswer.CONTACT -> {
-            if(isNotGoodContact(bindingCreatorCommandFragment, requireContext()))
+            if(isNotGoodContact(this, requireContext()))
                 return
-            viewModelCreatorCommandFragment.chosenBot.addVoicesListener(
+            viewModel?.chosenBot?.addVoicesListener(
                 typeAnswer = BotCreator.TypeAnswer.CONTACT,
-                phoneNumber = bindingCreatorCommandFragment.inputPhone.text.toString(),
-                firstName = bindingCreatorCommandFragment.inputFirstName.text.toString()
+                phoneNumber = this.inputPhone.text.toString(),
+                firstName = this.inputFirstName.text.toString()
             )
         }
         BotCreator.TypeAnswer.LOCATION -> {
-            if(isNotGoodLocation(bindingCreatorCommandFragment, requireContext()))
+            if(isNotGoodLocation(this, requireContext()))
                 return
-            viewModelCreatorCommandFragment.chosenBot.addVoicesListener(
+            viewModel?.chosenBot?.addVoicesListener(
                 typeAnswer = BotCreator.TypeAnswer.LOCATION,
-                lat = bindingCreatorCommandFragment.inputLat.text.toString().toFloat(),
-                lon = bindingCreatorCommandFragment.inputLon.text.toString().toFloat()
+                lat = this.inputLat.text.toString().toFloat(),
+                lon = this.inputLon.text.toString().toFloat()
             )
         }
         BotCreator.TypeAnswer.POLL -> {
-            if(isNotGoodPoll(bindingCreatorCommandFragment, requireContext()))
+            if(isNotGoodPoll(this, requireContext()))
                 return
-            val pollList = (bindingCreatorCommandFragment.inputAnswer.text.split(';') as ArrayList)
+            val pollList = (this.inputAnswer.text.split(';') as ArrayList)
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
                 pollList.removeIf { it.isBlank() || it.isEmpty() }
             } else {
@@ -572,27 +572,27 @@ internal fun CreatorCommandFragment.voiceAnswer() {
                 pollList.clear()
                 pollList.addAll(tmp)
             }
-            viewModelCreatorCommandFragment.chosenBot.addVoicesListener(
+            viewModel?.chosenBot?.addVoicesListener(
                 typeAnswer = BotCreator.TypeAnswer.POLL,
-                question = bindingCreatorCommandFragment.inputQuestion.text.toString(),
+                question = this.inputQuestion.text.toString(),
                 pollList = pollList
             )
         }
         BotCreator.TypeAnswer.VENUE -> {
-            if(isNotGoodVenue(bindingCreatorCommandFragment, requireContext()))
+            if(isNotGoodVenue(this, requireContext()))
                 return
-            viewModelCreatorCommandFragment.chosenBot.addVoicesListener(
+            viewModel?.chosenBot?.addVoicesListener(
                 typeAnswer = BotCreator.TypeAnswer.VENUE,
-                lat = bindingCreatorCommandFragment.inputLat.text.toString().toFloat(),
-                lon = bindingCreatorCommandFragment.inputLon.text.toString().toFloat(),
-                title = bindingCreatorCommandFragment.inputTitle.text.toString(),
-                address = bindingCreatorCommandFragment.inputAddress.text.toString()
+                lat = this.inputLat.text.toString().toFloat(),
+                lon = this.inputLon.text.toString().toFloat(),
+                title = this.inputTitle.text.toString(),
+                address = this.inputAddress.text.toString()
             )
         }
         BotCreator.TypeAnswer.VIDEO_NOTE -> {
-            if(isNotGoodVideo(bindingCreatorCommandFragment, requireContext()))
+            if(isNotGoodVideo(this, requireContext()))
                 return
-            viewModelCreatorCommandFragment.chosenBot.addVoicesListener(
+            viewModel?.chosenBot?.addVoicesListener(
                 typeAnswer = BotCreator.TypeAnswer.VIDEO_NOTE,
                 answerTGFile = TelegramFile.ByFile(File(uriSrc))
             )
@@ -600,86 +600,86 @@ internal fun CreatorCommandFragment.voiceAnswer() {
     }
     isSuccess = true
 }
-internal fun CreatorCommandFragment.videoAnswer() {
-    when(bindingCreatorCommandFragment.spinnerTypeOfAnswer.selectedItem as BotCreator.TypeAnswer){
+internal fun CreatorCommandFragment.videoAnswer() = with(binding!!)  {
+    when(this.spinnerTypeOfAnswer.selectedItem as BotCreator.TypeAnswer){
         BotCreator.TypeAnswer.TEXT -> {
-            if(isNotGoodText(bindingCreatorCommandFragment, requireContext()))
+            if(isNotGoodText(this, requireContext()))
                 return
-            viewModelCreatorCommandFragment.chosenBot.addVideosListener(
+            viewModel?.chosenBot?.addVideosListener(
                 typeAnswer = BotCreator.TypeAnswer.TEXT,
-                answerText = bindingCreatorCommandFragment.inputAnswer.text.toString()
+                answerText = this.inputAnswer.text.toString()
             )
         }
         BotCreator.TypeAnswer.ANIMATION -> {
-            if(isNotGoodAnimation(bindingCreatorCommandFragment, requireContext()))
+            if(isNotGoodAnimation(this, requireContext()))
                 return
-            viewModelCreatorCommandFragment.chosenBot.addVideosListener(
+            viewModel?.chosenBot?.addVideosListener(
                 typeAnswer = BotCreator.TypeAnswer.ANIMATION,
-                answerTGFile = TelegramFile.ByUrl(bindingCreatorCommandFragment.inputAnswer.text.toString())
+                answerTGFile = TelegramFile.ByUrl(this.inputAnswer.text.toString())
             )
         }
         BotCreator.TypeAnswer.AUDIO -> {
-            if(isNotGoodAudio(bindingCreatorCommandFragment, requireContext()))
+            if(isNotGoodAudio(this, requireContext()))
                 return
-            viewModelCreatorCommandFragment.chosenBot.addVideosListener(
+            viewModel?.chosenBot?.addVideosListener(
                 typeAnswer = BotCreator.TypeAnswer.AUDIO,
                 answerTGFile = TelegramFile.ByFile(File(uriSrc))
             )
         }
         BotCreator.TypeAnswer.DOCUMENT -> {
-            if(isNotGoodDocument(bindingCreatorCommandFragment, requireContext()))
+            if(isNotGoodDocument(this, requireContext()))
                 return
-            viewModelCreatorCommandFragment.chosenBot.addVideosListener(
+            viewModel?.chosenBot?.addVideosListener(
                 typeAnswer = BotCreator.TypeAnswer.DOCUMENT,
                 answerTGFile = TelegramFile.ByFile(File(uriSrc))
             )
         }
         BotCreator.TypeAnswer.PHOTO -> {
-            if(isNotGoodPhoto(bindingCreatorCommandFragment, requireContext()))
+            if(isNotGoodPhoto(this, requireContext()))
                 return
-            viewModelCreatorCommandFragment.chosenBot.addVideosListener(
+            viewModel?.chosenBot?.addVideosListener(
                 typeAnswer = BotCreator.TypeAnswer.PHOTO,
                 answerTGFile = TelegramFile.ByFile(File(uriSrc))
             )
         }
         BotCreator.TypeAnswer.VIDEO -> {
-            if(isNotGoodVideo(bindingCreatorCommandFragment, requireContext()))
+            if(isNotGoodVideo(this, requireContext()))
                 return
-            viewModelCreatorCommandFragment.chosenBot.addVideosListener(
+            viewModel?.chosenBot?.addVideosListener(
                 typeAnswer = BotCreator.TypeAnswer.VIDEO,
                 answerTGFile = TelegramFile.ByFile(File(uriSrc))
             )
         }
         BotCreator.TypeAnswer.VOICE -> {
-            if(isNotGoodVoice(bindingCreatorCommandFragment, requireContext()))
+            if(isNotGoodVoice(this, requireContext()))
                 return
-            viewModelCreatorCommandFragment.chosenBot.addVideosListener(
+            viewModel?.chosenBot?.addVideosListener(
                 typeAnswer = BotCreator.TypeAnswer.VOICE,
                 answerTGFile = TelegramFile.ByFile(File(uriSrc))
             )
         }
         BotCreator.TypeAnswer.CONTACT -> {
-            if(isNotGoodContact(bindingCreatorCommandFragment, requireContext()))
+            if(isNotGoodContact(this, requireContext()))
                 return
-            viewModelCreatorCommandFragment.chosenBot.addVideosListener(
+            viewModel?.chosenBot?.addVideosListener(
                 typeAnswer = BotCreator.TypeAnswer.CONTACT,
-                phoneNumber = bindingCreatorCommandFragment.inputPhone.text.toString(),
-                firstName = bindingCreatorCommandFragment.inputFirstName.text.toString()
+                phoneNumber = this.inputPhone.text.toString(),
+                firstName = this.inputFirstName.text.toString()
             )
         }
         BotCreator.TypeAnswer.LOCATION -> {
-            if(isNotGoodLocation(bindingCreatorCommandFragment, requireContext()))
+            if(isNotGoodLocation(this, requireContext()))
                 return
-            viewModelCreatorCommandFragment.chosenBot.addVideosListener(
+            viewModel?.chosenBot?.addVideosListener(
                 typeAnswer = BotCreator.TypeAnswer.LOCATION,
-                lat = bindingCreatorCommandFragment.inputLat.text.toString().toFloat(),
-                lon = bindingCreatorCommandFragment.inputLon.text.toString().toFloat()
+                lat = this.inputLat.text.toString().toFloat(),
+                lon = this.inputLon.text.toString().toFloat()
             )
         }
         BotCreator.TypeAnswer.POLL -> {
-            if(isNotGoodPoll(bindingCreatorCommandFragment, requireContext()))
+            if(isNotGoodPoll(this, requireContext()))
                 return
-            val pollList = (bindingCreatorCommandFragment.inputAnswer.text.split(';') as ArrayList)
+            val pollList = (this.inputAnswer.text.split(';') as ArrayList)
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
                 pollList.removeIf { it.isBlank() || it.isEmpty() }
             } else {
@@ -688,27 +688,27 @@ internal fun CreatorCommandFragment.videoAnswer() {
                 pollList.clear()
                 pollList.addAll(tmp)
             }
-            viewModelCreatorCommandFragment.chosenBot.addVideosListener(
+            viewModel?.chosenBot?.addVideosListener(
                 typeAnswer = BotCreator.TypeAnswer.POLL,
-                question = bindingCreatorCommandFragment.inputQuestion.text.toString(),
+                question = this.inputQuestion.text.toString(),
                 pollList = pollList
             )
         }
         BotCreator.TypeAnswer.VENUE -> {
-            if(isNotGoodVenue(bindingCreatorCommandFragment, requireContext()))
+            if(isNotGoodVenue(this, requireContext()))
                 return
-            viewModelCreatorCommandFragment.chosenBot.addVideosListener(
+            viewModel?.chosenBot?.addVideosListener(
                 typeAnswer = BotCreator.TypeAnswer.VENUE,
-                lat = bindingCreatorCommandFragment.inputLat.text.toString().toFloat(),
-                lon = bindingCreatorCommandFragment.inputLon.text.toString().toFloat(),
-                title = bindingCreatorCommandFragment.inputTitle.text.toString(),
-                address = bindingCreatorCommandFragment.inputAddress.text.toString()
+                lat = this.inputLat.text.toString().toFloat(),
+                lon = this.inputLon.text.toString().toFloat(),
+                title = this.inputTitle.text.toString(),
+                address = this.inputAddress.text.toString()
             )
         }
         BotCreator.TypeAnswer.VIDEO_NOTE -> {
-            if(isNotGoodVideo(bindingCreatorCommandFragment, requireContext()))
+            if(isNotGoodVideo(this, requireContext()))
                 return
-            viewModelCreatorCommandFragment.chosenBot.addVideosListener(
+            viewModel?.chosenBot?.addVideosListener(
                 typeAnswer = BotCreator.TypeAnswer.VIDEO_NOTE,
                 answerTGFile = TelegramFile.ByFile(File(uriSrc))
             )
@@ -716,86 +716,86 @@ internal fun CreatorCommandFragment.videoAnswer() {
     }
     isSuccess = true
 }
-internal fun CreatorCommandFragment.photoAnswer() {
-    when(bindingCreatorCommandFragment.spinnerTypeOfAnswer.selectedItem as BotCreator.TypeAnswer){
+internal fun CreatorCommandFragment.photoAnswer() = with(binding!!)  {
+    when(this.spinnerTypeOfAnswer.selectedItem as BotCreator.TypeAnswer){
         BotCreator.TypeAnswer.TEXT -> {
-            if(isNotGoodText(bindingCreatorCommandFragment, requireContext()))
+            if(isNotGoodText(this, requireContext()))
                 return
-            viewModelCreatorCommandFragment.chosenBot.addPhotosListener(
+            viewModel?.chosenBot?.addPhotosListener(
                 typeAnswer = BotCreator.TypeAnswer.TEXT,
-                answerText = bindingCreatorCommandFragment.inputAnswer.text.toString()
+                answerText = this.inputAnswer.text.toString()
             )
         }
         BotCreator.TypeAnswer.ANIMATION -> {
-            if(isNotGoodAnimation(bindingCreatorCommandFragment, requireContext()))
+            if(isNotGoodAnimation(this, requireContext()))
                 return
-            viewModelCreatorCommandFragment.chosenBot.addPhotosListener(
+            viewModel?.chosenBot?.addPhotosListener(
                 typeAnswer = BotCreator.TypeAnswer.ANIMATION,
-                answerTGFile = TelegramFile.ByUrl(bindingCreatorCommandFragment.inputAnswer.text.toString())
+                answerTGFile = TelegramFile.ByUrl(this.inputAnswer.text.toString())
             )
         }
         BotCreator.TypeAnswer.AUDIO -> {
-            if(isNotGoodAudio(bindingCreatorCommandFragment, requireContext()))
+            if(isNotGoodAudio(this, requireContext()))
                 return
-            viewModelCreatorCommandFragment.chosenBot.addPhotosListener(
+            viewModel?.chosenBot?.addPhotosListener(
                 typeAnswer = BotCreator.TypeAnswer.AUDIO,
                 answerTGFile = TelegramFile.ByFile(File(uriSrc))
             )
         }
         BotCreator.TypeAnswer.DOCUMENT -> {
-            if(isNotGoodDocument(bindingCreatorCommandFragment, requireContext()))
+            if(isNotGoodDocument(this, requireContext()))
                 return
-            viewModelCreatorCommandFragment.chosenBot.addPhotosListener(
+            viewModel?.chosenBot?.addPhotosListener(
                 typeAnswer = BotCreator.TypeAnswer.DOCUMENT,
                 answerTGFile = TelegramFile.ByFile(File(uriSrc))
             )
         }
         BotCreator.TypeAnswer.PHOTO -> {
-            if(isNotGoodPhoto(bindingCreatorCommandFragment, requireContext()))
+            if(isNotGoodPhoto(this, requireContext()))
                 return
-            viewModelCreatorCommandFragment.chosenBot.addPhotosListener(
+            viewModel?.chosenBot?.addPhotosListener(
                 typeAnswer = BotCreator.TypeAnswer.PHOTO,
                 answerTGFile = TelegramFile.ByFile(File(uriSrc))
             )
         }
         BotCreator.TypeAnswer.VIDEO -> {
-            if(isNotGoodVideo(bindingCreatorCommandFragment, requireContext()))
+            if(isNotGoodVideo(this, requireContext()))
                 return
-            viewModelCreatorCommandFragment.chosenBot.addPhotosListener(
+            viewModel?.chosenBot?.addPhotosListener(
                 typeAnswer = BotCreator.TypeAnswer.VIDEO,
                 answerTGFile = TelegramFile.ByFile(File(uriSrc))
             )
         }
         BotCreator.TypeAnswer.VOICE -> {
-            if(isNotGoodVoice(bindingCreatorCommandFragment, requireContext()))
+            if(isNotGoodVoice(this, requireContext()))
                 return
-            viewModelCreatorCommandFragment.chosenBot.addPhotosListener(
+            viewModel?.chosenBot?.addPhotosListener(
                 typeAnswer = BotCreator.TypeAnswer.VOICE,
                 answerTGFile = TelegramFile.ByFile(File(uriSrc))
             )
         }
         BotCreator.TypeAnswer.CONTACT -> {
-            if(isNotGoodContact(bindingCreatorCommandFragment, requireContext()))
+            if(isNotGoodContact(this, requireContext()))
                 return
-            viewModelCreatorCommandFragment.chosenBot.addPhotosListener(
+            viewModel?.chosenBot?.addPhotosListener(
                 typeAnswer = BotCreator.TypeAnswer.CONTACT,
-                phoneNumber = bindingCreatorCommandFragment.inputPhone.text.toString(),
-                firstName = bindingCreatorCommandFragment.inputFirstName.text.toString()
+                phoneNumber = this.inputPhone.text.toString(),
+                firstName = this.inputFirstName.text.toString()
             )
         }
         BotCreator.TypeAnswer.LOCATION -> {
-            if(isNotGoodLocation(bindingCreatorCommandFragment, requireContext()))
+            if(isNotGoodLocation(this, requireContext()))
                 return
-            viewModelCreatorCommandFragment.chosenBot.addPhotosListener(
+            viewModel?.chosenBot?.addPhotosListener(
                 typeAnswer = BotCreator.TypeAnswer.LOCATION,
-                lat = bindingCreatorCommandFragment.inputLat.text.toString().toFloat(),
-                lon = bindingCreatorCommandFragment.inputLon.text.toString().toFloat()
+                lat = this.inputLat.text.toString().toFloat(),
+                lon = this.inputLon.text.toString().toFloat()
             )
         }
         BotCreator.TypeAnswer.POLL -> {
-            if(isNotGoodPoll(bindingCreatorCommandFragment, requireContext()))
+            if(isNotGoodPoll(this, requireContext()))
                 return
-            val pollList = (bindingCreatorCommandFragment.inputAnswer.text.split(';') as ArrayList)
+            val pollList = (this.inputAnswer.text.split(';') as ArrayList)
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
                 pollList.removeIf { it.isBlank() || it.isEmpty() }
             } else {
@@ -804,27 +804,27 @@ internal fun CreatorCommandFragment.photoAnswer() {
                 pollList.clear()
                 pollList.addAll(tmp)
             }
-            viewModelCreatorCommandFragment.chosenBot.addPhotosListener(
+            viewModel?.chosenBot?.addPhotosListener(
                 typeAnswer = BotCreator.TypeAnswer.POLL,
-                question = bindingCreatorCommandFragment.inputQuestion.text.toString(),
+                question = this.inputQuestion.text.toString(),
                 pollList = pollList
             )
         }
         BotCreator.TypeAnswer.VENUE -> {
-            if(isNotGoodVenue(bindingCreatorCommandFragment, requireContext()))
+            if(isNotGoodVenue(this, requireContext()))
                 return
-            viewModelCreatorCommandFragment.chosenBot.addPhotosListener(
+            viewModel?.chosenBot?.addPhotosListener(
                 typeAnswer = BotCreator.TypeAnswer.VENUE,
-                lat = bindingCreatorCommandFragment.inputLat.text.toString().toFloat(),
-                lon = bindingCreatorCommandFragment.inputLon.text.toString().toFloat(),
-                title = bindingCreatorCommandFragment.inputTitle.text.toString(),
-                address = bindingCreatorCommandFragment.inputAddress.text.toString()
+                lat = this.inputLat.text.toString().toFloat(),
+                lon = this.inputLon.text.toString().toFloat(),
+                title = this.inputTitle.text.toString(),
+                address = this.inputAddress.text.toString()
             )
         }
         BotCreator.TypeAnswer.VIDEO_NOTE -> {
-            if(isNotGoodVideo(bindingCreatorCommandFragment, requireContext()))
+            if(isNotGoodVideo(this, requireContext()))
                 return
-            viewModelCreatorCommandFragment.chosenBot.addPhotosListener(
+            viewModel?.chosenBot?.addPhotosListener(
                 typeAnswer = BotCreator.TypeAnswer.VIDEO_NOTE,
                 answerTGFile = TelegramFile.ByFile(File(uriSrc))
             )
@@ -832,86 +832,86 @@ internal fun CreatorCommandFragment.photoAnswer() {
     }
     isSuccess = true
 }
-internal fun CreatorCommandFragment.documentAnswer() {
-    when(bindingCreatorCommandFragment.spinnerTypeOfAnswer.selectedItem as BotCreator.TypeAnswer){
+internal fun CreatorCommandFragment.documentAnswer() = with(binding!!)  {
+    when(this.spinnerTypeOfAnswer.selectedItem as BotCreator.TypeAnswer){
         BotCreator.TypeAnswer.TEXT -> {
-            if(isNotGoodText(bindingCreatorCommandFragment, requireContext()))
+            if(isNotGoodText(this, requireContext()))
                 return
-            viewModelCreatorCommandFragment.chosenBot.addDocumentListener(
+            viewModel?.chosenBot?.addDocumentListener(
                 typeAnswer = BotCreator.TypeAnswer.TEXT,
-                answerText = bindingCreatorCommandFragment.inputAnswer.text.toString()
+                answerText = this.inputAnswer.text.toString()
             )
         }
         BotCreator.TypeAnswer.ANIMATION -> {
-            if(isNotGoodAnimation(bindingCreatorCommandFragment, requireContext()))
+            if(isNotGoodAnimation(this, requireContext()))
                 return
-            viewModelCreatorCommandFragment.chosenBot.addDocumentListener(
+            viewModel?.chosenBot?.addDocumentListener(
                 typeAnswer = BotCreator.TypeAnswer.ANIMATION,
-                answerTGFile = TelegramFile.ByUrl(bindingCreatorCommandFragment.inputAnswer.text.toString())
+                answerTGFile = TelegramFile.ByUrl(this.inputAnswer.text.toString())
             )
         }
         BotCreator.TypeAnswer.AUDIO -> {
-            if(isNotGoodAudio(bindingCreatorCommandFragment, requireContext()))
+            if(isNotGoodAudio(this, requireContext()))
                 return
-            viewModelCreatorCommandFragment.chosenBot.addDocumentListener(
+            viewModel?.chosenBot?.addDocumentListener(
                 typeAnswer = BotCreator.TypeAnswer.AUDIO,
                 answerTGFile = TelegramFile.ByFile(File(uriSrc))
             )
         }
         BotCreator.TypeAnswer.DOCUMENT -> {
-            if(isNotGoodDocument(bindingCreatorCommandFragment, requireContext()))
+            if(isNotGoodDocument(this, requireContext()))
                 return
-            viewModelCreatorCommandFragment.chosenBot.addDocumentListener(
+            viewModel?.chosenBot?.addDocumentListener(
                 typeAnswer = BotCreator.TypeAnswer.DOCUMENT,
                 answerTGFile = TelegramFile.ByFile(File(uriSrc))
             )
         }
         BotCreator.TypeAnswer.PHOTO -> {
-            if(isNotGoodPhoto(bindingCreatorCommandFragment, requireContext()))
+            if(isNotGoodPhoto(this, requireContext()))
                 return
-            viewModelCreatorCommandFragment.chosenBot.addDocumentListener(
+            viewModel?.chosenBot?.addDocumentListener(
                 typeAnswer = BotCreator.TypeAnswer.PHOTO,
                 answerTGFile = TelegramFile.ByFile(File(uriSrc))
             )
         }
         BotCreator.TypeAnswer.VIDEO -> {
-            if(isNotGoodVideo(bindingCreatorCommandFragment, requireContext()))
+            if(isNotGoodVideo(this, requireContext()))
                 return
-            viewModelCreatorCommandFragment.chosenBot.addDocumentListener(
+            viewModel?.chosenBot?.addDocumentListener(
                 typeAnswer = BotCreator.TypeAnswer.VIDEO,
                 answerTGFile = TelegramFile.ByFile(File(uriSrc))
             )
         }
         BotCreator.TypeAnswer.VOICE -> {
-            if(isNotGoodVoice(bindingCreatorCommandFragment, requireContext()))
+            if(isNotGoodVoice(this, requireContext()))
                 return
-            viewModelCreatorCommandFragment.chosenBot.addDocumentListener(
+            viewModel?.chosenBot?.addDocumentListener(
                 typeAnswer = BotCreator.TypeAnswer.VOICE,
                 answerTGFile = TelegramFile.ByFile(File(uriSrc))
             )
         }
         BotCreator.TypeAnswer.CONTACT -> {
-            if(isNotGoodContact(bindingCreatorCommandFragment, requireContext()))
+            if(isNotGoodContact(this, requireContext()))
                 return
-            viewModelCreatorCommandFragment.chosenBot.addDocumentListener(
+            viewModel?.chosenBot?.addDocumentListener(
                 typeAnswer = BotCreator.TypeAnswer.CONTACT,
-                phoneNumber = bindingCreatorCommandFragment.inputPhone.text.toString(),
-                firstName = bindingCreatorCommandFragment.inputFirstName.text.toString()
+                phoneNumber = this.inputPhone.text.toString(),
+                firstName = this.inputFirstName.text.toString()
             )
         }
         BotCreator.TypeAnswer.LOCATION -> {
-            if(isNotGoodLocation(bindingCreatorCommandFragment, requireContext()))
+            if(isNotGoodLocation(this, requireContext()))
                 return
-            viewModelCreatorCommandFragment.chosenBot.addDocumentListener(
+            viewModel?.chosenBot?.addDocumentListener(
                 typeAnswer = BotCreator.TypeAnswer.LOCATION,
-                lat = bindingCreatorCommandFragment.inputLat.text.toString().toFloat(),
-                lon = bindingCreatorCommandFragment.inputLon.text.toString().toFloat()
+                lat = this.inputLat.text.toString().toFloat(),
+                lon = this.inputLon.text.toString().toFloat()
             )
         }
         BotCreator.TypeAnswer.POLL -> {
-            if(isNotGoodPoll(bindingCreatorCommandFragment, requireContext()))
+            if(isNotGoodPoll(this, requireContext()))
                 return
-            val pollList = (bindingCreatorCommandFragment.inputAnswer.text.split(';') as ArrayList)
+            val pollList = (this.inputAnswer.text.split(';') as ArrayList)
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
                 pollList.removeIf { it.isBlank() || it.isEmpty() }
             } else {
@@ -920,27 +920,27 @@ internal fun CreatorCommandFragment.documentAnswer() {
                 pollList.clear()
                 pollList.addAll(tmp)
             }
-            viewModelCreatorCommandFragment.chosenBot.addDocumentListener(
+            viewModel?.chosenBot?.addDocumentListener(
                 typeAnswer = BotCreator.TypeAnswer.POLL,
-                question = bindingCreatorCommandFragment.inputQuestion.text.toString(),
+                question = this.inputQuestion.text.toString(),
                 pollList = pollList
             )
         }
         BotCreator.TypeAnswer.VENUE -> {
-            if(isNotGoodVenue(bindingCreatorCommandFragment, requireContext()))
+            if(isNotGoodVenue(this, requireContext()))
                 return
-            viewModelCreatorCommandFragment.chosenBot.addDocumentListener(
+            viewModel?.chosenBot?.addDocumentListener(
                 typeAnswer = BotCreator.TypeAnswer.VENUE,
-                lat = bindingCreatorCommandFragment.inputLat.text.toString().toFloat(),
-                lon = bindingCreatorCommandFragment.inputLon.text.toString().toFloat(),
-                title = bindingCreatorCommandFragment.inputTitle.text.toString(),
-                address = bindingCreatorCommandFragment.inputAddress.text.toString()
+                lat = this.inputLat.text.toString().toFloat(),
+                lon = this.inputLon.text.toString().toFloat(),
+                title = this.inputTitle.text.toString(),
+                address = this.inputAddress.text.toString()
             )
         }
         BotCreator.TypeAnswer.VIDEO_NOTE -> {
-            if(isNotGoodVideo(bindingCreatorCommandFragment, requireContext()))
+            if(isNotGoodVideo(this, requireContext()))
                 return
-            viewModelCreatorCommandFragment.chosenBot.addDocumentListener(
+            viewModel?.chosenBot?.addDocumentListener(
                 typeAnswer = BotCreator.TypeAnswer.VIDEO_NOTE,
                 answerTGFile = TelegramFile.ByFile(File(uriSrc))
             )
@@ -948,86 +948,86 @@ internal fun CreatorCommandFragment.documentAnswer() {
     }
     isSuccess = true
 }
-internal fun CreatorCommandFragment.animationAnswer() {
-    when(bindingCreatorCommandFragment.spinnerTypeOfAnswer.selectedItem as BotCreator.TypeAnswer){
+internal fun CreatorCommandFragment.animationAnswer() = with(binding!!)  {
+    when(this.spinnerTypeOfAnswer.selectedItem as BotCreator.TypeAnswer){
         BotCreator.TypeAnswer.TEXT -> {
-            if(isNotGoodText(bindingCreatorCommandFragment, requireContext()))
+            if(isNotGoodText(this, requireContext()))
                 return
-            viewModelCreatorCommandFragment.chosenBot.addAnimationListener(
+            viewModel?.chosenBot?.addAnimationListener(
                 typeAnswer = BotCreator.TypeAnswer.TEXT,
-                answerText = bindingCreatorCommandFragment.inputAnswer.text.toString()
+                answerText = this.inputAnswer.text.toString()
             )
         }
         BotCreator.TypeAnswer.ANIMATION -> {
-            if(isNotGoodAnimation(bindingCreatorCommandFragment, requireContext()))
+            if(isNotGoodAnimation(this, requireContext()))
                 return
-            viewModelCreatorCommandFragment.chosenBot.addAnimationListener(
+            viewModel?.chosenBot?.addAnimationListener(
                 typeAnswer = BotCreator.TypeAnswer.ANIMATION,
-                answerTGFile = TelegramFile.ByUrl(bindingCreatorCommandFragment.inputAnswer.text.toString())
+                answerTGFile = TelegramFile.ByUrl(this.inputAnswer.text.toString())
             )
         }
         BotCreator.TypeAnswer.AUDIO -> {
-            if(isNotGoodAudio(bindingCreatorCommandFragment, requireContext()))
+            if(isNotGoodAudio(this, requireContext()))
                 return
-            viewModelCreatorCommandFragment.chosenBot.addAnimationListener(
+            viewModel?.chosenBot?.addAnimationListener(
                 typeAnswer = BotCreator.TypeAnswer.AUDIO,
                 answerTGFile = TelegramFile.ByFile(File(uriSrc))
             )
         }
         BotCreator.TypeAnswer.DOCUMENT -> {
-            if(isNotGoodDocument(bindingCreatorCommandFragment, requireContext()))
+            if(isNotGoodDocument(this, requireContext()))
                 return
-            viewModelCreatorCommandFragment.chosenBot.addAnimationListener(
+            viewModel?.chosenBot?.addAnimationListener(
                 typeAnswer = BotCreator.TypeAnswer.DOCUMENT,
                 answerTGFile = TelegramFile.ByFile(File(uriSrc))
             )
         }
         BotCreator.TypeAnswer.PHOTO -> {
-            if(isNotGoodPhoto(bindingCreatorCommandFragment, requireContext()))
+            if(isNotGoodPhoto(this, requireContext()))
                 return
-            viewModelCreatorCommandFragment.chosenBot.addAnimationListener(
+            viewModel?.chosenBot?.addAnimationListener(
                 typeAnswer = BotCreator.TypeAnswer.PHOTO,
                 answerTGFile = TelegramFile.ByFile(File(uriSrc))
             )
         }
         BotCreator.TypeAnswer.VIDEO -> {
-            if(isNotGoodVideo(bindingCreatorCommandFragment, requireContext()))
+            if(isNotGoodVideo(this, requireContext()))
                 return
-            viewModelCreatorCommandFragment.chosenBot.addAnimationListener(
+            viewModel?.chosenBot?.addAnimationListener(
                 typeAnswer = BotCreator.TypeAnswer.VIDEO,
                 answerTGFile = TelegramFile.ByFile(File(uriSrc))
             )
         }
         BotCreator.TypeAnswer.VOICE -> {
-            if(isNotGoodVoice(bindingCreatorCommandFragment, requireContext()))
+            if(isNotGoodVoice(this, requireContext()))
                 return
-            viewModelCreatorCommandFragment.chosenBot.addAnimationListener(
+            viewModel?.chosenBot?.addAnimationListener(
                 typeAnswer = BotCreator.TypeAnswer.VOICE,
                 answerTGFile = TelegramFile.ByFile(File(uriSrc))
             )
         }
         BotCreator.TypeAnswer.CONTACT -> {
-            if(isNotGoodContact(bindingCreatorCommandFragment, requireContext()))
+            if(isNotGoodContact(this, requireContext()))
                 return
-            viewModelCreatorCommandFragment.chosenBot.addAnimationListener(
+            viewModel?.chosenBot?.addAnimationListener(
                 typeAnswer = BotCreator.TypeAnswer.CONTACT,
-                phoneNumber = bindingCreatorCommandFragment.inputPhone.text.toString(),
-                firstName = bindingCreatorCommandFragment.inputFirstName.text.toString()
+                phoneNumber = this.inputPhone.text.toString(),
+                firstName = this.inputFirstName.text.toString()
             )
         }
         BotCreator.TypeAnswer.LOCATION -> {
-            if(isNotGoodLocation(bindingCreatorCommandFragment, requireContext()))
+            if(isNotGoodLocation(this, requireContext()))
                 return
-            viewModelCreatorCommandFragment.chosenBot.addAnimationListener(
+            viewModel?.chosenBot?.addAnimationListener(
                 typeAnswer = BotCreator.TypeAnswer.LOCATION,
-                lat = bindingCreatorCommandFragment.inputLat.text.toString().toFloat(),
-                lon = bindingCreatorCommandFragment.inputLon.text.toString().toFloat()
+                lat = this.inputLat.text.toString().toFloat(),
+                lon = this.inputLon.text.toString().toFloat()
             )
         }
         BotCreator.TypeAnswer.POLL -> {
-            if(isNotGoodPoll(bindingCreatorCommandFragment, requireContext()))
+            if(isNotGoodPoll(this, requireContext()))
                 return
-            val pollList = (bindingCreatorCommandFragment.inputAnswer.text.split(';') as ArrayList)
+            val pollList = (this.inputAnswer.text.split(';') as ArrayList)
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
                 pollList.removeIf { it.isBlank() || it.isEmpty() }
             } else {
@@ -1036,27 +1036,27 @@ internal fun CreatorCommandFragment.animationAnswer() {
                 pollList.clear()
                 pollList.addAll(tmp)
             }
-            viewModelCreatorCommandFragment.chosenBot.addAnimationListener(
+            viewModel?.chosenBot?.addAnimationListener(
                 typeAnswer = BotCreator.TypeAnswer.POLL,
-                question = bindingCreatorCommandFragment.inputQuestion.text.toString(),
+                question = this.inputQuestion.text.toString(),
                 pollList = pollList
             )
         }
         BotCreator.TypeAnswer.VENUE -> {
-            if(isNotGoodVenue(bindingCreatorCommandFragment, requireContext()))
+            if(isNotGoodVenue(this, requireContext()))
                 return
-            viewModelCreatorCommandFragment.chosenBot.addAnimationListener(
+            viewModel?.chosenBot?.addAnimationListener(
                 typeAnswer = BotCreator.TypeAnswer.VENUE,
-                lat = bindingCreatorCommandFragment.inputLat.text.toString().toFloat(),
-                lon = bindingCreatorCommandFragment.inputLon.text.toString().toFloat(),
-                title = bindingCreatorCommandFragment.inputTitle.text.toString(),
-                address = bindingCreatorCommandFragment.inputAddress.text.toString()
+                lat = this.inputLat.text.toString().toFloat(),
+                lon = this.inputLon.text.toString().toFloat(),
+                title = this.inputTitle.text.toString(),
+                address = this.inputAddress.text.toString()
             )
         }
         BotCreator.TypeAnswer.VIDEO_NOTE -> {
-            if(isNotGoodVideo(bindingCreatorCommandFragment, requireContext()))
+            if(isNotGoodVideo(this, requireContext()))
                 return
-            viewModelCreatorCommandFragment.chosenBot.addAnimationListener(
+            viewModel?.chosenBot?.addAnimationListener(
                 typeAnswer = BotCreator.TypeAnswer.VIDEO_NOTE,
                 answerTGFile = TelegramFile.ByFile(File(uriSrc))
             )
@@ -1064,95 +1064,95 @@ internal fun CreatorCommandFragment.animationAnswer() {
     }
     isSuccess = true
 }
-internal fun CreatorCommandFragment.commandAnswer(){
-    when(bindingCreatorCommandFragment.spinnerTypeOfAnswer.selectedItem as BotCreator.TypeAnswer){
+internal fun CreatorCommandFragment.commandAnswer() = with(binding!!)  {
+    when(this.spinnerTypeOfAnswer.selectedItem as BotCreator.TypeAnswer){
         BotCreator.TypeAnswer.TEXT -> {
-            if(isNotGoodText(bindingCreatorCommandFragment, requireContext()))
+            if(isNotGoodText(this, requireContext()))
                 return
-            viewModelCreatorCommandFragment.chosenBot.addCommandListener(
-                command = bindingCreatorCommandFragment.inputCommand.text.toString(),
+            viewModel?.chosenBot?.addCommandListener(
+                command = this.inputCommand.text.toString(),
                 typeAnswer = BotCreator.TypeAnswer.TEXT,
-                answerText = bindingCreatorCommandFragment.inputAnswer.text.toString()
+                answerText = this.inputAnswer.text.toString()
             )
         }
         BotCreator.TypeAnswer.ANIMATION -> {
-            if(isNotGoodAnimation(bindingCreatorCommandFragment, requireContext()))
+            if(isNotGoodAnimation(this, requireContext()))
                 return
-            viewModelCreatorCommandFragment.chosenBot.addCommandListener(
-                command = bindingCreatorCommandFragment.inputCommand.text.toString(),
+            viewModel?.chosenBot?.addCommandListener(
+                command = this.inputCommand.text.toString(),
                 typeAnswer = BotCreator.TypeAnswer.ANIMATION,
-                answerTGFile = TelegramFile.ByUrl(bindingCreatorCommandFragment.inputAnswer.text.toString())
+                answerTGFile = TelegramFile.ByUrl(this.inputAnswer.text.toString())
             )
         }
         BotCreator.TypeAnswer.AUDIO -> {
-            if(isNotGoodAudio(bindingCreatorCommandFragment, requireContext()))
+            if(isNotGoodAudio(this, requireContext()))
                 return
-            viewModelCreatorCommandFragment.chosenBot.addCommandListener(
-                command = bindingCreatorCommandFragment.inputCommand.text.toString(),
+            viewModel?.chosenBot?.addCommandListener(
+                command = this.inputCommand.text.toString(),
                 typeAnswer = BotCreator.TypeAnswer.AUDIO,
                 answerTGFile = TelegramFile.ByFile(File(uriSrc))
             )
         }
         BotCreator.TypeAnswer.DOCUMENT -> {
-            if(isNotGoodDocument(bindingCreatorCommandFragment, requireContext()))
+            if(isNotGoodDocument(this, requireContext()))
                 return
-            viewModelCreatorCommandFragment.chosenBot.addCommandListener(
-                command = bindingCreatorCommandFragment.inputCommand.text.toString(),
+            viewModel?.chosenBot?.addCommandListener(
+                command = this.inputCommand.text.toString(),
                 typeAnswer = BotCreator.TypeAnswer.DOCUMENT,
                 answerTGFile = TelegramFile.ByFile(File(uriSrc))
             )
         }
         BotCreator.TypeAnswer.PHOTO -> {
-            if(isNotGoodPhoto(bindingCreatorCommandFragment, requireContext()))
+            if(isNotGoodPhoto(this, requireContext()))
                 return
-            viewModelCreatorCommandFragment.chosenBot.addCommandListener(
-                command = bindingCreatorCommandFragment.inputCommand.text.toString(),
+            viewModel?.chosenBot?.addCommandListener(
+                command = this.inputCommand.text.toString(),
                 typeAnswer = BotCreator.TypeAnswer.PHOTO,
                 answerTGFile = TelegramFile.ByFile(File(uriSrc))
             )
         }
         BotCreator.TypeAnswer.VIDEO -> {
-            if(isNotGoodVideo(bindingCreatorCommandFragment, requireContext()))
+            if(isNotGoodVideo(this, requireContext()))
                 return
-            viewModelCreatorCommandFragment.chosenBot.addCommandListener(
-                command = bindingCreatorCommandFragment.inputCommand.text.toString(),
+            viewModel?.chosenBot?.addCommandListener(
+                command = this.inputCommand.text.toString(),
                 typeAnswer = BotCreator.TypeAnswer.VIDEO,
                 answerTGFile = TelegramFile.ByFile(File(uriSrc))
             )
         }
         BotCreator.TypeAnswer.VOICE -> {
-            if(isNotGoodVoice(bindingCreatorCommandFragment, requireContext()))
+            if(isNotGoodVoice(this, requireContext()))
                 return
-            viewModelCreatorCommandFragment.chosenBot.addCommandListener(
-                command = bindingCreatorCommandFragment.inputCommand.text.toString(),
+            viewModel?.chosenBot?.addCommandListener(
+                command = this.inputCommand.text.toString(),
                 typeAnswer = BotCreator.TypeAnswer.VOICE,
                 answerTGFile = TelegramFile.ByFile(File(uriSrc))
             )
         }
         BotCreator.TypeAnswer.CONTACT -> {
-            if(isNotGoodContact(bindingCreatorCommandFragment, requireContext()))
+            if(isNotGoodContact(this, requireContext()))
                 return
-            viewModelCreatorCommandFragment.chosenBot.addCommandListener(
-                command = bindingCreatorCommandFragment.inputCommand.text.toString(),
+            viewModel?.chosenBot?.addCommandListener(
+                command = this.inputCommand.text.toString(),
                 typeAnswer = BotCreator.TypeAnswer.CONTACT,
-                phoneNumber = bindingCreatorCommandFragment.inputPhone.text.toString(),
-                firstName = bindingCreatorCommandFragment.inputFirstName.text.toString()
+                phoneNumber = this.inputPhone.text.toString(),
+                firstName = this.inputFirstName.text.toString()
             )
         }
         BotCreator.TypeAnswer.LOCATION -> {
-            if(isNotGoodLocation(bindingCreatorCommandFragment, requireContext()))
+            if(isNotGoodLocation(this, requireContext()))
                 return
-            viewModelCreatorCommandFragment.chosenBot.addCommandListener(
-                command = bindingCreatorCommandFragment.inputCommand.text.toString(),
+            viewModel?.chosenBot?.addCommandListener(
+                command = this.inputCommand.text.toString(),
                 typeAnswer = BotCreator.TypeAnswer.LOCATION,
-                lat = bindingCreatorCommandFragment.inputLat.text.toString().toFloat(),
-                lon = bindingCreatorCommandFragment.inputLon.text.toString().toFloat()
+                lat = this.inputLat.text.toString().toFloat(),
+                lon = this.inputLon.text.toString().toFloat()
             )
         }
         BotCreator.TypeAnswer.POLL -> {
-            if(isNotGoodPoll(bindingCreatorCommandFragment, requireContext()))
+            if(isNotGoodPoll(this, requireContext()))
                 return
-            val pollList = (bindingCreatorCommandFragment.inputAnswer.text.split(';') as ArrayList)
+            val pollList = (this.inputAnswer.text.split(';') as ArrayList)
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
                 pollList.removeIf { it.isBlank() || it.isEmpty() }
             } else {
@@ -1161,30 +1161,30 @@ internal fun CreatorCommandFragment.commandAnswer(){
                 pollList.clear()
                 pollList.addAll(tmp)
             }
-            viewModelCreatorCommandFragment.chosenBot.addCommandListener(
-                command = bindingCreatorCommandFragment.inputCommand.text.toString(),
+            viewModel?.chosenBot?.addCommandListener(
+                command = this.inputCommand.text.toString(),
                 typeAnswer = BotCreator.TypeAnswer.POLL,
-                question = bindingCreatorCommandFragment.inputQuestion.text.toString(),
+                question = this.inputQuestion.text.toString(),
                 pollList = pollList
             )
         }
         BotCreator.TypeAnswer.VENUE -> {
-            if(isNotGoodVenue(bindingCreatorCommandFragment, requireContext()))
+            if(isNotGoodVenue(this, requireContext()))
                 return
-            viewModelCreatorCommandFragment.chosenBot.addCommandListener(
-                command = bindingCreatorCommandFragment.inputCommand.text.toString(),
+            viewModel?.chosenBot?.addCommandListener(
+                command = this.inputCommand.text.toString(),
                 typeAnswer = BotCreator.TypeAnswer.VENUE,
-                lat = bindingCreatorCommandFragment.inputLat.text.toString().toFloat(),
-                lon = bindingCreatorCommandFragment.inputLon.text.toString().toFloat(),
-                title = bindingCreatorCommandFragment.inputTitle.text.toString(),
-                address = bindingCreatorCommandFragment.inputAddress.text.toString()
+                lat = this.inputLat.text.toString().toFloat(),
+                lon = this.inputLon.text.toString().toFloat(),
+                title = this.inputTitle.text.toString(),
+                address = this.inputAddress.text.toString()
             )
         }
         BotCreator.TypeAnswer.VIDEO_NOTE -> {
-            if(isNotGoodVideo(bindingCreatorCommandFragment, requireContext()))
+            if(isNotGoodVideo(this, requireContext()))
                 return
-            viewModelCreatorCommandFragment.chosenBot.addCommandListener(
-                command = bindingCreatorCommandFragment.inputCommand.text.toString(),
+            viewModel?.chosenBot?.addCommandListener(
+                command = this.inputCommand.text.toString(),
                 typeAnswer = BotCreator.TypeAnswer.VIDEO_NOTE,
                 answerTGFile = TelegramFile.ByFile(File(uriSrc))
             )
@@ -1192,95 +1192,95 @@ internal fun CreatorCommandFragment.commandAnswer(){
     }
     isSuccess = true
 }
-internal fun CreatorCommandFragment.textAnswer() {
-    when(bindingCreatorCommandFragment.spinnerTypeOfAnswer.selectedItem as BotCreator.TypeAnswer){
+internal fun CreatorCommandFragment.textAnswer() = with(binding!!) {
+    when(this.spinnerTypeOfAnswer.selectedItem as BotCreator.TypeAnswer){
         BotCreator.TypeAnswer.TEXT -> {
-            if(isNotGoodText(bindingCreatorCommandFragment, requireContext()))
+            if(isNotGoodText(this, requireContext()))
                 return
-            viewModelCreatorCommandFragment.chosenBot.addTextListener(
-                text = bindingCreatorCommandFragment.inputCommand.text.toString(),
+            viewModel?.chosenBot?.addTextListener(
+                text = this.inputCommand.text.toString(),
                 typeAnswer = BotCreator.TypeAnswer.TEXT,
-                answerText = bindingCreatorCommandFragment.inputAnswer.text.toString()
+                answerText = this.inputAnswer.text.toString()
             )
         }
         BotCreator.TypeAnswer.ANIMATION -> {
-            if(isNotGoodAnimation(bindingCreatorCommandFragment, requireContext()))
+            if(isNotGoodAnimation(this, requireContext()))
                 return
-            viewModelCreatorCommandFragment.chosenBot.addTextListener(
-                text = bindingCreatorCommandFragment.inputCommand.text.toString(),
+            viewModel?.chosenBot?.addTextListener(
+                text = this.inputCommand.text.toString(),
                 typeAnswer = BotCreator.TypeAnswer.ANIMATION,
-                answerTGFile = TelegramFile.ByUrl(bindingCreatorCommandFragment.inputAnswer.text.toString())
+                answerTGFile = TelegramFile.ByUrl(this.inputAnswer.text.toString())
             )
         }
         BotCreator.TypeAnswer.AUDIO -> {
-            if(isNotGoodAudio(bindingCreatorCommandFragment, requireContext()))
+            if(isNotGoodAudio(this, requireContext()))
                 return
-            viewModelCreatorCommandFragment.chosenBot.addTextListener(
-                text = bindingCreatorCommandFragment.inputCommand.text.toString(),
+            viewModel?.chosenBot?.addTextListener(
+                text = this.inputCommand.text.toString(),
                 typeAnswer = BotCreator.TypeAnswer.AUDIO,
                 answerTGFile = TelegramFile.ByFile(File(uriSrc))
             )
         }
         BotCreator.TypeAnswer.DOCUMENT -> {
-            if(isNotGoodDocument(bindingCreatorCommandFragment, requireContext()))
+            if(isNotGoodDocument(this, requireContext()))
                 return
-            viewModelCreatorCommandFragment.chosenBot.addTextListener(
-                text = bindingCreatorCommandFragment.inputCommand.text.toString(),
+            viewModel?.chosenBot?.addTextListener(
+                text = this.inputCommand.text.toString(),
                 typeAnswer = BotCreator.TypeAnswer.DOCUMENT,
                 answerTGFile = TelegramFile.ByFile(File(uriSrc))
             )
         }
         BotCreator.TypeAnswer.PHOTO -> {
-            if(isNotGoodPhoto(bindingCreatorCommandFragment, requireContext()))
+            if(isNotGoodPhoto(this, requireContext()))
                 return
-            viewModelCreatorCommandFragment.chosenBot.addTextListener(
-                text = bindingCreatorCommandFragment.inputCommand.text.toString(),
+            viewModel?.chosenBot?.addTextListener(
+                text = this.inputCommand.text.toString(),
                 typeAnswer = BotCreator.TypeAnswer.PHOTO,
                 answerTGFile = TelegramFile.ByFile(File(uriSrc))
             )
         }
         BotCreator.TypeAnswer.VIDEO -> {
-            if(isNotGoodVideo(bindingCreatorCommandFragment, requireContext()))
+            if(isNotGoodVideo(this, requireContext()))
                 return
-            viewModelCreatorCommandFragment.chosenBot.addTextListener(
-                text = bindingCreatorCommandFragment.inputCommand.text.toString(),
+            viewModel?.chosenBot?.addTextListener(
+                text = this.inputCommand.text.toString(),
                 typeAnswer = BotCreator.TypeAnswer.VIDEO,
                 answerTGFile = TelegramFile.ByFile(File(uriSrc))
             )
         }
         BotCreator.TypeAnswer.VOICE -> {
-            if(isNotGoodVoice(bindingCreatorCommandFragment, requireContext()))
+            if(isNotGoodVoice(this, requireContext()))
                 return
-            viewModelCreatorCommandFragment.chosenBot.addTextListener(
-                text = bindingCreatorCommandFragment.inputCommand.text.toString(),
+            viewModel?.chosenBot?.addTextListener(
+                text = this.inputCommand.text.toString(),
                 typeAnswer = BotCreator.TypeAnswer.VOICE,
                 answerTGFile = TelegramFile.ByFile(File(uriSrc))
             )
         }
         BotCreator.TypeAnswer.CONTACT -> {
-            if(isNotGoodContact(bindingCreatorCommandFragment, requireContext()))
+            if(isNotGoodContact(this, requireContext()))
                 return
-            viewModelCreatorCommandFragment.chosenBot.addTextListener(
-                text = bindingCreatorCommandFragment.inputCommand.text.toString(),
+            viewModel?.chosenBot?.addTextListener(
+                text = this.inputCommand.text.toString(),
                 typeAnswer = BotCreator.TypeAnswer.CONTACT,
-                phoneNumber = bindingCreatorCommandFragment.inputPhone.text.toString(),
-                firstName = bindingCreatorCommandFragment.inputFirstName.text.toString()
+                phoneNumber = this.inputPhone.text.toString(),
+                firstName = this.inputFirstName.text.toString()
             )
         }
         BotCreator.TypeAnswer.LOCATION -> {
-            if(isNotGoodLocation(bindingCreatorCommandFragment, requireContext()))
+            if(isNotGoodLocation(this, requireContext()))
                 return
-            viewModelCreatorCommandFragment.chosenBot.addTextListener(
-                text = bindingCreatorCommandFragment.inputCommand.text.toString(),
+            viewModel?.chosenBot?.addTextListener(
+                text = this.inputCommand.text.toString(),
                 typeAnswer = BotCreator.TypeAnswer.LOCATION,
-                lat = bindingCreatorCommandFragment.inputLat.text.toString().toFloat(),
-                lon = bindingCreatorCommandFragment.inputLon.text.toString().toFloat()
+                lat = this.inputLat.text.toString().toFloat(),
+                lon = this.inputLon.text.toString().toFloat()
             )
         }
         BotCreator.TypeAnswer.POLL -> {
-            if(isNotGoodPoll(bindingCreatorCommandFragment, requireContext()))
+            if(isNotGoodPoll(this, requireContext()))
                 return
-            val pollList = (bindingCreatorCommandFragment.inputAnswer.text.split(';') as ArrayList)
+            val pollList = (this.inputAnswer.text.split(';') as ArrayList)
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
                 pollList.removeIf { it.isBlank() || it.isEmpty() }
             } else {
@@ -1289,30 +1289,30 @@ internal fun CreatorCommandFragment.textAnswer() {
                 pollList.clear()
                 pollList.addAll(tmp)
             }
-            viewModelCreatorCommandFragment.chosenBot.addTextListener(
-                text = bindingCreatorCommandFragment.inputCommand.text.toString(),
+            viewModel?.chosenBot?.addTextListener(
+                text = this.inputCommand.text.toString(),
                 typeAnswer = BotCreator.TypeAnswer.POLL,
-                question = bindingCreatorCommandFragment.inputQuestion.text.toString(),
+                question = this.inputQuestion.text.toString(),
                 pollList = pollList
             )
         }
         BotCreator.TypeAnswer.VENUE -> {
-            if(isNotGoodVenue(bindingCreatorCommandFragment, requireContext()))
+            if(isNotGoodVenue(this, requireContext()))
                 return
-            viewModelCreatorCommandFragment.chosenBot.addTextListener(
-                text = bindingCreatorCommandFragment.inputCommand.text.toString(),
+            viewModel?.chosenBot?.addTextListener(
+                text = this.inputCommand.text.toString(),
                 typeAnswer = BotCreator.TypeAnswer.VENUE,
-                lat = bindingCreatorCommandFragment.inputLat.text.toString().toFloat(),
-                lon = bindingCreatorCommandFragment.inputLon.text.toString().toFloat(),
-                title = bindingCreatorCommandFragment.inputTitle.text.toString(),
-                address = bindingCreatorCommandFragment.inputAddress.text.toString()
+                lat = this.inputLat.text.toString().toFloat(),
+                lon = this.inputLon.text.toString().toFloat(),
+                title = this.inputTitle.text.toString(),
+                address = this.inputAddress.text.toString()
             )
         }
         BotCreator.TypeAnswer.VIDEO_NOTE -> {
-            if(isNotGoodVideo(bindingCreatorCommandFragment, requireContext()))
+            if(isNotGoodVideo(this, requireContext()))
                 return
-            viewModelCreatorCommandFragment.chosenBot.addTextListener(
-                text = bindingCreatorCommandFragment.inputCommand.text.toString(),
+            viewModel?.chosenBot?.addTextListener(
+                text = this.inputCommand.text.toString(),
                 typeAnswer = BotCreator.TypeAnswer.VIDEO_NOTE,
                 answerTGFile = TelegramFile.ByFile(File(uriSrc))
             )

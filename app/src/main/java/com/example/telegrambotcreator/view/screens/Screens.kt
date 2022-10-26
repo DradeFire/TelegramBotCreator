@@ -1,4 +1,4 @@
-package com.example.telegrambotcreator.view.cicerone.screens
+package com.example.telegrambotcreator.view.screens
 
 import com.example.telegrambotcreator.view.fragments.check_video.CheckVideoFragment
 import com.example.telegrambotcreator.view.fragments.creator_bot.CreatorBotFragment

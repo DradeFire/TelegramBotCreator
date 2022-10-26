@@ -7,8 +7,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.telegrambotcreator.databinding.ItemListOfBotsBinding
 import com.example.telegrambotcreator.model.creator.helper.restoreBot
 import com.example.telegrambotcreator.model.datebase.model.BotDbModel
-import com.example.telegrambotcreator.view.cicerone.App
-import com.example.telegrambotcreator.view.cicerone.screens.Screens
+import com.example.telegrambotcreator.view.screens.Screens
 import com.example.telegrambotcreator.viewmodel.TelegramViewModel
 
 class ListOfBotsAdapter(outBots: List<BotDbModel>, private val viewModel: TelegramViewModel): RecyclerView.Adapter<ListOfBotsAdapter.ViewHolder>() {
@@ -23,7 +22,7 @@ class ListOfBotsAdapter(outBots: List<BotDbModel>, private val viewModel: Telegr
             txCountOfCommands.text = "Count of commands:  ${botDbModel.countOfCommands}"
             btOpenBot.setOnClickListener {
                 viewModel.chosenBot.restoreBot(botDbModel)
-                App.INSTANCE.router.navigateTo(Screens.InformationBotFrag())
+                viewModel.router?.navigateTo(Screens.InformationBotFrag())
             }
         }
 

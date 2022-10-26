@@ -84,9 +84,7 @@ private fun checkChildes(it: BaseTgContainer, id: Int): BaseTgContainer? {
         }
         inCommand?.let {
             val tmp = findFatherRec(id, it)
-            tmp?.let {
-                    inIt -> return inIt
-            }
+            tmp?.let { inIt -> return inIt }
         }
         inContact?.let {
             val tmp = findFatherRec(id, it)

@@ -32,64 +32,61 @@ import com.example.telegrambotcreator.model.creator.helper.convertToType
 import com.example.telegrambotcreator.model.creator.helper.findFather
 import com.example.telegrambotcreator.model.creator.helper.saveBot
 import com.example.telegrambotcreator.model.creator.model.*
-import com.example.telegrambotcreator.view.cicerone.App
 import com.example.telegrambotcreator.viewmodel.TelegramViewModel
 import com.hbisoft.pickit.PickiT
 import com.hbisoft.pickit.PickiTCallbacks
 
 class ModificationCommandFragment : Fragment(), PickiTCallbacks {
 
-    // todo =
-
     private var pickiT: PickiT? = null
     private var isSuccess = false
     private var uriSrc: String? = null
-    internal lateinit var binding: FragmentModificationCommandBinding
+    internal var binding: FragmentModificationCommandBinding? = null
     internal lateinit var viewModel: TelegramViewModel
     internal val btClickListenerModifyCommandFragment = View.OnClickListener {
         viewModel.chosenBot.findFather(viewModel.commandsDeque.peek()!!.id)?.let {
-            when(binding.spinnerTypeOfAnswer.selectedItem as BotCreator.TypeAnswer){
-                BotCreator.TypeAnswer.TEXT -> if(!isNotGoodText(binding, requireContext())){
+            when(binding?.spinnerTypeOfAnswer?.selectedItem as BotCreator.TypeAnswer){
+                BotCreator.TypeAnswer.TEXT -> if(!isNotGoodText(binding!!, requireContext())){
                     addNewData(it, null, null, null, null, null, null, null, null,
-                        binding.inputAnswer.text.toString(), null)
+                        binding?.inputAnswer?.text.toString(), null)
                     isSuccess = true
                 }
-                BotCreator.TypeAnswer.ANIMATION -> if(!isNotGoodAnimation(binding, requireContext())){
+                BotCreator.TypeAnswer.ANIMATION -> if(!isNotGoodAnimation(binding!!, requireContext())){
                     addNewData(it, null, null, null, null, null, null, null, null,
-                        binding.inputAnswer.text.toString(), null)
+                        binding?.inputAnswer?.text.toString(), null)
                     isSuccess = true
                 }
-                BotCreator.TypeAnswer.AUDIO -> if(!isNotGoodAudio(binding, requireContext())){
+                BotCreator.TypeAnswer.AUDIO -> if(!isNotGoodAudio(binding!!, requireContext())){
                     val file = uriSrc ?: viewModel.commandsDeque.peek()!!.answerTGFile
                     addNewData(it, file,
                         null, null, null, null, null, null, null, null, null)
                     isSuccess = true
                 }
-                BotCreator.TypeAnswer.DOCUMENT -> if(!isNotGoodDocument(binding, requireContext())){
+                BotCreator.TypeAnswer.DOCUMENT -> if(!isNotGoodDocument(binding!!, requireContext())){
                     val file = uriSrc ?: viewModel.commandsDeque.peek()!!.answerTGFile
                     addNewData(it, file,
                         null, null, null, null, null, null, null, null, null)
                     isSuccess = true
                 }
-                BotCreator.TypeAnswer.PHOTO -> if(!isNotGoodPhoto(binding, requireContext())){
+                BotCreator.TypeAnswer.PHOTO -> if(!isNotGoodPhoto(binding!!, requireContext())){
                     val file = uriSrc ?: viewModel.commandsDeque.peek()!!.answerTGFile
                     addNewData(it, file,
                         null, null, null, null, null, null, null, null, null)
                     isSuccess = true
                 }
-                BotCreator.TypeAnswer.VIDEO -> if(!isNotGoodVideo(binding, requireContext())){
+                BotCreator.TypeAnswer.VIDEO -> if(!isNotGoodVideo(binding!!, requireContext())){
                     val file = uriSrc ?: viewModel.commandsDeque.peek()!!.answerTGFile
                     addNewData(it, file,
                         null, null, null, null, null, null, null, null, null)
                     isSuccess = true
                 }
-                BotCreator.TypeAnswer.VOICE -> if(!isNotGoodVoice(binding, requireContext())){
+                BotCreator.TypeAnswer.VOICE -> if(!isNotGoodVoice(binding!!, requireContext())){
                     val file = uriSrc ?: viewModel.commandsDeque.peek()!!.answerTGFile
                     addNewData(it, file,
                         null, null, null, null, null, null, null, null, null)
                     isSuccess = true
                 }
-                BotCreator.TypeAnswer.CONTACT -> if(!isNotGoodContact(binding, requireContext())){
+                BotCreator.TypeAnswer.CONTACT -> if(!isNotGoodContact(binding!!, requireContext())){
                     addNewData(it,
                         null,
                         null,
@@ -97,21 +94,21 @@ class ModificationCommandFragment : Fragment(), PickiTCallbacks {
                         null,
                         null,
                         null,
-                        binding.inputPhone.text.toString(),
-                        binding.inputFirstName.text.toString(),
+                        binding?.inputPhone?.text.toString(),
+                        binding?.inputFirstName?.text.toString(),
                         null,
                         null)
                     isSuccess = true
                 }
-                BotCreator.TypeAnswer.LOCATION -> if(!isNotGoodLocation(binding, requireContext())){
+                BotCreator.TypeAnswer.LOCATION -> if(!isNotGoodLocation(binding!!, requireContext())){
                     addNewData(it, null, null, null, null,
-                        binding.inputLon.text.toString().toFloat(),
-                        binding.inputLat.text.toString().toFloat(),
+                        binding?.inputLon?.text.toString().toFloat(),
+                        binding?.inputLat?.text.toString().toFloat(),
                         null, null, null, null)
                     isSuccess = true
                 }
-                BotCreator.TypeAnswer.POLL -> if(!isNotGoodPoll(binding, requireContext())){
-                    val pollList = (binding.inputAnswer.text.toString().split(';') as ArrayList)
+                BotCreator.TypeAnswer.POLL -> if(!isNotGoodPoll(binding!!, requireContext())){
+                    val pollList = (binding?.inputAnswer?.text.toString().split(';') as ArrayList)
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
                         pollList.removeIf { i -> i.isBlank() || i.isEmpty() }
                     } else {
@@ -120,21 +117,21 @@ class ModificationCommandFragment : Fragment(), PickiTCallbacks {
                         pollList.addAll(tmp)
                     }
                     addNewData(it, null,
-                        binding.inputQuestion.text.toString(),
+                        binding?.inputQuestion?.text.toString(),
                         null, null, null, null, null, null, null,
                         pollList)
                     isSuccess = true
                 }
-                BotCreator.TypeAnswer.VENUE -> if(!isNotGoodVenue(binding, requireContext())){
+                BotCreator.TypeAnswer.VENUE -> if(!isNotGoodVenue(binding!!, requireContext())){
                     addNewData(it, null, null,
-                        binding.inputTitle.text.toString(),
-                        binding.inputAddress.text.toString(),
-                        binding.inputLon.text.toString().toFloat(),
-                        binding.inputLat.text.toString().toFloat(),
+                        binding?.inputTitle?.text.toString(),
+                        binding?.inputAddress?.text.toString(),
+                        binding?.inputLon?.text.toString().toFloat(),
+                        binding?.inputLat?.text.toString().toFloat(),
                         null, null, null, null)
                     isSuccess = true
                 }
-                BotCreator.TypeAnswer.VIDEO_NOTE -> if(!isNotGoodVideo(binding, requireContext())){
+                BotCreator.TypeAnswer.VIDEO_NOTE -> if(!isNotGoodVideo(binding!!, requireContext())){
                     val file = uriSrc ?: viewModel.commandsDeque.peek()!!.answerTGFile
                     addNewData(it, file,
                         null, null, null, null, null, null, null, null, null)
@@ -143,25 +140,26 @@ class ModificationCommandFragment : Fragment(), PickiTCallbacks {
             }
             when(it){
                 is CommandTG -> {
-                    if(binding.inputCommand.text.toString().isNotEmpty()
-                        && binding.inputCommand.text.toString().isNotBlank()
-                        && !binding.inputCommand.text.toString().contains(' ')
+                    if(binding?.inputCommand?.text.toString().isNotEmpty()
+                        && binding?.inputCommand?.text.toString().isNotBlank()
+                        && !binding?.inputCommand?.text.toString().contains(' ')
                     )
-                        it.command = binding.inputCommand.text.toString()
+                        it.command = binding?.inputCommand?.text.toString()
                     else {
                         isSuccess = false
                         Toast.makeText(requireContext(), "Field \"Command\" is bad", Toast.LENGTH_SHORT).show()
                     }
                 }
                 is TextTG -> {
-                    if(binding.inputCommand.text.toString().isNotEmpty() && binding.inputCommand.text.toString().isNotBlank())
-                        it.text = binding.inputCommand.text.toString()
+                    if(binding?.inputCommand?.text.toString().isNotEmpty() && binding?.inputCommand?.text.toString().isNotBlank())
+                        it.text = binding?.inputCommand?.text.toString()
                     else {
                         isSuccess = false
                         Toast.makeText(requireContext(), "Field \"Command\" is bad", Toast.LENGTH_SHORT).show()
                     }
 
                 }
+                else -> throw Exception()
             }
         }
         if(isSuccess){
@@ -170,17 +168,44 @@ class ModificationCommandFragment : Fragment(), PickiTCallbacks {
         }
     }
 
-    @SuppressLint("SetTextI18n")
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View {
-        binding = FragmentModificationCommandBinding.inflate(inflater, container, false)
+    ): View? {
+        FragmentModificationCommandBinding.inflate(inflater, container, false).also {
+            binding = it
+            return binding?.root
+        }
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        startInit()
+    }
+
+    @SuppressLint("SetTextI18n")
+    private fun startInit() {
         viewModel = ViewModelProvider(requireActivity())[TelegramViewModel::class.java]
         viewModel.isCreatingCommand = true
+        pickiT = PickiT(requireContext(), this, requireActivity())
+
+        if(viewModel.isCreatingCallbackButton){
+            binding?.inputCommand?.hint = "button text"
+            binding?.txTypeOfCommand?.text = "Type of button:"
+            binding?.txCommand?.text = "Text on button:"
+            binding?.btCreateCommand?.text = "Create button"
+        }
+
+        bindObservers()
+        bindButtons()
+        bindViewAndSpinners()
+    }
+
+    private fun bindObservers() {
         viewModel.updateTrigger.observe(viewLifecycleOwner){
             it?.let {
-                val idCom = viewModel.commandsDeque.peek().id
+                val idCom = viewModel.commandsDeque.peek()?.id ?: -1
                 viewModel.commandsDeque.pop()
                 viewModel.commandsDeque.push(viewModel.chosenBot.findFather(idCom))
 
@@ -188,27 +213,14 @@ class ModificationCommandFragment : Fragment(), PickiTCallbacks {
                 viewModel.isCreatingCallbackButton = false
                 viewModel.updateTrigger.call()
                 Toast.makeText(requireContext(), "Command edited", Toast.LENGTH_SHORT).show()
-                App.INSTANCE.router.exit()
+                viewModel.router?.exit()
             }
         }
-        pickiT = PickiT(requireContext(), this, requireActivity())
-
-        if(viewModel.isCreatingCallbackButton){
-            binding.inputCommand.hint = "button text"
-            binding.txTypeOfCommand.text = "Type of button:"
-            binding.txCommand.text = "Text on button:"
-            binding.btCreateCommand.text = "Create button"
-        }
-
-        bindButtons()
-        bindViewAndSpinners()
-
-        return binding.root
     }
 
     private fun bindButtons() {
-        binding.btAddSrc.setOnClickListener {
-            when(binding.spinnerTypeOfAnswer.selectedItem as BotCreator.TypeAnswer){
+        binding?.btAddSrc?.setOnClickListener {
+            when(binding?.spinnerTypeOfAnswer?.selectedItem as BotCreator.TypeAnswer){
                 BotCreator.TypeAnswer.AUDIO -> openGalleryForSomething("audio/*")
                 BotCreator.TypeAnswer.DOCUMENT -> openGalleryForSomething("application/*")
                 BotCreator.TypeAnswer.PHOTO -> openGalleryForSomething("image/*")
@@ -218,7 +230,7 @@ class ModificationCommandFragment : Fragment(), PickiTCallbacks {
                 else -> throw java.lang.Exception("error")
             }
         }
-        binding.btCreateCommand.setOnClickListener(btClickListenerModifyCommandFragment)
+        binding?.btCreateCommand?.setOnClickListener(btClickListenerModifyCommandFragment)
     }
 
     private fun addNewData(
@@ -257,92 +269,111 @@ class ModificationCommandFragment : Fragment(), PickiTCallbacks {
             }
             else -> throw Exception("")
         }
-        when(viewModel.commandsDeque.peek().typeAnswer.convertToType()){
+        when(viewModel.commandsDeque.peek()?.typeAnswer?.convertToType()){
             BotCreator.TypeAnswer.TEXT -> {
-                bindSpecView(View.GONE, View.VISIBLE,View.GONE, View.GONE, View.GONE, View.GONE, View.GONE, View.GONE, View.GONE, "answer", "")
-                binding.inputAnswer.setText(viewModel.commandsDeque.peek().answerText)
+                bindSpecView(View.GONE, View.VISIBLE,View.GONE, View.GONE, View.GONE, View.GONE,
+                    View.GONE, View.GONE, View.GONE, "answer", "")
+                binding?.inputAnswer?.setText(viewModel.commandsDeque.peek().answerText)
             }
             BotCreator.TypeAnswer.ANIMATION -> {
-                bindSpecView(View.GONE, View.VISIBLE,View.GONE, View.GONE, View.GONE, View.GONE, View.GONE, View.GONE, View.GONE, "url", "")
-                binding.inputAnswer.setText(viewModel.commandsDeque.peek().answerText)
+                bindSpecView(View.GONE, View.VISIBLE,View.GONE, View.GONE, View.GONE, View.GONE,
+                    View.GONE, View.GONE, View.GONE, "url", "")
+                binding?.inputAnswer?.setText(viewModel.commandsDeque.peek().answerText)
             }
             BotCreator.TypeAnswer.AUDIO -> {
-                bindSpecView(View.GONE, View.GONE, View.VISIBLE, View.GONE, View.GONE, View.GONE, View.GONE, View.GONE, View.GONE, "", "Add audio")
-                binding.btAddSrc.text = viewModel.commandsDeque.peek().answerTGFile!!.substring(
+                bindSpecView(View.GONE, View.GONE, View.VISIBLE, View.GONE, View.GONE, View.GONE,
+                    View.GONE, View.GONE, View.GONE, "", "Add audio")
+                binding?.btAddSrc?.text = viewModel.commandsDeque.peek().answerTGFile!!.substring(
                     viewModel.commandsDeque.peek().answerTGFile!!.lastIndexOf('/') + 1
                 )
             }
             BotCreator.TypeAnswer.DOCUMENT -> {
-                bindSpecView(View.GONE, View.GONE, View.VISIBLE, View.GONE, View.GONE, View.GONE, View.GONE, View.GONE, View.GONE, "", "Add document")
-                binding.btAddSrc.text = viewModel.commandsDeque.peek().answerTGFile!!.substring(
+                bindSpecView(View.GONE, View.GONE, View.VISIBLE, View.GONE, View.GONE, View.GONE,
+                    View.GONE, View.GONE, View.GONE, "", "Add document")
+                binding?.btAddSrc?.text = viewModel.commandsDeque.peek().answerTGFile!!.substring(
                     viewModel.commandsDeque.peek().answerTGFile!!.lastIndexOf('/') + 1
                 )
             }
             BotCreator.TypeAnswer.PHOTO -> {
-                bindSpecView(View.GONE, View.GONE, View.VISIBLE, View.GONE, View.GONE, View.GONE, View.GONE, View.GONE, View.GONE, "", "Add image")
-                binding.btAddSrc.text = viewModel.commandsDeque.peek().answerTGFile!!.substring(
+                bindSpecView(View.GONE, View.GONE, View.VISIBLE, View.GONE, View.GONE, View.GONE,
+                    View.GONE, View.GONE, View.GONE, "", "Add image")
+                binding?.btAddSrc?.text = viewModel.commandsDeque.peek().answerTGFile!!.substring(
                     viewModel.commandsDeque.peek().answerTGFile!!.lastIndexOf('/') + 1
                 )
             }
             BotCreator.TypeAnswer.VIDEO -> {
-                bindSpecView(View.GONE, View.GONE, View.VISIBLE, View.GONE, View.GONE, View.GONE, View.GONE, View.GONE, View.GONE, "", "Add video")
-                binding.btAddSrc.text = viewModel.commandsDeque.peek().answerTGFile!!.substring(
+                bindSpecView(View.GONE, View.GONE, View.VISIBLE, View.GONE, View.GONE, View.GONE,
+                    View.GONE, View.GONE, View.GONE, "", "Add video")
+                binding?.btAddSrc?.text = viewModel.commandsDeque.peek().answerTGFile!!.substring(
                     viewModel.commandsDeque.peek().answerTGFile!!.lastIndexOf('/') + 1
                 )
             }
             BotCreator.TypeAnswer.VOICE -> {
-                bindSpecView(View.GONE, View.GONE, View.VISIBLE, View.GONE, View.GONE, View.GONE, View.GONE, View.GONE, View.GONE, "", "Add voice")
-                binding.btAddSrc.text = viewModel.commandsDeque.peek().answerTGFile!!.substring(
+                bindSpecView(View.GONE, View.GONE, View.VISIBLE, View.GONE, View.GONE, View.GONE,
+                    View.GONE, View.GONE, View.GONE, "", "Add voice")
+                binding?.btAddSrc?.text = viewModel.commandsDeque.peek().answerTGFile!!.substring(
                     viewModel.commandsDeque.peek().answerTGFile!!.lastIndexOf('/') + 1
                 )
             }
             BotCreator.TypeAnswer.CONTACT -> {
-                bindSpecView(View.GONE, View.GONE, View.GONE, View.VISIBLE, View.VISIBLE, View.GONE, View.GONE, View.GONE, View.GONE, "", "")
-                binding.apply {
+                bindSpecView(View.GONE, View.GONE, View.GONE, View.VISIBLE, View.VISIBLE, View.GONE,
+                    View.GONE, View.GONE, View.GONE, "", "")
+                binding?.apply {
                     inputFirstName.setText(viewModel.commandsDeque.peek().firstName)
                     inputPhone.setText(viewModel.commandsDeque.peek().phoneNumber)
                 }
             }
             BotCreator.TypeAnswer.LOCATION -> {
-                bindSpecView(View.GONE, View.GONE, View.GONE, View.GONE, View.GONE, View.VISIBLE, View.VISIBLE, View.GONE, View.GONE, "", "")
-                binding.apply {
-                    inputLat.setText(viewModel.commandsDeque.peek().lat.toString())
-                    inputLon.setText(viewModel.commandsDeque.peek().lon.toString())
+                bindSpecView(View.GONE, View.GONE, View.GONE, View.GONE, View.GONE, View.VISIBLE,
+                    View.VISIBLE, View.GONE, View.GONE, "", "")
+                binding?.apply {
+                    inputLat.setText(viewModel.commandsDeque.peek()?.lat.toString())
+                    inputLon.setText(viewModel.commandsDeque.peek()?.lon.toString())
                 }
             }
             BotCreator.TypeAnswer.POLL -> {
-                bindSpecView(View.VISIBLE, View.VISIBLE, View.GONE, View.GONE, View.GONE, View.GONE, View.GONE, View.GONE, View.GONE, "answers (split by \";\")", "")
-                binding.inputQuestion.setText(viewModel.commandsDeque.peek().question)
+                bindSpecView(View.VISIBLE, View.VISIBLE, View.GONE, View.GONE, View.GONE, View.GONE,
+                    View.GONE, View.GONE, View.GONE, "answers (split by \";\")", "")
+                binding?.inputQuestion?.setText(viewModel.commandsDeque.peek()?.question)
                 var t = ""
-                viewModel.commandsDeque.peek().pollList?.forEachIndexed { index, s ->
+                viewModel.commandsDeque.peek()?.pollList?.forEachIndexed { index, s ->
                     t += s
-                    if(index != viewModel.commandsDeque.peek().pollList!!.lastIndex)
+                    if(index != viewModel.commandsDeque.peek()?.pollList!!.lastIndex)
                         t += ';'
                 }
-                binding.inputAnswer.setText(t)
+                binding?.inputAnswer?.setText(t)
             }
             BotCreator.TypeAnswer.VENUE -> {
-                bindSpecView(View.GONE, View.GONE, View.GONE, View.GONE, View.GONE, View.VISIBLE, View.VISIBLE, View.VISIBLE, View.VISIBLE, "", "")
-                binding.apply {
-                    inputLat.setText(viewModel.commandsDeque.peek().lat.toString())
-                    inputLon.setText(viewModel.commandsDeque.peek().lon.toString())
-                    inputAddress.setText(viewModel.commandsDeque.peek().address)
-                    inputTitle.setText(viewModel.commandsDeque.peek().title)
+                bindSpecView(View.GONE, View.GONE, View.GONE, View.GONE, View.GONE, View.VISIBLE,
+                    View.VISIBLE, View.VISIBLE, View.VISIBLE, "", "")
+                binding?.apply {
+                    inputLat.setText(viewModel.commandsDeque.peek()?.lat.toString())
+                    inputLon.setText(viewModel.commandsDeque.peek()?.lon.toString())
+                    inputAddress.setText(viewModel.commandsDeque.peek()?.address)
+                    inputTitle.setText(viewModel.commandsDeque.peek()?.title)
                 }
             }
             BotCreator.TypeAnswer.VIDEO_NOTE -> {
-                bindSpecView(View.GONE, View.GONE, View.VISIBLE, View.GONE, View.GONE, View.GONE, View.GONE, View.GONE, View.GONE, "", "Add video")
-                binding.btAddSrc.text = viewModel.commandsDeque.peek().answerTGFile!!.substring(
-                    viewModel.commandsDeque.peek().answerTGFile!!.lastIndexOf('/') + 1
+                bindSpecView(View.GONE, View.GONE, View.VISIBLE, View.GONE, View.GONE, View.GONE,
+                    View.GONE, View.GONE, View.GONE, "", "Add video")
+                binding?.btAddSrc?.text = viewModel.commandsDeque.peek()?.answerTGFile!!.substring(
+                    viewModel.commandsDeque.peek()?.answerTGFile!!.lastIndexOf('/') + 1
                 )
             }
+            else -> throw Exception()
         }
         val adapterCommands = if (viewModel.isCreatingCallbackButton)
-            ArrayAdapter(requireContext(), android.R.layout.simple_spinner_dropdown_item, BotCreator.TypeCallback.values())
+            ArrayAdapter(requireContext(), android.R.layout.simple_spinner_dropdown_item,
+                BotCreator.TypeCallback.values())
         else
-            ArrayAdapter(requireContext(), android.R.layout.simple_spinner_dropdown_item, BotCreator.TypeCommand.values())
-        val adapterAnswers = ArrayAdapter(requireContext(), android.R.layout.simple_spinner_dropdown_item, BotCreator.TypeAnswer.values())
-        binding.spinnerTypeOfCommand.apply {
+            ArrayAdapter(requireContext(), android.R.layout.simple_spinner_dropdown_item,
+                BotCreator.TypeCommand.values())
+        val adapterAnswers = ArrayAdapter(
+            requireContext(),
+            android.R.layout.simple_spinner_dropdown_item,
+            BotCreator.TypeAnswer.values()
+        )
+        binding?.spinnerTypeOfCommand?.apply {
             this.adapter = adapterCommands
             onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
                 override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
@@ -369,7 +400,7 @@ class ModificationCommandFragment : Fragment(), PickiTCallbacks {
                 }
 
                 private fun simpleTextCommand() {
-                    binding.apply {
+                    binding?.apply {
                         btCreateCommand.isEnabled = true
                         txCommand.visibility = View.VISIBLE
                         inputCommand.visibility = View.VISIBLE
@@ -379,7 +410,7 @@ class ModificationCommandFragment : Fragment(), PickiTCallbacks {
                 }
 
                 private fun simpleCommand(){
-                    binding.apply {
+                    binding?.apply {
                         btCreateCommand.isEnabled = true
                         txCommand.visibility = View.GONE
                         inputCommand.visibility = View.GONE
@@ -388,7 +419,7 @@ class ModificationCommandFragment : Fragment(), PickiTCallbacks {
                 }
 
                 override fun onNothingSelected(p0: AdapterView<*>?) {
-                    binding.apply {
+                    binding?.apply {
                         btCreateCommand.isEnabled = false
                         btCreateCommand.setOnClickListener(null)
                     }
@@ -397,24 +428,36 @@ class ModificationCommandFragment : Fragment(), PickiTCallbacks {
             }
             setSelection(posCommand)
         }
-        binding.spinnerTypeOfAnswer.apply {
+        binding?.spinnerTypeOfAnswer?.apply {
             this.adapter = adapterAnswers
             onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
                 @SuppressLint("SetTextI18n")
                 override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
                     when(BotCreator.TypeAnswer.values()[position]){
-                        BotCreator.TypeAnswer.TEXT -> bindView(View.GONE, View.VISIBLE,View.GONE, View.GONE, View.GONE, View.GONE, View.GONE, View.GONE, View.GONE, "answer", "")
-                        BotCreator.TypeAnswer.ANIMATION -> bindView(View.GONE, View.VISIBLE,View.GONE, View.GONE, View.GONE, View.GONE, View.GONE, View.GONE, View.GONE, "url", "")
-                        BotCreator.TypeAnswer.AUDIO -> bindView(View.GONE, View.GONE, View.VISIBLE, View.GONE, View.GONE, View.GONE, View.GONE, View.GONE, View.GONE, "", "Add audio")
-                        BotCreator.TypeAnswer.DOCUMENT -> bindView(View.GONE, View.GONE, View.VISIBLE, View.GONE, View.GONE, View.GONE, View.GONE, View.GONE, View.GONE, "", "Add document")
-                        BotCreator.TypeAnswer.PHOTO -> bindView(View.GONE, View.GONE, View.VISIBLE, View.GONE, View.GONE, View.GONE, View.GONE, View.GONE, View.GONE, "", "Add image")
-                        BotCreator.TypeAnswer.VIDEO -> bindView(View.GONE, View.GONE, View.VISIBLE, View.GONE, View.GONE, View.GONE, View.GONE, View.GONE, View.GONE, "", "Add video")
-                        BotCreator.TypeAnswer.VOICE -> bindView(View.GONE, View.GONE, View.VISIBLE, View.GONE, View.GONE, View.GONE, View.GONE, View.GONE, View.GONE, "", "Add voice")
-                        BotCreator.TypeAnswer.CONTACT -> bindView(View.GONE, View.GONE, View.GONE, View.VISIBLE, View.VISIBLE, View.GONE, View.GONE, View.GONE, View.GONE, "", "")
-                        BotCreator.TypeAnswer.LOCATION -> bindView(View.GONE, View.GONE, View.GONE, View.GONE, View.GONE, View.VISIBLE, View.VISIBLE, View.GONE, View.GONE, "", "")
-                        BotCreator.TypeAnswer.POLL -> bindView(View.VISIBLE, View.VISIBLE, View.GONE, View.GONE, View.GONE, View.GONE, View.GONE, View.GONE, View.GONE, "answers (split by \";\")", "")
-                        BotCreator.TypeAnswer.VENUE -> bindView(View.GONE, View.GONE, View.GONE, View.GONE, View.GONE, View.VISIBLE, View.VISIBLE, View.VISIBLE, View.VISIBLE, "", "")
-                        BotCreator.TypeAnswer.VIDEO_NOTE -> bindView(View.GONE, View.GONE, View.VISIBLE, View.GONE, View.GONE, View.GONE, View.GONE, View.GONE, View.GONE, "", "Add video")
+                        BotCreator.TypeAnswer.TEXT -> bindView(View.GONE, View.VISIBLE,View.GONE, View.GONE,
+                            View.GONE, View.GONE, View.GONE, View.GONE, View.GONE, "answer", "")
+                        BotCreator.TypeAnswer.ANIMATION -> bindView(View.GONE, View.VISIBLE,View.GONE, View.GONE,
+                            View.GONE, View.GONE, View.GONE, View.GONE, View.GONE, "url", "")
+                        BotCreator.TypeAnswer.AUDIO -> bindView(View.GONE, View.GONE, View.VISIBLE, View.GONE,
+                            View.GONE, View.GONE, View.GONE, View.GONE, View.GONE, "", "Add audio")
+                        BotCreator.TypeAnswer.DOCUMENT -> bindView(View.GONE, View.GONE, View.VISIBLE, View.GONE,
+                            View.GONE, View.GONE, View.GONE, View.GONE, View.GONE, "", "Add document")
+                        BotCreator.TypeAnswer.PHOTO -> bindView(View.GONE, View.GONE, View.VISIBLE, View.GONE,
+                            View.GONE, View.GONE, View.GONE, View.GONE, View.GONE, "", "Add image")
+                        BotCreator.TypeAnswer.VIDEO -> bindView(View.GONE, View.GONE, View.VISIBLE, View.GONE,
+                            View.GONE, View.GONE, View.GONE, View.GONE, View.GONE, "", "Add video")
+                        BotCreator.TypeAnswer.VOICE -> bindView(View.GONE, View.GONE, View.VISIBLE, View.GONE,
+                            View.GONE, View.GONE, View.GONE, View.GONE, View.GONE, "", "Add voice")
+                        BotCreator.TypeAnswer.CONTACT -> bindView(View.GONE, View.GONE, View.GONE, View.VISIBLE,
+                            View.VISIBLE, View.GONE, View.GONE, View.GONE, View.GONE, "", "")
+                        BotCreator.TypeAnswer.LOCATION -> bindView(View.GONE, View.GONE, View.GONE, View.GONE,
+                            View.GONE, View.VISIBLE, View.VISIBLE, View.GONE, View.GONE, "", "")
+                        BotCreator.TypeAnswer.POLL -> bindView(View.VISIBLE, View.VISIBLE, View.GONE, View.GONE,
+                            View.GONE, View.GONE, View.GONE, View.GONE, View.GONE, "answers (split by \";\")", "")
+                        BotCreator.TypeAnswer.VENUE -> bindView(View.GONE, View.GONE, View.GONE, View.GONE, View.GONE,
+                            View.VISIBLE, View.VISIBLE, View.VISIBLE, View.VISIBLE, "", "")
+                        BotCreator.TypeAnswer.VIDEO_NOTE -> bindView(View.GONE, View.GONE, View.VISIBLE, View.GONE,
+                            View.GONE, View.GONE, View.GONE, View.GONE, View.GONE, "", "Add video")
                     }
                 }
 
@@ -430,7 +473,7 @@ class ModificationCommandFragment : Fragment(), PickiTCallbacks {
                     inputTitleV: Int,
                     inputAnswerH: String,
                     btAddSrcT: String
-                ) = with(binding){
+                ) = with(binding!!){
                     btCreateCommand.isEnabled = true
                     inputQuestion.visibility = inputQuestionV
                     inputAnswer.visibility = inputAnswerV
@@ -448,7 +491,7 @@ class ModificationCommandFragment : Fragment(), PickiTCallbacks {
 
                 private fun notImplemented(){
                     Toast.makeText(requireContext(), "Not implemented", Toast.LENGTH_SHORT).show()
-                    binding.apply{
+                    binding?.apply{
                         btCreateCommand.isEnabled = false
                         btCreateCommand.setOnClickListener(null)
                         inputQuestion.visibility = View.GONE
@@ -464,7 +507,7 @@ class ModificationCommandFragment : Fragment(), PickiTCallbacks {
                 }
 
                 override fun onNothingSelected(p0: AdapterView<*>?) {
-                    binding.apply{
+                    binding?.apply{
                         btCreateCommand.isEnabled = false
                         btCreateCommand.setOnClickListener(null)
                         inputQuestion.visibility = View.GONE
@@ -495,7 +538,7 @@ class ModificationCommandFragment : Fragment(), PickiTCallbacks {
         inputTitleV: Int,
         inputAnswerH: String,
         btAddSrcT: String
-    ) = with(binding){
+    ) = with(binding!!){
         btCreateCommand.isEnabled = true
         inputQuestion.visibility = inputQuestionV
         inputAnswer.visibility = inputAnswerV
@@ -528,15 +571,12 @@ class ModificationCommandFragment : Fragment(), PickiTCallbacks {
     }
 
     override fun PickiTonUriReturned() {
-
     }
 
     override fun PickiTonStartListener() {
-
     }
 
     override fun PickiTonProgressUpdate(progress: Int) {
-
     }
 
     override fun PickiTonCompleteListener(
@@ -548,7 +588,7 @@ class ModificationCommandFragment : Fragment(), PickiTCallbacks {
     ) {
         if(wasSuccessful){
             uriSrc = path
-            binding.btAddSrc.text = path.toString().substring(path!!.lastIndexOf('/') + 1)
+            binding?.btAddSrc?.text = uriSrc.toString().substring(uriSrc.toString().lastIndexOf('/') + 1)
         } else
             Toast.makeText(requireContext(), "Problem with pick file", Toast.LENGTH_SHORT).show()
     }
@@ -558,11 +598,11 @@ class ModificationCommandFragment : Fragment(), PickiTCallbacks {
         wasSuccessful: Boolean,
         Reason: String?
     ) {
-
     }
 
     override fun onDestroyView() {
         pickiT = null
+        binding = null
         super.onDestroyView()
     }
 

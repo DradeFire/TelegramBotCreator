@@ -29,8 +29,7 @@ import com.example.telegrambotcreator.model.creator.helper.saveBot
 import com.example.telegrambotcreator.model.creator.model.*
 import com.example.telegrambotcreator.model.datebase.model.BotDbModel
 import com.example.telegrambotcreator.service.BotService
-import com.example.telegrambotcreator.view.cicerone.App
-import com.example.telegrambotcreator.view.cicerone.screens.Screens
+import com.example.telegrambotcreator.view.screens.Screens
 import com.example.telegrambotcreator.view.fragments.information_bot.adapter.CommandsAdapter
 import com.example.telegrambotcreator.viewmodel.TelegramViewModel
 import com.google.gson.Gson
@@ -38,31 +37,38 @@ import kotlinx.coroutines.*
 
 class InformationBotFragment : Fragment() {
 
-    private lateinit var binding: FragmentInformationBotBinding
-    private lateinit var viewModel: TelegramViewModel
+    private var binding: FragmentInformationBotBinding? = null
+    private var viewModel: TelegramViewModel? = null
     private lateinit var curBot: BotDbModel
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View {
-        bindStartVars(inflater, container)
+    ): View? {
+        FragmentInformationBotBinding.inflate(inflater, container, false).also {
+            binding = it
+            return binding?.root
+        }
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        bindStartVars()
         bindView()
         bindButtons()
         bindRcView()
         bindSwitch()
-
-        return binding.root
     }
 
     private fun bindSwitch() {
             val isRun = isServiceRunning(BotService::class.java, requireActivity())
             if(!isRun)
                 requireActivity().getSharedPreferences("shared", Context.MODE_PRIVATE).edit().putString("name_bot", "").apply()
-        binding.switch2.isChecked = isRun
-        binding.switch2.visibility = View.VISIBLE
+        binding?.switch2?.isChecked = isRun
+        binding?.switch2?.visibility = View.VISIBLE
         val serviceClass = BotService::class.java
-        binding.switch2.setOnCheckedChangeListener { _, isEnabled ->
+        binding?.switch2?.setOnCheckedChangeListener { _, isEnabled ->
             when(isEnabled){
                 true -> {
                     if(!isServiceRunning(serviceClass, requireActivity())){
@@ -96,17 +102,16 @@ class InformationBotFragment : Fragment() {
         requireContext().startService(intent)
     }
 
-    private fun bindStartVars(inflater: LayoutInflater, container: ViewGroup?) {
-        binding = FragmentInformationBotBinding.inflate(inflater, container, false)
+    private fun bindStartVars() {
         viewModel = ViewModelProvider(requireActivity())[TelegramViewModel::class.java]
-        viewModel.chosenBot.also {
+        viewModel?.chosenBot?.also {
             curBot = it.saveBot()
         }
-        viewModel.deleteTrigger.observe(viewLifecycleOwner){
+        viewModel?.deleteTrigger?.observe(viewLifecycleOwner){
             it?.let {
-                viewModel.deleteTrigger.call()
+                viewModel?.deleteTrigger?.call()
                 Toast.makeText(requireContext(), "Bot deleted", Toast.LENGTH_SHORT).show()
-                App.INSTANCE.router.exit()
+                viewModel?.router?.exit()
             }
         }
         val getBot = requireActivity().getSharedPreferences("shared", Context.MODE_PRIVATE).getString("name_bot", "")
@@ -117,7 +122,7 @@ class InformationBotFragment : Fragment() {
     }
 
     @SuppressLint("SetTextI18n")
-    private fun bindView() = with(binding){
+    private fun bindView() = with(binding!!){
         txname.text = curBot.nameBot
         txdescription.text = curBot.description
         txcountCommands.text = "Count of commands: ${curBot.countOfCommands}"
@@ -140,10 +145,10 @@ class InformationBotFragment : Fragment() {
             } }
 
             withContext(Dispatchers.Main){
-                binding.rcCommands.apply {
+                binding?.rcCommands?.apply {
                     layoutManager = LinearLayoutManager(requireContext())
-                    adapter = CommandsAdapter(commands.await(), viewModel)
-                    binding.progressInformationBot.visibility = View.GONE
+                    adapter = CommandsAdapter(commands.await(), viewModel!!)
+                    binding?.progressInformationBot?.visibility = View.GONE
                     visibility = View.VISIBLE
                 }
             }
@@ -151,12 +156,12 @@ class InformationBotFragment : Fragment() {
         }
     }
 
-    private fun bindButtons() = with(binding){
+    private fun bindButtons() = with(binding!!){
         btAddCommand.setOnClickListener {
-            App.INSTANCE.router.navigateTo(Screens.CreatorCommandFrag())
+            viewModel?.router?.navigateTo(Screens.CreatorCommandFrag())
         }
         btModificationBot.setOnClickListener {
-            App.INSTANCE.router.navigateTo(Screens.ModificationBotFrag())
+            viewModel?.router?.navigateTo(Screens.ModificationBotFrag())
         }
         btDeleteBot.setOnClickListener {
             if(isServiceRunning(BotService::class.java, requireActivity()))
@@ -165,11 +170,17 @@ class InformationBotFragment : Fragment() {
                 AlertDialog.Builder(requireContext())
                     .setTitle("Delete this bot?")
                     .setPositiveButton("Yes") { _, _ ->
-                        viewModel.deleteBot(curBot)
+                        viewModel?.deleteBot(curBot)
                     }
                     .setNegativeButton("No") { _, _ -> }
                     .show()
         }
+    }
+
+    override fun onDestroyView() {
+        binding = null
+        viewModel = null
+        super.onDestroyView()
     }
 
 }

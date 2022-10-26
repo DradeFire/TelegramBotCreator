@@ -11,26 +11,40 @@ import com.example.telegrambotcreator.consts.Consts.TEST_API_TG_TOKEN
 import com.example.telegrambotcreator.databinding.FragmentCreatorBotBinding
 import com.example.telegrambotcreator.model.creator.helper.saveBot
 import com.example.telegrambotcreator.model.repository.Repository
-import com.example.telegrambotcreator.view.cicerone.App
 import com.example.telegrambotcreator.viewmodel.TelegramViewModel
 
 class CreatorBotFragment : Fragment() {
 
-    private lateinit var binding: FragmentCreatorBotBinding
-    private lateinit var viewModel: TelegramViewModel
+    private var binding: FragmentCreatorBotBinding? = null
+    private var viewModel: TelegramViewModel? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View {
-        initStartVars(inflater, container)
-        bindButtons()
+    ): View? {
+        binding = FragmentCreatorBotBinding.inflate(inflater, container, false)
+        return binding?.root
+    }
 
-        return binding.root
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        initStartVars()
+        bindObservers()
+        bindButtons()
+    }
+
+    private fun bindObservers() {
+        viewModel?.addTrigger?.observe(viewLifecycleOwner){
+            it?.let {
+                viewModel?.addTrigger?.call()
+                Toast.makeText(requireContext(), "Bot created", Toast.LENGTH_SHORT).show()
+                viewModel?.router?.exit()
+            }
+        }
     }
 
     private fun bindButtons() {
-        binding.btCreateBot.setOnClickListener {
+        binding?.btCreateBot?.setOnClickListener {
             bindInput()
         }
     }
@@ -39,10 +53,10 @@ class CreatorBotFragment : Fragment() {
         var nameOfBot: String
         var descriptionOfBot: String
         var token: String
-        with(binding.inputNameOfBot.text){
+        with(binding?.inputNameOfBot?.text.toString()){
             when{
                 isNotEmpty() && isNotBlank() -> {
-                    nameOfBot = this.toString()
+                    nameOfBot = this
                 }
                 else -> {
                     Toast.makeText(context, "Empty fields", Toast.LENGTH_SHORT).show()
@@ -50,10 +64,10 @@ class CreatorBotFragment : Fragment() {
                 }
             }
         }
-        with(binding.inputDescriptionOfCommand.text){
+        with(binding?.inputDescriptionOfCommand?.text.toString()){
             when{
                 isNotEmpty() && isNotBlank() -> {
-                    descriptionOfBot = this.toString()
+                    descriptionOfBot = this
                 }
                 else -> {
                     Toast.makeText(context, "Empty fields", Toast.LENGTH_SHORT).show()
@@ -61,10 +75,10 @@ class CreatorBotFragment : Fragment() {
                 }
             }
         }
-        with(binding.inputTokenOfBot.text){
+        with(binding?.inputTokenOfBot?.text.toString()){
             token = when{
                 isNotEmpty() && isNotBlank() -> {
-                    this.toString()
+                    this
                 }
                 else -> {
                     TEST_API_TG_TOKEN
@@ -79,8 +93,9 @@ class CreatorBotFragment : Fragment() {
                     && nameOfBot.isNotBlank()
                     && descriptionOfBot.isNotBlank()
                     && token.isNotBlank()-> {
-                viewModel.chosenBot = Repository().getBotCreator().createBaseBot(token = token, name = nameOfBot, description = descriptionOfBot)
-                viewModel.addBot(viewModel.chosenBot.saveBot())
+                viewModel?.chosenBot = Repository().getBotCreator()
+                    .createBaseBot(token = token, name = nameOfBot, description = descriptionOfBot)
+                viewModel?.addBot(viewModel?.chosenBot?.saveBot())
             }
             else -> {
                 Toast.makeText(context, "Empty fields", Toast.LENGTH_SHORT).show()
@@ -88,16 +103,14 @@ class CreatorBotFragment : Fragment() {
         }
     }
 
-    private fun initStartVars(inflater: LayoutInflater, container: ViewGroup?) {
-        binding = FragmentCreatorBotBinding.inflate(inflater, container, false)
+    private fun initStartVars() {
         viewModel = ViewModelProvider(requireActivity())[TelegramViewModel::class.java]
-        viewModel.addTrigger.observe(viewLifecycleOwner){
-            it?.let {
-                viewModel.addTrigger.call()
-                Toast.makeText(requireContext(), "Bot created", Toast.LENGTH_SHORT).show()
-                App.INSTANCE.router.exit()
-            }
-        }
+    }
+
+    override fun onDestroyView() {
+        binding = null
+        viewModel = null
+        super.onDestroyView()
     }
 
 }

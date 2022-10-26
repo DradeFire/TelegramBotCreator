@@ -11,51 +11,56 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.telegrambotcreator.databinding.FragmentListOfBotsBinding
-import com.example.telegrambotcreator.view.cicerone.App
-import com.example.telegrambotcreator.view.cicerone.screens.Screens
+import com.example.telegrambotcreator.view.screens.Screens
 import com.example.telegrambotcreator.view.fragments.list_bots.adapter.ListOfBotsAdapter
 import com.example.telegrambotcreator.viewmodel.TelegramViewModel
 
 
 class ListOfBotsFragment : Fragment() {
 
-    private lateinit var binding: FragmentListOfBotsBinding
-    private lateinit var viewModel: TelegramViewModel
+    private var binding: FragmentListOfBotsBinding? = null
+    private var viewModel: TelegramViewModel? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View {
-        initStartVars(inflater, container)
+    ): View? {
+        FragmentListOfBotsBinding.inflate(inflater, container, false).also {
+            binding = it
+            return binding?.root
+        }
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        initStartVars()
         initRcView()
         bindButtons()
 //        openGalleryForSomething("image/*")
-
-        return binding.root
     }
 
-    private fun initStartVars(inflater: LayoutInflater, container: ViewGroup?) {
-        binding = FragmentListOfBotsBinding.inflate(inflater, container, false)
+    private fun initStartVars() {
         viewModel = ViewModelProvider(requireActivity())[TelegramViewModel::class.java]
     }
 
-    private fun bindButtons() = with(binding) {
+    private fun bindButtons() = with(binding!!) {
         btCreateBot.setOnClickListener {
-            App.INSTANCE.router.navigateTo(Screens.CreatorBotFrag())
+            viewModel?.router?.navigateTo(Screens.CreatorBotFrag())
         }
     }
 
     private fun initRcView() {
-        viewModel.getAllBots()
-        viewModel.allBots.observe(viewLifecycleOwner) { list ->
+        viewModel?.getAllBots()
+        viewModel?.allBots?.observe(viewLifecycleOwner) { list ->
             list?.let {
-                binding.rcBots.apply {
+                binding?.rcBots?.apply {
                     layoutManager = LinearLayoutManager(requireContext())
-                    adapter = ListOfBotsAdapter(list, viewModel)
-                    binding.progressListOfBots.visibility = View.GONE
+                    adapter = ListOfBotsAdapter(list, viewModel!!)
+                    binding?.progressListOfBots?.visibility = View.GONE
                     visibility = View.VISIBLE
                 }
-                viewModel.allBots.call()
+                viewModel?.allBots?.call()
             }
 
         }
@@ -72,9 +77,10 @@ class ListOfBotsFragment : Fragment() {
 //        if (resultCode == Activity.RESULT_OK && requestCode == Consts.REQUEST_CODE){
 //            verifyStoragePermissions()
 //
-//            val f = File(getUriRealPath(requireContext(), data!!.data!!)) //File((data!!.data!!.path!!.replace("content", "file").substring(10)))
+//            val f = File(getUriRealPath(requireContext(), data!!.data!!))
+// File((data!!.data!!.path!!.replace("content", "file").substring(10)))
 //
-////            val uri = Uri.Builder().path(f).build()
+//            val uri = Uri.Builder().path(f).build()
 //            Glide.with(requireContext())
 //                .load(f)
 //                .into(binding.imTest)
@@ -101,6 +107,12 @@ class ListOfBotsFragment : Fragment() {
                 REQUEST_EXTERNAL_STORAGE
             )
         }
+    }
+
+    override fun onDestroyView() {
+        binding = null
+        viewModel = null
+        super.onDestroyView()
     }
 
 }

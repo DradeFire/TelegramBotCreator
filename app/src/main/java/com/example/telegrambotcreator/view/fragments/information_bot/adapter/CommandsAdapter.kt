@@ -9,8 +9,7 @@ import com.example.telegrambotcreator.databinding.ItemListOfCommandsBinding
 import com.example.telegrambotcreator.model.creator.BotCreator
 import com.example.telegrambotcreator.model.creator.helper.convertToCallbackType
 import com.example.telegrambotcreator.model.creator.model.*
-import com.example.telegrambotcreator.view.cicerone.App
-import com.example.telegrambotcreator.view.cicerone.screens.Screens
+import com.example.telegrambotcreator.view.screens.Screens
 import com.example.telegrambotcreator.viewmodel.TelegramViewModel
 
 class CommandsAdapter(outCommands: List<BaseTgContainer>, private val viewModel: TelegramViewModel): RecyclerView.Adapter<CommandsAdapter.ViewHolder>() {
@@ -72,7 +71,7 @@ class CommandsAdapter(outCommands: List<BaseTgContainer>, private val viewModel:
             btOpenCommand.setOnClickListener {
                 viewModel.commandsDeque.push(baseTgContainer)
                 viewModel.choosenCommand++
-                App.INSTANCE.router.navigateTo(Screens.InformationCommandFrag())
+                viewModel.router?.navigateTo(Screens.InformationCommandFrag())
             }
 
         }

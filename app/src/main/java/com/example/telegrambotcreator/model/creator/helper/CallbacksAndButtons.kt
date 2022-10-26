@@ -13,7 +13,7 @@ import com.github.kotlintelegrambot.entities.keyboard.KeyboardButton
 
     fun BotCreator.addInlineButtonToMessage(
         textButton: String,
-        fatherId: Int,
+        fatherId: Int?,
         typeAnswer: BotCreator.TypeAnswer,
         answerText: String? = null,
         answerTGFile: TelegramFile? = null,
@@ -33,7 +33,7 @@ import com.github.kotlintelegrambot.entities.keyboard.KeyboardButton
             is TelegramFile.ByFileId -> answerTGFile.fileId
             else -> null
         }
-        val father = findFather(fatherId)
+        val father = findFather(fatherId ?: -1)
         father?.let { baseTgContainer ->
             val obj = CallBackTG(BotCreator.TypeCallback.INLINE.convertFromCallbackType(), textButton, createNewID(callbackIDs), fatherId, typeAnswer.convertFromType(), answerText, answerTGFileIn, answerTGFile?.convertFromTgType(), lat, lon, question, pollList, title, address, phoneNumber, firstName)
 
@@ -46,7 +46,7 @@ import com.github.kotlintelegrambot.entities.keyboard.KeyboardButton
     }
     fun BotCreator.addReplyButtonToMessage(
         textButton: String,
-        fatherId: Int,
+        fatherId: Int?,
         typeAnswer: BotCreator.TypeAnswer,
         answerText: String? = null,
         answerTGFile: TelegramFile? = null,
@@ -66,7 +66,7 @@ import com.github.kotlintelegrambot.entities.keyboard.KeyboardButton
             is TelegramFile.ByFileId -> answerTGFile.fileId
             else -> null
         }
-        val father = findFather(fatherId)
+        val father = findFather(fatherId ?: -1)
         father?.let { baseTgContainer ->
             val obj = CallBackTG(BotCreator.TypeCallback.REPLY.convertFromCallbackType(), textButton, createNewID(callbackIDs), fatherId, typeAnswer.convertFromType(), answerText, answerTGFileIn, answerTGFile?.convertFromTgType(), lat, lon, question, pollList, title, address, phoneNumber, firstName)
 

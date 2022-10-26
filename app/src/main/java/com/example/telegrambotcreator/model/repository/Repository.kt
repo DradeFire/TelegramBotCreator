@@ -6,6 +6,7 @@ import com.example.telegrambotcreator.model.datebase.database.BotDatabase
 import com.example.telegrambotcreator.model.datebase.model.BotDbModel
 import io.reactivex.rxjava3.core.Completable
 import io.reactivex.rxjava3.core.Observable
+import java.lang.Exception
 
 class Repository {
 
@@ -13,9 +14,19 @@ class Repository {
 
     fun getDatabase(context: Context): BotDatabase = BotDatabase.getInstance(context)
 
-    fun addBot(database: BotDatabase, bot: BotDbModel): Completable = database.dao().addBot(bot)
+    fun addBot(database: BotDatabase, bot: BotDbModel?): Completable {
+        bot?.let {
+            return database.dao().addBot(bot)
+        }
+        throw Exception()
+    }
 
-    fun updateBot(database: BotDatabase, bot: BotDbModel): Completable = database.dao().updateBot(bot)
+    fun updateBot(database: BotDatabase, bot: BotDbModel?): Completable {
+        bot?.let {
+            return database.dao().updateBot(bot)
+        }
+        throw Exception()
+    }
 
     fun deleteBot(database: BotDatabase, bot: BotDbModel): Completable = database.dao().deleteBot(bot)
 

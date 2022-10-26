@@ -16,73 +16,79 @@ import com.bumptech.glide.Glide
 import com.example.telegrambotcreator.consts.Consts.isServiceRunning
 import com.example.telegrambotcreator.databinding.FragmentInformationCommandBinding
 import com.example.telegrambotcreator.model.creator.BotCreator
+import com.example.telegrambotcreator.model.creator.helper.*
 import com.example.telegrambotcreator.model.creator.helper.convertToCallbackType
 import com.example.telegrambotcreator.model.creator.helper.convertToType
 import com.example.telegrambotcreator.model.creator.helper.findFather
-import com.example.telegrambotcreator.model.creator.helper.saveBot
 import com.example.telegrambotcreator.model.creator.model.*
 import com.example.telegrambotcreator.service.BotService
-import com.example.telegrambotcreator.view.cicerone.App
-import com.example.telegrambotcreator.view.cicerone.screens.Screens
+import com.example.telegrambotcreator.view.screens.Screens
 import com.example.telegrambotcreator.view.fragments.information_bot.adapter.CommandsAdapter
 import com.example.telegrambotcreator.viewmodel.TelegramViewModel
 import java.io.File
 
 @Suppress("NULLABILITY_MISMATCH_BASED_ON_JAVA_ANNOTATIONS")
 class InformationCommandFragment : Fragment() {
-    private lateinit var binding: FragmentInformationCommandBinding
-    private lateinit var viewModel: TelegramViewModel
+    private var binding: FragmentInformationCommandBinding? = null
+    private var viewModel: TelegramViewModel? = null
     private lateinit var curCommand: BaseTgContainer
     private var mediaPlayer: MediaPlayer? = null
     private var isPlaying = false
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
-        initStartVars(inflater, container)
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+        FragmentInformationCommandBinding.inflate(inflater, container, false).also {
+            binding = it
+            return binding?.root
+        }
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        initStartVars()
         bindViews()
         bindButtons()
         bindRcView()
-
-        return binding.root
     }
 
     private fun bindButtons() {
-        binding.btAddCommand.setOnClickListener {
-            viewModel.isCreatingCallbackButton = false
-            App.INSTANCE.router.navigateTo(Screens.CreatorCommandFrag())
+        binding?.btAddCommand?.setOnClickListener {
+            viewModel?.isCreatingCallbackButton = false
+            viewModel?.router?.navigateTo(Screens.CreatorCommandFrag())
         }
-        binding.btAddButton.setOnClickListener {
-            viewModel.isCreatingCallbackButton = true
-            App.INSTANCE.router.navigateTo(Screens.CreatorCommandFrag())
+        binding?.btAddButton?.setOnClickListener {
+            viewModel?.isCreatingCallbackButton = true
+            viewModel?.router?.navigateTo(Screens.CreatorCommandFrag())
         }
-        binding.btModificationCommand.setOnClickListener {
+        binding?.btModificationCommand?.setOnClickListener {
             when(curCommand){
                 is CallBackTG -> {
-                    viewModel.isCreatingCallbackButton = true
-                    App.INSTANCE.router.navigateTo(Screens.ModificationCommandFrag())
+                    viewModel?.isCreatingCallbackButton = true
+                    viewModel?.router?.navigateTo(Screens.ModificationCommandFrag())
                 }
                 else -> {
-                    viewModel.isCreatingCallbackButton = false
-                    App.INSTANCE.router.navigateTo(Screens.ModificationCommandFrag())
+                    viewModel?.isCreatingCallbackButton = false
+                    viewModel?.router?.navigateTo(Screens.ModificationCommandFrag())
                 }
             }
         }
-        binding.btDeleteBot.setOnClickListener {
+        binding?.btDeleteBot?.setOnClickListener {
             if(isServiceRunning(BotService::class.java, requireActivity()))
                 Toast.makeText(requireContext(), "Bot is running, stop it!", Toast.LENGTH_SHORT).show()
             else
                 AlertDialog.Builder(requireContext())
                     .setTitle("Delete this command?")
                     .setPositiveButton("Yes") { _, _ ->
-                        viewModel.apply {
+                        viewModel?.apply {
                             choosenCommand--
                             commandsDeque.pop()
                             if (choosenCommand > 0){
                                 commandsDeque.pop()
-                                commandsDeque.push(viewModel.chosenBot.findFather(curCommand.fatherId!!))
+                                commandsDeque.push(viewModel?.chosenBot?.findFather(curCommand.fatherId!!))
                             }
                         }
-                        viewModel.chosenBot.deleteCommand(curCommand.id, curCommand.fatherId)
-                        viewModel.updateBot(viewModel.chosenBot.saveBot())
+                        viewModel?.chosenBot?.deleteCommand(curCommand.id, curCommand.fatherId)
+                        viewModel?.updateBot(viewModel?.chosenBot?.saveBot())
                     }
                     .setNegativeButton("No") { _, _ -> }
                     .show()
@@ -105,16 +111,16 @@ class InformationCommandFragment : Fragment() {
             curCommand.inCallBack?.let { addAll(it) }
         }
 
-        binding.rcCommands.apply {
+        binding?.rcCommands?.apply {
             layoutManager = LinearLayoutManager(requireContext())
-            adapter = CommandsAdapter(commands, viewModel)
-            binding.progressInformationCommand.visibility = View.GONE
-            binding.rcCommands.visibility = View.VISIBLE
+            adapter = CommandsAdapter(commands, viewModel!!)
+            binding?.progressInformationCommand?.visibility = View.GONE
+            binding?.rcCommands?.visibility = View.VISIBLE
         }
     }
 
     @SuppressLint("SetTextI18n")
-    private fun bindViews() = with(binding){
+    private fun bindViews() = with(binding!!){
         txTypeOfListener.text = "Type of command: " + when(curCommand){
             is CommandTG -> {
                 "COMMAND"
@@ -217,7 +223,8 @@ class InformationCommandFragment : Fragment() {
         }
         when(curCommand.typeAnswer.convertToType()){
             BotCreator.TypeAnswer.TEXT -> txAnswer.text = "\"${curCommand.answerText}\""
-            BotCreator.TypeAnswer.ANIMATION -> txAnswer.text = curCommand.answerTGFile!!.substring(curCommand.answerTGFile!!.lastIndexOf('/') + 1)
+            BotCreator.TypeAnswer.ANIMATION ->
+                txAnswer.text = curCommand.answerTGFile!!.substring(curCommand.answerTGFile!!.lastIndexOf('/') + 1)
             BotCreator.TypeAnswer.AUDIO -> {
                 txAnswer.visibility = View.GONE
                 btAudioPlay.visibility = View.VISIBLE
@@ -238,7 +245,8 @@ class InformationCommandFragment : Fragment() {
                     }
                 }
             }
-            BotCreator.TypeAnswer.DOCUMENT -> txAnswer.text = curCommand.answerTGFile!!.substring(curCommand.answerTGFile!!.lastIndexOf('/') + 1)
+            BotCreator.TypeAnswer.DOCUMENT ->
+                txAnswer.text = curCommand.answerTGFile!!.substring(curCommand.answerTGFile!!.lastIndexOf('/') + 1)
             BotCreator.TypeAnswer.PHOTO -> {
                 txAnswer.visibility = View.GONE
                 imageAnswer.visibility = View.VISIBLE
@@ -251,7 +259,7 @@ class InformationCommandFragment : Fragment() {
                 txAnswer.visibility = View.GONE
                 btAudioPlay.visibility = View.VISIBLE
                 btAudioPlay.setOnClickListener {
-                    App.INSTANCE.router.navigateTo(Screens.CheckVideoFrag())
+                    viewModel?.router?.navigateTo(Screens.CheckVideoFrag())
                 }
             }
             BotCreator.TypeAnswer.VOICE -> {
@@ -297,7 +305,7 @@ class InformationCommandFragment : Fragment() {
                 txAnswer.visibility = View.GONE
                 btAudioPlay.visibility = View.VISIBLE
                 btAudioPlay.setOnClickListener {
-                    App.INSTANCE.router.navigateTo(Screens.CheckVideoFrag())
+                    viewModel?.router?.navigateTo(Screens.CheckVideoFrag())
                 }
             }
         }
@@ -323,21 +331,23 @@ class InformationCommandFragment : Fragment() {
         return countC
     }
 
-    private fun initStartVars(inflater: LayoutInflater, container: ViewGroup?) {
-        binding = FragmentInformationCommandBinding.inflate(inflater, container, false)
+    private fun initStartVars() {
         viewModel = ViewModelProvider(requireActivity())[TelegramViewModel::class.java]
-        curCommand = viewModel.commandsDeque.peek()
-        viewModel.updateTrigger.observe(viewLifecycleOwner){
+        curCommand = viewModel?.commandsDeque?.peek()!!
+        viewModel?.updateTrigger?.observe(viewLifecycleOwner){
             it?.let {
-                viewModel.updateTrigger.call()
+                viewModel?.updateTrigger?.call()
                 Toast.makeText(requireContext(), "Command deleted", Toast.LENGTH_SHORT).show()
-                App.INSTANCE.router.exit()
+                viewModel?.router?.exit()
             }
         }
     }
 
     override fun onDestroyView() {
         mediaPlayer?.stop()
+        mediaPlayer = null
+        binding = null
+        viewModel = null
         super.onDestroyView()
     }
 

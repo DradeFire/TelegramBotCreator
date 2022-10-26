@@ -81,7 +81,6 @@ class BotService: Service() {
             stopForeground(true)
         }
         catch (e: Exception) {
-
         }
         finally {
             super.onDestroy()

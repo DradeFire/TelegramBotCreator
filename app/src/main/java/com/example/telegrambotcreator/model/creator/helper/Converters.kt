@@ -3,7 +3,6 @@ package com.example.telegrambotcreator.model.creator.helper
 import com.example.telegrambotcreator.model.creator.BotCreator
 import com.github.kotlintelegrambot.entities.TelegramFile
 import java.io.File
-import java.net.URI
 
 // region Converters
 

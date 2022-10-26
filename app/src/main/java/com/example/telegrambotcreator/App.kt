@@ -1,4 +1,4 @@
-package com.example.telegrambotcreator.view.cicerone
+package com.example.telegrambotcreator
 
 import android.app.Application
 import com.github.terrakok.cicerone.Cicerone
