@@ -14,6 +14,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import com.example.telegrambotcreator.consts.Consts.isServiceRunning
+import com.example.telegrambotcreator.databinding.FragmentInformationBotBinding
 import com.example.telegrambotcreator.databinding.FragmentInformationCommandBinding
 import com.example.telegrambotcreator.model.creator.BotCreator
 import com.example.telegrambotcreator.model.creator.helper.*
@@ -22,36 +23,36 @@ import com.example.telegrambotcreator.model.creator.helper.convertToType
 import com.example.telegrambotcreator.model.creator.helper.findFather
 import com.example.telegrambotcreator.model.creator.model.*
 import com.example.telegrambotcreator.service.BotService
+import com.example.telegrambotcreator.view.base.BaseFragment
 import com.example.telegrambotcreator.view.screens.Screens
 import com.example.telegrambotcreator.view.fragments.information_bot.adapter.CommandsAdapter
 import com.example.telegrambotcreator.viewmodel.TelegramViewModel
 import java.io.File
 
-@Suppress("NULLABILITY_MISMATCH_BASED_ON_JAVA_ANNOTATIONS")
-class InformationCommandFragment : Fragment() {
-    private var binding: FragmentInformationCommandBinding? = null
-    private var viewModel: TelegramViewModel? = null
-    private lateinit var curCommand: BaseTgContainer
+class InformationCommandFragment : BaseFragment<FragmentInformationCommandBinding>() {
+
+    override val inflater: (LayoutInflater, ViewGroup?, Boolean) -> FragmentInformationCommandBinding =
+        FragmentInformationCommandBinding::inflate
+
+    private lateinit var curCommand: ListenerTgBase
     private var mediaPlayer: MediaPlayer? = null
     private var isPlaying = false
+    private var adapter: CommandsAdapter? = null
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        FragmentInformationCommandBinding.inflate(inflater, container, false).also {
-            binding = it
-            return binding?.root
+    override fun initStartValues() {
+        viewModel = ViewModelProvider(requireActivity())[TelegramViewModel::class.java]
+        curCommand = viewModel?.commandsDeque?.peek()!!
+        viewModel?.updateTrigger?.observe(viewLifecycleOwner) {
+            it?.let {
+                viewModel?.updateTrigger?.call()
+
+                Toast.makeText(requireContext(), "Command deleted", Toast.LENGTH_SHORT).show()
+                viewModel?.router?.exit()
+            }
         }
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-
-        initStartVars()
-        bindViews()
-        bindButtons()
-        bindRcView()
-    }
-
-    private fun bindButtons() {
+    override fun initButtons() {
         binding?.btAddCommand?.setOnClickListener {
             viewModel?.isCreatingCallbackButton = false
             viewModel?.router?.navigateTo(Screens.CreatorCommandFrag())
@@ -61,7 +62,7 @@ class InformationCommandFragment : Fragment() {
             viewModel?.router?.navigateTo(Screens.CreatorCommandFrag())
         }
         binding?.btModificationCommand?.setOnClickListener {
-            when(curCommand){
+            when (curCommand) {
                 is CallBackTG -> {
                     viewModel?.isCreatingCallbackButton = true
                     viewModel?.router?.navigateTo(Screens.ModificationCommandFrag())
@@ -73,8 +74,9 @@ class InformationCommandFragment : Fragment() {
             }
         }
         binding?.btDeleteBot?.setOnClickListener {
-            if(isServiceRunning(BotService::class.java, requireActivity()))
-                Toast.makeText(requireContext(), "Bot is running, stop it!", Toast.LENGTH_SHORT).show()
+            if (isServiceRunning(BotService::class.java, requireActivity()))
+                Toast.makeText(requireContext(), "Bot is running, stop it!", Toast.LENGTH_SHORT)
+                    .show()
             else
                 AlertDialog.Builder(requireContext())
                     .setTitle("Delete this command?")
@@ -82,7 +84,7 @@ class InformationCommandFragment : Fragment() {
                         viewModel?.apply {
                             choosenCommand--
                             commandsDeque.pop()
-                            if (choosenCommand > 0){
+                            if (choosenCommand > 0) {
                                 commandsDeque.pop()
                                 commandsDeque.push(viewModel?.chosenBot?.findFather(curCommand.fatherId!!))
                             }
@@ -95,33 +97,26 @@ class InformationCommandFragment : Fragment() {
         }
     }
 
-    private fun bindRcView() {
-        val commands = arrayListOf<BaseTgContainer>().apply {
-            curCommand.inCommand?.let { addAll(it) }
-            curCommand.inAnimation?.let { addAll(it) }
-            curCommand.inContact?.let { addAll(it) }
-            curCommand.inDocument?.let { addAll(it) }
-            curCommand.inLocation?.let { addAll(it) }
-            curCommand.inPhoto?.let { addAll(it) }
-            curCommand.inSticker?.let { addAll(it) }
-            curCommand.inText?.let { addAll(it) }
-            curCommand.inVideoNote?.let { addAll(it) }
-            curCommand.inVideo?.let { addAll(it) }
-            curCommand.inVoice?.let { addAll(it) }
+    override fun initRecyclerView() {
+        val commands = arrayListOf<ListenerTgBase>().apply {
+            curCommand.inListeners?.let { addAll(it) }
             curCommand.inCallBack?.let { addAll(it) }
         }
 
-        binding?.rcCommands?.apply {
-            layoutManager = LinearLayoutManager(requireContext())
+        if (adapter == null) {
             adapter = CommandsAdapter(commands, viewModel!!)
+            binding?.rcCommands?.apply {
+                layoutManager = LinearLayoutManager(requireContext())
+                this.adapter = adapter
+            }
             binding?.progressInformationCommand?.visibility = View.GONE
             binding?.rcCommands?.visibility = View.VISIBLE
         }
     }
 
     @SuppressLint("SetTextI18n")
-    private fun bindViews() = with(binding!!){
-        txTypeOfListener.text = "Type of command: " + when(curCommand){
+    override fun initUI() = with(binding!!) {
+        txTypeOfListener.text = "Type of command: " + when (curCommand) {
             is CommandTG -> {
                 "COMMAND"
             }
@@ -155,15 +150,15 @@ class InformationCommandFragment : Fragment() {
             is VoiceTG -> {
                 "VOICE"
             }
-            is VenueTG -> "VENUE"
             is CallBackTG -> {
-                when((curCommand as CallBackTG).typeCallback.convertToCallbackType()){
+                when ((curCommand as CallBackTG).typeCallback.convertToCallbackType()) {
                     BotCreator.TypeCallback.INLINE -> "INLINE BUTTON"
                     BotCreator.TypeCallback.REPLY -> "REPLY BUTTON"
                 }
             }
+            else -> ""
         }
-        txListener.text = when(curCommand){
+        txListener.text = when (curCommand) {
             is CommandTG -> {
                 "/${(curCommand as CommandTG).command}"
             }
@@ -177,9 +172,9 @@ class InformationCommandFragment : Fragment() {
                 "Document"
             }
             is LocationTG -> {
-                "lat: ${curCommand.lat}" +
+                "lat: ${curCommand.action?.lat}" +
                         "\n" +
-                        "lon: ${curCommand.lon}"
+                        "lon: ${curCommand.action?.lon}"
             }
             is PhotoTG -> {
                 "Photo"
@@ -200,14 +195,14 @@ class InformationCommandFragment : Fragment() {
                 "Voice"
             }
             is CallBackTG -> {
-                when((curCommand as CallBackTG).typeCallback.convertToCallbackType()){
+                when ((curCommand as CallBackTG).typeCallback.convertToCallbackType()) {
                     BotCreator.TypeCallback.INLINE -> "INLINE BUTTON"
                     BotCreator.TypeCallback.REPLY -> "REPLY BUTTON"
                 }
             }
-            is VenueTG -> "Venue"
+            else -> ""
         }
-        txTypeOfAnswer.text = when(curCommand.typeAnswer.convertToType()){
+        txTypeOfAnswer.text = when (curCommand.typeAnswer.convertToType()) {
             BotCreator.TypeAnswer.TEXT -> "Type answer: TEXT"
             BotCreator.TypeAnswer.PHOTO -> "Type answer: PHOTO"
             BotCreator.TypeAnswer.ANIMATION -> "Type of answer: ANIMATION"
@@ -221,16 +216,21 @@ class InformationCommandFragment : Fragment() {
             BotCreator.TypeAnswer.VENUE -> "Type of answer: VENUE"
             BotCreator.TypeAnswer.VIDEO_NOTE -> "Type of answer: VIDEO_NOTE"
         }
-        when(curCommand.typeAnswer.convertToType()){
-            BotCreator.TypeAnswer.TEXT -> txAnswer.text = "\"${curCommand.answerText}\""
+        when (curCommand.typeAnswer.convertToType()) {
+            BotCreator.TypeAnswer.TEXT -> txAnswer.text = "\"${curCommand.action?.answerText}\""
             BotCreator.TypeAnswer.ANIMATION ->
-                txAnswer.text = curCommand.answerTGFile!!.substring(curCommand.answerTGFile!!.lastIndexOf('/') + 1)
+                txAnswer.text = curCommand.action?.answerTGFile!!.substring(
+                    curCommand.action?.answerTGFile!!.lastIndexOf('/') + 1
+                )
             BotCreator.TypeAnswer.AUDIO -> {
                 txAnswer.visibility = View.GONE
                 btAudioPlay.visibility = View.VISIBLE
-                mediaPlayer = MediaPlayer.create(requireContext(), File(curCommand.answerTGFile).toUri())
+                mediaPlayer = MediaPlayer.create(
+                    requireContext(),
+                    File(curCommand.action?.answerTGFile).toUri()
+                )
                 btAudioPlay.setOnClickListener {
-                    when(isPlaying){
+                    when (isPlaying) {
                         true -> {
                             isPlaying = false
                             btAudioPlay.text = "Play"
@@ -246,11 +246,13 @@ class InformationCommandFragment : Fragment() {
                 }
             }
             BotCreator.TypeAnswer.DOCUMENT ->
-                txAnswer.text = curCommand.answerTGFile!!.substring(curCommand.answerTGFile!!.lastIndexOf('/') + 1)
+                txAnswer.text = curCommand.action?.answerTGFile!!.substring(
+                    curCommand.action?.answerTGFile!!.lastIndexOf('/') + 1
+                )
             BotCreator.TypeAnswer.PHOTO -> {
                 txAnswer.visibility = View.GONE
                 imageAnswer.visibility = View.VISIBLE
-                val photo = File(curCommand.answerTGFile)
+                val photo = File(curCommand.action?.answerTGFile)
                 Glide.with(requireContext())
                     .load(photo)
                     .into(imageAnswer)
@@ -265,9 +267,12 @@ class InformationCommandFragment : Fragment() {
             BotCreator.TypeAnswer.VOICE -> {
                 txAnswer.visibility = View.GONE
                 btAudioPlay.visibility = View.VISIBLE
-                mediaPlayer = MediaPlayer.create(requireContext(), File(curCommand.answerTGFile).toUri())
+                mediaPlayer = MediaPlayer.create(
+                    requireContext(),
+                    File(curCommand.action?.answerTGFile).toUri()
+                )
                 btAudioPlay.setOnClickListener {
-                    when(isPlaying){
+                    when (isPlaying) {
                         true -> {
                             isPlaying = false
                             btAudioPlay.text = "Play"
@@ -283,23 +288,23 @@ class InformationCommandFragment : Fragment() {
                 }
             }
             BotCreator.TypeAnswer.CONTACT -> {
-                txAnswer.text = "First name: ${curCommand.firstName}\n" +
-                        "Phone number: ${curCommand.phoneNumber}"
+                txAnswer.text = "First name: ${curCommand.action?.firstName}\n" +
+                        "Phone number: ${curCommand.action?.phoneNumber}"
             }
             BotCreator.TypeAnswer.LOCATION -> {
-                txAnswer.text = "Lat: ${curCommand.lat}\n" +
-                        "Lon: ${curCommand.lon}"
+                txAnswer.text = "Lat: ${curCommand.action?.lat}\n" +
+                        "Lon: ${curCommand.action?.lon}"
             }
             BotCreator.TypeAnswer.POLL -> {
-                var t = "Question: ${curCommand.question}\n"
-                curCommand.pollList?.forEach { v -> t += "\n- $v" }
-                txAnswer.text =  t
+                var t = "Question: ${curCommand.action?.question}\n"
+                curCommand.action?.pollList?.forEach { v -> t += "\n- $v" }
+                txAnswer.text = t
             }
             BotCreator.TypeAnswer.VENUE -> {
-                txAnswer.text = "Title: ${curCommand.title}\n" +
-                        "Address: ${curCommand.address}\n" +
-                        "Lat: ${curCommand.lat}\n" +
-                        "Lon: ${curCommand.lon}"
+                txAnswer.text = "Title: ${curCommand.action?.title}\n" +
+                        "Address: ${curCommand.action?.address}\n" +
+                        "Lat: ${curCommand.action?.lat}\n" +
+                        "Lon: ${curCommand.action?.lon}"
             }
             BotCreator.TypeAnswer.VIDEO_NOTE -> {
                 txAnswer.visibility = View.GONE
@@ -314,41 +319,18 @@ class InformationCommandFragment : Fragment() {
         txCountCommands.text = "Count of commands $countC"
     }
 
-    private fun computeCount(baseTgContainer: BaseTgContainer): Int {
+    private fun computeCount(listenerTgBase: ListenerTgBase): Int {
         var countC = 0
-        countC += if(baseTgContainer.inAnimation.isNullOrEmpty()) 0 else baseTgContainer.inAnimation!!.size
-        countC += if(baseTgContainer.inCommand.isNullOrEmpty()) 0 else baseTgContainer.inCommand!!.size
-        countC += if(baseTgContainer.inContact.isNullOrEmpty()) 0 else baseTgContainer.inContact!!.size
-        countC += if(baseTgContainer.inDocument.isNullOrEmpty()) 0 else baseTgContainer.inDocument!!.size
-        countC += if(baseTgContainer.inLocation.isNullOrEmpty()) 0 else baseTgContainer.inLocation!!.size
-        countC += if(baseTgContainer.inPhoto.isNullOrEmpty()) 0 else baseTgContainer.inPhoto!!.size
-        countC += if(baseTgContainer.inSticker.isNullOrEmpty()) 0 else baseTgContainer.inSticker!!.size
-        countC += if(baseTgContainer.inText.isNullOrEmpty()) 0 else baseTgContainer.inText!!.size
-        countC += if(baseTgContainer.inVideoNote.isNullOrEmpty()) 0 else baseTgContainer.inVideoNote!!.size
-        countC += if(baseTgContainer.inVideo.isNullOrEmpty()) 0 else baseTgContainer.inVideo!!.size
-        countC += if(baseTgContainer.inVoice.isNullOrEmpty()) 0 else baseTgContainer.inVoice!!.size
-        countC += if(baseTgContainer.inCallBack.isNullOrEmpty()) 0 else baseTgContainer.inCallBack!!.size
+        countC += if (listenerTgBase.inListeners.isNullOrEmpty()) 0 else listenerTgBase.inListeners!!.size
+        countC += if (listenerTgBase.inCallBack.isNullOrEmpty()) 0 else listenerTgBase.inCallBack!!.size
         return countC
     }
 
-    private fun initStartVars() {
-        viewModel = ViewModelProvider(requireActivity())[TelegramViewModel::class.java]
-        curCommand = viewModel?.commandsDeque?.peek()!!
-        viewModel?.updateTrigger?.observe(viewLifecycleOwner){
-            it?.let {
-                viewModel?.updateTrigger?.call()
-                Toast.makeText(requireContext(), "Command deleted", Toast.LENGTH_SHORT).show()
-                viewModel?.router?.exit()
-            }
-        }
-    }
-
-    override fun onDestroyView() {
+    override fun onDetach() {
         mediaPlayer?.stop()
         mediaPlayer = null
-        binding = null
-        viewModel = null
-        super.onDestroyView()
+        adapter = null
+        super.onDetach()
     }
 
 }

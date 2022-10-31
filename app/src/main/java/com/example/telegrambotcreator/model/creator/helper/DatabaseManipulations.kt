@@ -18,11 +18,11 @@ import com.google.gson.Gson
 // region Database Manipulations
 
 fun BotCreator.saveBot(): BotDbModel = BotDbModel(
-    if(botId == null) 0 else botId!!,
+    if (botId == null) 0 else botId!!,
     nameOfBot,
     description,
     animations.size + commands.size + contacts.size + documents.size + locations.size
-            + photos.size + stickers.size+ texts.size + videoNotes.size + videos.size + voices.size,
+            + photos.size + stickers.size + texts.size + videoNotes.size + videos.size + voices.size,
     bot.token,
     isPolling,
     Gson().toJson(animations),
@@ -37,8 +37,8 @@ fun BotCreator.saveBot(): BotDbModel = BotDbModel(
     Gson().toJson(videos),
     Gson().toJson(voices)
 )
-fun BotCreator.restoreBot(bot: BotDbModel) {
 
+fun BotCreator.restoreBot(bot: BotDbModel) {
     botId = bot.id
     nameOfBot = bot.nameBot
     description = bot.description

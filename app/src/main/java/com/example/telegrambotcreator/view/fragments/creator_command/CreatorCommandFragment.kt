@@ -3,8 +3,6 @@ package com.example.telegrambotcreator.view.fragments.creator_command
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Build
-import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -12,128 +10,107 @@ import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.ViewModelProvider
 import com.example.telegrambotcreator.consts.Consts.REQUEST_CODE
 import com.example.telegrambotcreator.databinding.FragmentCreatorCommandBinding
 import com.example.telegrambotcreator.model.creator.BotCreator
 import com.example.telegrambotcreator.model.creator.helper.findFather
 import com.example.telegrambotcreator.model.creator.helper.saveBot
+import com.example.telegrambotcreator.view.base.BaseFragment
 import com.example.telegrambotcreator.view.fragments.creator_command.helper.*
-import com.example.telegrambotcreator.viewmodel.TelegramViewModel
 import com.hbisoft.pickit.PickiT
 import com.hbisoft.pickit.PickiTCallbacks
 import java.lang.Exception
 
-class CreatorCommandFragment : Fragment(), PickiTCallbacks {
+class CreatorCommandFragment : BaseFragment<FragmentCreatorCommandBinding>(), PickiTCallbacks {
 
-    private var pickiT: PickiT? = null
+    override val inflater: (LayoutInflater, ViewGroup?, Boolean) -> FragmentCreatorCommandBinding =
+        FragmentCreatorCommandBinding::inflate
+
+    private lateinit var pickiT: PickiT
     internal var isSuccess = false
     internal lateinit var uriSrc: String
-    internal var binding: FragmentCreatorCommandBinding? = null
-    internal var viewModel: TelegramViewModel? = null
     internal val btClickListenerCreatorCommandFragment = View.OnClickListener {
-        val cur = if(viewModel?.commandsDeque.isNullOrEmpty())
-                null
-            else
-                viewModel?.commandsDeque?.peek()
+        val cur = if (viewModel?.commandsDeque.isNullOrEmpty())
+            null
+        else
+            viewModel?.commandsDeque?.peek()
 
-        when(cur){
+        when (cur) {
             null -> // Bot
-                when(binding?.spinnerTypeOfCommand?.selectedItem as BotCreator.TypeCommand) {
+                when (binding?.spinnerTypeOfCommand?.selectedItem as BotCreator.TypeCommand) {
                     BotCreator.TypeCommand.COMMAND -> {
-                        if(binding?.inputCommand?.text.isNullOrEmpty() || binding?.inputCommand?.text.toString().contains(' '))
+                        if (binding?.inputCommand?.text.isNullOrEmpty() || binding?.inputCommand?.text.toString()
+                                .contains(' ')
+                        )
                             return@OnClickListener
-                        commandAnswer()
+                        commandAnswer(binding!!, viewModel!!)
                     }
                     BotCreator.TypeCommand.TEXT -> {
-                        if(binding?.inputCommand?.text.isNullOrEmpty())
+                        if (binding?.inputCommand?.text.isNullOrEmpty())
                             return@OnClickListener
-                        textAnswer()
+                        textAnswer(binding!!, viewModel!!)
                     }
-                    BotCreator.TypeCommand.ANIMATION -> animationAnswer()
-                    BotCreator.TypeCommand.DOCUMENT -> documentAnswer()
-                    BotCreator.TypeCommand.PHOTO -> photoAnswer()
-                    BotCreator.TypeCommand.VIDEO -> videoAnswer()
-                    BotCreator.TypeCommand.VOICE -> voiceAnswer()
-                    BotCreator.TypeCommand.CONTACT -> contactAnswer()
-                    BotCreator.TypeCommand.LOCATION -> locationAnswer()
-                    BotCreator.TypeCommand.VIDEO_NOTE -> videoNoteAnswer()
-                    BotCreator.TypeCommand.STICKER -> stickerAnswer()
+                    BotCreator.TypeCommand.ANIMATION -> animationAnswer(binding!!, viewModel!!)
+                    BotCreator.TypeCommand.DOCUMENT -> documentAnswer(binding!!, viewModel!!)
+                    BotCreator.TypeCommand.PHOTO -> photoAnswer(binding!!, viewModel!!)
+                    BotCreator.TypeCommand.VIDEO -> videoAnswer(binding!!, viewModel!!)
+                    BotCreator.TypeCommand.VOICE -> voiceAnswer(binding!!, viewModel!!)
+                    BotCreator.TypeCommand.CONTACT -> contactAnswer(binding!!, viewModel!!)
+                    BotCreator.TypeCommand.LOCATION -> locationAnswer(binding!!, viewModel!!)
+                    BotCreator.TypeCommand.VIDEO_NOTE -> videoNoteAnswer(binding!!, viewModel!!)
+                    BotCreator.TypeCommand.STICKER -> stickerAnswer(binding!!, viewModel!!)
                 }
             else ->  // Command
                 if (viewModel?.isCreatingCallbackButton == true)
-                    when(binding?.spinnerTypeOfCommand?.selectedItem as BotCreator.TypeCallback){
+                    when (binding?.spinnerTypeOfCommand?.selectedItem as BotCreator.TypeCallback) {
                         BotCreator.TypeCallback.INLINE -> {
-                            if(binding?.inputCommand?.text.isNullOrEmpty())
+                            if (binding?.inputCommand?.text.isNullOrEmpty())
                                 return@OnClickListener
-                            child_inlineAnswer()
+                            child_inlineAnswer(binding!!, viewModel!!)
                         }
                         BotCreator.TypeCallback.REPLY -> {
-                            if(binding?.inputCommand?.text.isNullOrEmpty())
+                            if (binding?.inputCommand?.text.isNullOrEmpty())
                                 return@OnClickListener
-                            child_replyAnswer()
+                            child_replyAnswer(binding!!, viewModel!!)
                         }
                     }
                 else
-                    when(binding?.spinnerTypeOfCommand?.selectedItem as BotCreator.TypeCommand) {
+                    when (binding?.spinnerTypeOfCommand?.selectedItem as BotCreator.TypeCommand) {
                         BotCreator.TypeCommand.COMMAND -> {
-                            if(binding?.inputCommand?.text.isNullOrEmpty() || binding?.inputCommand?.text.toString().contains(' '))
+                            if (binding?.inputCommand?.text.isNullOrEmpty() || binding?.inputCommand?.text.toString()
+                                    .contains(' ')
+                            )
                                 return@OnClickListener
-                            child_commandAnswer()
+                            child_commandAnswer(binding!!, viewModel!!)
                         }
                         BotCreator.TypeCommand.TEXT -> {
-                            if(binding?.inputCommand?.text.isNullOrEmpty())
+                            if (binding?.inputCommand?.text.isNullOrEmpty())
                                 return@OnClickListener
-                            child_textAnswer()
+                            child_textAnswer(binding!!, viewModel!!)
                         }
-                        BotCreator.TypeCommand.ANIMATION -> child_animationAnswer()
-                        BotCreator.TypeCommand.DOCUMENT -> child_documentAnswer()
-                        BotCreator.TypeCommand.PHOTO -> child_photoAnswer()
-                        BotCreator.TypeCommand.VIDEO -> child_videoAnswer()
-                        BotCreator.TypeCommand.VOICE -> child_voiceAnswer()
-                        BotCreator.TypeCommand.CONTACT -> child_contactAnswer()
-                        BotCreator.TypeCommand.LOCATION -> child_locationAnswer()
-                        BotCreator.TypeCommand.VIDEO_NOTE -> child_videoNoteAnswer()
-                        BotCreator.TypeCommand.STICKER -> child_stickerAnswer()
+                        BotCreator.TypeCommand.ANIMATION -> child_animationAnswer(binding!!, viewModel!!)
+                        BotCreator.TypeCommand.DOCUMENT -> child_documentAnswer(binding!!, viewModel!!)
+                        BotCreator.TypeCommand.PHOTO -> child_photoAnswer(binding!!, viewModel!!)
+                        BotCreator.TypeCommand.VIDEO -> child_videoAnswer(binding!!, viewModel!!)
+                        BotCreator.TypeCommand.VOICE -> child_voiceAnswer(binding!!, viewModel!!)
+                        BotCreator.TypeCommand.CONTACT -> child_contactAnswer(binding!!, viewModel!!)
+                        BotCreator.TypeCommand.LOCATION -> child_locationAnswer(binding!!, viewModel!!)
+                        BotCreator.TypeCommand.VIDEO_NOTE -> child_videoNoteAnswer(binding!!, viewModel!!)
+                        BotCreator.TypeCommand.STICKER -> child_stickerAnswer(binding!!, viewModel!!)
                     }
         }
 
-        if(isSuccess)
+        if (isSuccess)
             viewModel?.updateBot(viewModel?.chosenBot?.saveBot())
     }
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        binding = FragmentCreatorCommandBinding.inflate(inflater, container, false)
-        return binding?.root
-    }
-
-    @SuppressLint("SetTextI18n")
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        initStartVars()
-
-        if(viewModel?.isCreatingCallbackButton == true){
-            binding?.inputCommand?.hint = "button text"
-            binding?.txTypeOfCommand?.text = "Type of button:"
-            binding?.txCommand?.text = "Text on button:"
-            binding?.btCreateCommand?.text = "Create button"
-        }
-
-        bindObservers()
-        bindSpinners()
-        bindButton()
-    }
-
-    private fun bindObservers() {
-        viewModel?.updateTrigger?.observe(viewLifecycleOwner){
+    override fun initObservers() {
+        viewModel?.updateTrigger?.observe(viewLifecycleOwner) {
             it?.let {
                 viewModel?.run {
                     updateTrigger.call()
 
-                    if (choosenCommand > 0){
+                    if (choosenCommand > 0) {
                         val id = commandsDeque.peek()?.id ?: -1
                         commandsDeque.pop()
                         commandsDeque.push(chosenBot.findFather(id))
@@ -146,20 +123,27 @@ class CreatorCommandFragment : Fragment(), PickiTCallbacks {
                     router?.exit()
                 }
             }
-
         }
     }
 
-    private fun initStartVars() {
-        viewModel = ViewModelProvider(requireActivity())[TelegramViewModel::class.java]
+    override fun initStartValues() {
         viewModel?.isCreatingCommand = true
         pickiT = PickiT(requireContext(), this, requireActivity())
     }
 
-    private fun bindButton() {
+    override fun initUI() {
+        if (viewModel?.isCreatingCallbackButton == true) {
+            binding?.inputCommand?.hint = "button text"
+            binding?.txTypeOfCommand?.text = "Type of button:"
+            binding?.txCommand?.text = "Text on button:"
+            binding?.btCreateCommand?.text = "Create button"
+        }
+    }
+
+    override fun initButtons() {
         binding?.btCreateCommand?.setOnClickListener(btClickListenerCreatorCommandFragment)
         binding?.btAddSrc?.setOnClickListener {
-            when(binding?.spinnerTypeOfAnswer?.selectedItem as BotCreator.TypeAnswer){
+            when (binding?.spinnerTypeOfAnswer?.selectedItem as BotCreator.TypeAnswer) {
                 BotCreator.TypeAnswer.AUDIO -> {
                     openGalleryForSomething("audio/*")
                 }
@@ -183,22 +167,39 @@ class CreatorCommandFragment : Fragment(), PickiTCallbacks {
         }
     }
 
-    private fun bindSpinners() {
+    override fun initSpinners() {
         val adapterCommands = if (viewModel?.isCreatingCallbackButton == true)
-            ArrayAdapter(requireContext(), android.R.layout.simple_spinner_dropdown_item, BotCreator.TypeCallback.values())
+            ArrayAdapter(
+                requireContext(),
+                android.R.layout.simple_spinner_dropdown_item,
+                BotCreator.TypeCallback.values()
+            )
         else
-            ArrayAdapter(requireContext(), android.R.layout.simple_spinner_dropdown_item, BotCreator.TypeCommand.values())
-        val adapterAnswers = ArrayAdapter(requireContext(), android.R.layout.simple_spinner_dropdown_item, BotCreator.TypeAnswer.values())
-        binding?.spinnerTypeOfCommand.apply {
-            this?.adapter = adapterCommands
-            this?.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-                override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
-                    when(viewModel?.isCreatingCallbackButton){
+            ArrayAdapter(
+                requireContext(),
+                android.R.layout.simple_spinner_dropdown_item,
+                BotCreator.TypeCommand.values()
+            )
+        val adapterAnswers = ArrayAdapter(
+            requireContext(),
+            android.R.layout.simple_spinner_dropdown_item,
+            BotCreator.TypeAnswer.values()
+        )
+        binding?.spinnerTypeOfCommand?.apply {
+            adapter = adapterCommands
+            onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+                override fun onItemSelected(
+                    parent: AdapterView<*>?,
+                    view: View?,
+                    position: Int,
+                    id: Long
+                ) {
+                    when (viewModel?.isCreatingCallbackButton) {
                         true -> {
                             simpleTextCommand()
                         }
                         false -> {
-                            when(BotCreator.TypeCommand.values()[position]){
+                            when (BotCreator.TypeCommand.values()[position]) {
                                 BotCreator.TypeCommand.COMMAND -> {
                                     simpleTextCommand()
                                 }
@@ -246,7 +247,7 @@ class CreatorCommandFragment : Fragment(), PickiTCallbacks {
                     }
                 }
 
-                private fun simpleCommand(){
+                private fun simpleCommand() {
                     binding?.apply {
                         btCreateCommand.isEnabled = true
                         txCommand.visibility = View.GONE
@@ -265,46 +266,195 @@ class CreatorCommandFragment : Fragment(), PickiTCallbacks {
             }
         }
         binding?.spinnerTypeOfAnswer?.apply {
-            this.adapter = adapterAnswers
-            this.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            adapter = adapterAnswers
+            onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
                 @SuppressLint("SetTextI18n")
-                override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
-                    when(BotCreator.TypeAnswer.values()[position]){
+                override fun onItemSelected(
+                    parent: AdapterView<*>?,
+                    view: View?,
+                    position: Int,
+                    id: Long
+                ) {
+                    when (BotCreator.TypeAnswer.values()[position]) {
                         BotCreator.TypeAnswer.TEXT -> {
-                            bindView(View.GONE, View.VISIBLE,View.GONE, View.GONE, View.GONE, View.GONE, View.GONE, View.GONE, View.GONE, "answer", "")
+                            bindView(
+                                View.GONE,
+                                View.VISIBLE,
+                                View.GONE,
+                                View.GONE,
+                                View.GONE,
+                                View.GONE,
+                                View.GONE,
+                                View.GONE,
+                                View.GONE,
+                                "answer",
+                                ""
+                            )
                         }
                         BotCreator.TypeAnswer.ANIMATION -> {
-                            bindView(View.GONE, View.VISIBLE,View.GONE, View.GONE, View.GONE, View.GONE, View.GONE, View.GONE, View.GONE, "url", "")
+                            bindView(
+                                View.GONE,
+                                View.VISIBLE,
+                                View.GONE,
+                                View.GONE,
+                                View.GONE,
+                                View.GONE,
+                                View.GONE,
+                                View.GONE,
+                                View.GONE,
+                                "url",
+                                ""
+                            )
                         }
                         BotCreator.TypeAnswer.AUDIO -> {
-                            bindView(View.GONE, View.GONE, View.VISIBLE, View.GONE, View.GONE, View.GONE, View.GONE, View.GONE, View.GONE, "", "Add audio")
+                            bindView(
+                                View.GONE,
+                                View.GONE,
+                                View.VISIBLE,
+                                View.GONE,
+                                View.GONE,
+                                View.GONE,
+                                View.GONE,
+                                View.GONE,
+                                View.GONE,
+                                "",
+                                "Add audio"
+                            )
                         }
                         BotCreator.TypeAnswer.DOCUMENT -> {
-                            bindView(View.GONE, View.GONE, View.VISIBLE, View.GONE, View.GONE, View.GONE, View.GONE, View.GONE, View.GONE, "", "Add document")
+                            bindView(
+                                View.GONE,
+                                View.GONE,
+                                View.VISIBLE,
+                                View.GONE,
+                                View.GONE,
+                                View.GONE,
+                                View.GONE,
+                                View.GONE,
+                                View.GONE,
+                                "",
+                                "Add document"
+                            )
                         }
                         BotCreator.TypeAnswer.PHOTO -> {
-                            bindView(View.GONE, View.GONE, View.VISIBLE, View.GONE, View.GONE, View.GONE, View.GONE, View.GONE, View.GONE, "", "Add image")
+                            bindView(
+                                View.GONE,
+                                View.GONE,
+                                View.VISIBLE,
+                                View.GONE,
+                                View.GONE,
+                                View.GONE,
+                                View.GONE,
+                                View.GONE,
+                                View.GONE,
+                                "",
+                                "Add image"
+                            )
                         }
                         BotCreator.TypeAnswer.VIDEO -> {
-                            bindView(View.GONE, View.GONE, View.VISIBLE, View.GONE, View.GONE, View.GONE, View.GONE, View.GONE, View.GONE, "", "Add video")
+                            bindView(
+                                View.GONE,
+                                View.GONE,
+                                View.VISIBLE,
+                                View.GONE,
+                                View.GONE,
+                                View.GONE,
+                                View.GONE,
+                                View.GONE,
+                                View.GONE,
+                                "",
+                                "Add video"
+                            )
                         }
                         BotCreator.TypeAnswer.VOICE -> {
-                            bindView(View.GONE, View.GONE, View.VISIBLE, View.GONE, View.GONE, View.GONE, View.GONE, View.GONE, View.GONE, "", "Add voice")
+                            bindView(
+                                View.GONE,
+                                View.GONE,
+                                View.VISIBLE,
+                                View.GONE,
+                                View.GONE,
+                                View.GONE,
+                                View.GONE,
+                                View.GONE,
+                                View.GONE,
+                                "",
+                                "Add voice"
+                            )
                         }
                         BotCreator.TypeAnswer.CONTACT -> {
-                            bindView(View.GONE, View.GONE, View.GONE, View.VISIBLE, View.VISIBLE, View.GONE, View.GONE, View.GONE, View.GONE, "", "")
+                            bindView(
+                                View.GONE,
+                                View.GONE,
+                                View.GONE,
+                                View.VISIBLE,
+                                View.VISIBLE,
+                                View.GONE,
+                                View.GONE,
+                                View.GONE,
+                                View.GONE,
+                                "",
+                                ""
+                            )
                         }
                         BotCreator.TypeAnswer.LOCATION -> {
-                            bindView(View.GONE, View.GONE, View.GONE, View.GONE, View.GONE, View.VISIBLE, View.VISIBLE, View.GONE, View.GONE, "", "")
+                            bindView(
+                                View.GONE,
+                                View.GONE,
+                                View.GONE,
+                                View.GONE,
+                                View.GONE,
+                                View.VISIBLE,
+                                View.VISIBLE,
+                                View.GONE,
+                                View.GONE,
+                                "",
+                                ""
+                            )
                         }
                         BotCreator.TypeAnswer.POLL -> {
-                            bindView(View.VISIBLE, View.VISIBLE, View.GONE, View.GONE, View.GONE, View.GONE, View.GONE, View.GONE, View.GONE, "answers (split by \";\")", "")
+                            bindView(
+                                View.VISIBLE,
+                                View.VISIBLE,
+                                View.GONE,
+                                View.GONE,
+                                View.GONE,
+                                View.GONE,
+                                View.GONE,
+                                View.GONE,
+                                View.GONE,
+                                "answers (split by \";\")",
+                                ""
+                            )
                         }
                         BotCreator.TypeAnswer.VENUE -> {
-                            bindView(View.GONE, View.GONE, View.GONE, View.GONE, View.GONE, View.VISIBLE, View.VISIBLE, View.VISIBLE, View.VISIBLE, "", "")
+                            bindView(
+                                View.GONE,
+                                View.GONE,
+                                View.GONE,
+                                View.GONE,
+                                View.GONE,
+                                View.VISIBLE,
+                                View.VISIBLE,
+                                View.VISIBLE,
+                                View.VISIBLE,
+                                "",
+                                ""
+                            )
                         }
                         BotCreator.TypeAnswer.VIDEO_NOTE -> {
-                            bindView(View.GONE, View.GONE, View.VISIBLE, View.GONE, View.GONE, View.GONE, View.GONE, View.GONE, View.GONE, "", "Add video")
+                            bindView(
+                                View.GONE,
+                                View.GONE,
+                                View.VISIBLE,
+                                View.GONE,
+                                View.GONE,
+                                View.GONE,
+                                View.GONE,
+                                View.GONE,
+                                View.GONE,
+                                "",
+                                "Add video"
+                            )
                         }
                     }
                 }
@@ -339,9 +489,9 @@ class CreatorCommandFragment : Fragment(), PickiTCallbacks {
                     }
                 }
 
-                private fun notImplemented(){
+                private fun notImplemented() {
                     Toast.makeText(requireContext(), "Not implemented", Toast.LENGTH_SHORT).show()
-                    binding?.apply{
+                    binding?.apply {
                         btCreateCommand.isEnabled = false
                         btCreateCommand.setOnClickListener(null)
                         inputQuestion.visibility = View.GONE
@@ -357,7 +507,7 @@ class CreatorCommandFragment : Fragment(), PickiTCallbacks {
                 }
 
                 override fun onNothingSelected(p0: AdapterView<*>?) {
-                    binding?.apply{
+                    binding?.apply {
                         btCreateCommand.isEnabled = false
                         btCreateCommand.setOnClickListener(null)
                         inputQuestion.visibility = View.GONE
@@ -408,7 +558,7 @@ class CreatorCommandFragment : Fragment(), PickiTCallbacks {
         wasSuccessful: Boolean,
         Reason: String?
     ) {
-        if(wasSuccessful){
+        if (wasSuccessful) {
             uriSrc = path.toString()
             binding?.btAddSrc?.text = uriSrc.substring(uriSrc.lastIndexOf('/') + 1)
         } else
@@ -420,13 +570,6 @@ class CreatorCommandFragment : Fragment(), PickiTCallbacks {
         wasSuccessful: Boolean,
         Reason: String?
     ) {
-    }
-
-    override fun onDestroyView() {
-        pickiT = null
-        binding = null
-        viewModel = null
-        super.onDestroyView()
     }
 
 }

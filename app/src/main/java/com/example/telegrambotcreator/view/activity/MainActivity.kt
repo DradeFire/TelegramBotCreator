@@ -29,11 +29,11 @@ class MainActivity : AppCompatActivity() {
 
     override fun onResumeFragments() {
         super.onResumeFragments()
-        App.INSTANCE.navigatorHolder.setNavigator(navigator)
+        (applicationContext as? App)?.navigatorHolder?.setNavigator(navigator)
     }
 
     override fun onPause() {
-        App.INSTANCE.navigatorHolder.removeNavigator()
+        (applicationContext as? App)?.navigatorHolder?.removeNavigator()
         super.onPause()
     }
 
@@ -52,6 +52,7 @@ class MainActivity : AppCompatActivity() {
             1
         )
 
+//        deleteAllFromBD()
 //        addTestBots()
 //        testBotPhoto()
         viewModel.router?.newRootScreen(Screens.ListOfBotsFrag())
@@ -81,6 +82,11 @@ class MainActivity : AppCompatActivity() {
             }
             viewModel.router?.exit()
         }
+    }
+
+    private fun deleteAllFromBD() {
+        val db = Repository().getDatabase(this@MainActivity)
+        Repository().deleteAll(db)
     }
 
     private fun addTestBots() {

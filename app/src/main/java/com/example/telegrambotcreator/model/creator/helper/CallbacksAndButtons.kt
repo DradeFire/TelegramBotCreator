@@ -1,6 +1,7 @@
 package com.example.telegrambotcreator.model.creator.helper
 
 import com.example.telegrambotcreator.model.creator.BotCreator
+import com.example.telegrambotcreator.model.creator.model.ActionTG
 import com.example.telegrambotcreator.model.creator.model.CallBackTG
 import com.github.kotlintelegrambot.dispatcher.Dispatcher
 import com.github.kotlintelegrambot.dispatcher.callbackQuery
@@ -35,7 +36,9 @@ import com.github.kotlintelegrambot.entities.keyboard.KeyboardButton
         }
         val father = findFather(fatherId ?: -1)
         father?.let { baseTgContainer ->
-            val obj = CallBackTG(BotCreator.TypeCallback.INLINE.convertFromCallbackType(), textButton, createNewID(callbackIDs), fatherId, typeAnswer.convertFromType(), answerText, answerTGFileIn, answerTGFile?.convertFromTgType(), lat, lon, question, pollList, title, address, phoneNumber, firstName)
+            val obj = CallBackTG(BotCreator.TypeCallback.INLINE.convertFromCallbackType(), textButton, createNewID(callbackIDs), typeAnswer.convertFromType(), fatherId,
+                ActionTG(answerText, answerTGFileIn, answerTGFile?.convertFromTgType(), lat, lon, question, pollList, title, address, phoneNumber, firstName)
+            )
 
             if (baseTgContainer.inCallBack == null)
                 baseTgContainer.inCallBack = arrayListOf(obj)
@@ -68,7 +71,13 @@ import com.github.kotlintelegrambot.entities.keyboard.KeyboardButton
         }
         val father = findFather(fatherId ?: -1)
         father?.let { baseTgContainer ->
-            val obj = CallBackTG(BotCreator.TypeCallback.REPLY.convertFromCallbackType(), textButton, createNewID(callbackIDs), fatherId, typeAnswer.convertFromType(), answerText, answerTGFileIn, answerTGFile?.convertFromTgType(), lat, lon, question, pollList, title, address, phoneNumber, firstName)
+            val obj = CallBackTG(BotCreator.TypeCallback.REPLY.convertFromCallbackType(), textButton,
+                createNewID(callbackIDs), typeAnswer.convertFromType(), fatherId,
+                ActionTG(
+                    answerText, answerTGFileIn, answerTGFile?.convertFromTgType(),
+                    lat, lon, question, pollList, title, address, phoneNumber, firstName
+                )
+            )
 
             if (baseTgContainer.inCallBack == null)
                 baseTgContainer.inCallBack = arrayListOf(obj)
@@ -108,7 +117,11 @@ import com.github.kotlintelegrambot.entities.keyboard.KeyboardButton
         }
         return reply
     }
-    internal fun BotCreator.addCallback(dispatcher: Dispatcher, callbacks: List<CallBackTG>, message: Message): Boolean = with(dispatcher)  {
+    internal fun BotCreator.addCallback(
+        dispatcher: Dispatcher,
+        callbacks: List<CallBackTG>,
+        message: Message
+    ): Boolean = with(dispatcher)  {
         callbacks.forEach { call ->
             when(call.typeCallback.convertToCallbackType()){
                 BotCreator.TypeCallback.INLINE -> {

@@ -13,8 +13,6 @@
         android:orientation="vertical"
         android:visibility="visible">
 
-
-
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/btCreateBot"
             android:layout_width="match_parent"

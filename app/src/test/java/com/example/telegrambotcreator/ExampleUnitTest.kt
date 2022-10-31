@@ -19,7 +19,8 @@ class ExampleUnitTest {
             addChildCommandListener("lol_rus", ids.last(), BotCreator.TypeAnswer.TEXT, "Ну дурачок, правда")
             ids = getIDs()
             addInlineButtonToMessage("Еблан?", ids.first(), BotCreator.TypeAnswer.TEXT, "Ну EBLAN")
-//            build().startPolling()
+            build()
+            builtBot.startPolling()
         }
 
         while (true) {}

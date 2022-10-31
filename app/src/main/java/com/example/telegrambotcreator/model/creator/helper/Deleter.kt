@@ -1,110 +1,20 @@
 package com.example.telegrambotcreator.model.creator.helper
 
 import com.example.telegrambotcreator.model.creator.BotCreator
-import com.example.telegrambotcreator.model.creator.model.BaseTgContainer
+import com.example.telegrambotcreator.model.creator.model.ListenerTgBase
 
 internal fun BotCreator.deleteCommand(id: Int, fatherId: Int? = null) {
     if (fatherId != null){
         val father = findFather(fatherId)
         father?.apply {
             var ind = -1
-            inCommand?.forEachIndexed { index, it ->
+            inListeners?.forEachIndexed { index, it ->
                 val inD = removeCommand(it, id, index)
                 if(inD != -1)
                     ind = inD
             }
             if (ind != -1) {
-                (inCommand as ArrayList).removeAt(ind)
-                return
-            }
-            inText?.forEachIndexed { index, it ->
-                val inD = removeCommand(it, id, index)
-                if(inD != -1)
-                    ind = inD
-            }
-            if (ind != -1) {
-                (inText as ArrayList).removeAt(ind)
-                return
-            }
-            inAnimation?.forEachIndexed { index, it ->
-                val inD = removeCommand(it, id, index)
-                if(inD != -1)
-                    ind = inD
-            }
-            if (ind != -1) {
-                (inAnimation as ArrayList).removeAt(ind)
-                return
-            }
-            inDocument?.forEachIndexed { index, it ->
-                val inD = removeCommand(it, id, index)
-                if(inD != -1)
-                    ind = inD
-            }
-            if (ind != -1) {
-                (inDocument as ArrayList).removeAt(ind)
-                return
-            }
-            inSticker?.forEachIndexed { index, it ->
-                val inD = removeCommand(it, id, index)
-                if(inD != -1)
-                    ind = inD
-            }
-            if (ind != -1) {
-                (inSticker as ArrayList).removeAt(ind)
-                return
-            }
-            inVoice?.forEachIndexed { index, it ->
-                val inD = removeCommand(it, id, index)
-                if(inD != -1)
-                    ind = inD
-            }
-            if (ind != -1) {
-                (inVoice as ArrayList).removeAt(ind)
-                return
-            }
-            inVideoNote?.forEachIndexed { index, it ->
-                val inD = removeCommand(it, id, index)
-                if(inD != -1)
-                    ind = inD
-            }
-            if (ind != -1) {
-                (inVideoNote as ArrayList).removeAt(ind)
-                return
-            }
-            inVideo?.forEachIndexed { index, it ->
-                val inD = removeCommand(it, id, index)
-                if(inD != -1)
-                    ind = inD
-            }
-            if (ind != -1) {
-                (inVideo as ArrayList).removeAt(ind)
-                return
-            }
-            inPhoto?.forEachIndexed { index, it ->
-                val inD = removeCommand(it, id, index)
-                if(inD != -1)
-                    ind = inD
-            }
-            if (ind != -1) {
-                (inPhoto as ArrayList).removeAt(ind)
-                return
-            }
-            inLocation?.forEachIndexed { index, it ->
-                val inD = removeCommand(it, id, index)
-                if(inD != -1)
-                    ind = inD
-            }
-            if (ind != -1) {
-                (inLocation as ArrayList).removeAt(ind)
-                return
-            }
-            inContact?.forEachIndexed { index, it ->
-                val inD = removeCommand(it, id, index)
-                if(inD != -1)
-                    ind = inD
-            }
-            if (ind != -1) {
-                (inContact as ArrayList).removeAt(ind)
+                (inListeners as? ArrayList)?.removeAt(ind)
                 return
             }
             inCallBack?.forEachIndexed { index, it ->
@@ -113,7 +23,7 @@ internal fun BotCreator.deleteCommand(id: Int, fatherId: Int? = null) {
                     ind = inD
             }
             if (ind != -1) {
-                (inCallBack as ArrayList).removeAt(ind)
+                (inCallBack as? ArrayList)?.removeAt(ind)
                 return
             }
         }
@@ -223,7 +133,7 @@ internal fun BotCreator.deleteCommand(id: Int, fatherId: Int? = null) {
 }
 
 private fun removeCommand(
-    it: BaseTgContainer,
+    it: ListenerTgBase,
     id: Int,
     index: Int
 ): Int {

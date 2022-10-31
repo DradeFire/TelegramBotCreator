@@ -82,9 +82,7 @@ class BotService: Service() {
         }
         catch (e: Exception) {
         }
-        finally {
-            super.onDestroy()
-        }
+        super.onDestroy()
     }
 
     override fun onBind(intent: Intent): IBinder {

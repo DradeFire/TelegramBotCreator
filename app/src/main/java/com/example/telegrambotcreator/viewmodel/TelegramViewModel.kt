@@ -5,7 +5,7 @@ import androidx.lifecycle.ViewModel
 import com.example.telegrambotcreator.App
 import com.example.telegrambotcreator.consts.SingleLiveEvent
 import com.example.telegrambotcreator.model.creator.BotCreator
-import com.example.telegrambotcreator.model.creator.model.BaseTgContainer
+import com.example.telegrambotcreator.model.creator.model.ListenerTgBase
 import com.example.telegrambotcreator.model.datebase.database.BotDatabase
 import com.example.telegrambotcreator.model.datebase.model.BotDbModel
 import com.example.telegrambotcreator.model.repository.Repository
@@ -94,7 +94,7 @@ class TelegramViewModel: ViewModel() {
 
     // region Command
     var choosenCommand = 0
-    val commandsDeque = ArrayDeque<BaseTgContainer>()
+    val commandsDeque = ArrayDeque<ListenerTgBase>()
     // endregion
 
     // region Creating Command

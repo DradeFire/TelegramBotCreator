@@ -1,49 +1,25 @@
 package com.example.telegrambotcreator.view.fragments.check_video
 
-import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import android.widget.MediaController
-import androidx.lifecycle.ViewModelProvider
 import com.example.telegrambotcreator.databinding.FragmentCheckVideoBinding
-import com.example.telegrambotcreator.viewmodel.TelegramViewModel
+import com.example.telegrambotcreator.view.base.BaseFragment
 
-class CheckVideoFragment : Fragment() {
+class CheckVideoFragment : BaseFragment<FragmentCheckVideoBinding>() {
 
-    private var binding: FragmentCheckVideoBinding? = null
-    private var viewModel: TelegramViewModel? = null
+    override val inflater: (LayoutInflater, ViewGroup?, Boolean) -> FragmentCheckVideoBinding =
+        FragmentCheckVideoBinding::inflate
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        binding = FragmentCheckVideoBinding.inflate(inflater, container, false)
-        return binding?.root
-    }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-
-        viewModel = ViewModelProvider(requireActivity())[TelegramViewModel::class.java].also {
-            it.isCreatingCommand = true
-        }
+    override fun initUI() {
+        viewModel?.isCreatingCommand = true
 
         binding?.videoView?.apply {
-            setVideoPath(viewModel?.commandsDeque?.peek()?.answerTGFile)
+            setVideoPath(viewModel?.commandsDeque?.peek()?.action?.answerTGFile)
             setMediaController(MediaController(requireContext()).apply {
                 setAnchorView(binding?.videoView)
             })
         }
-    }
-
-    override fun onDestroyView() {
-        viewModel?.isCreatingCommand = false
-        viewModel = null
-        binding = null
-
-        super.onDestroyView()
     }
 
 }

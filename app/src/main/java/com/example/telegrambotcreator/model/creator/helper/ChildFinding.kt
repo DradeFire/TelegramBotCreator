@@ -1,11 +1,11 @@
 package com.example.telegrambotcreator.model.creator.helper
 
 import com.example.telegrambotcreator.model.creator.BotCreator
-import com.example.telegrambotcreator.model.creator.model.BaseTgContainer
+import com.example.telegrambotcreator.model.creator.model.ListenerTgBase
 
 // region Child Finding
-internal fun BotCreator.findFather(id: Int): BaseTgContainer? {
-    fun inCheck(it: BaseTgContainer): BaseTgContainer?{
+internal fun BotCreator.findFather(id: Int): ListenerTgBase? {
+    fun inCheck(it: ListenerTgBase): ListenerTgBase?{
         if (id == it.id){
             return it
         }
@@ -19,9 +19,7 @@ internal fun BotCreator.findFather(id: Int): BaseTgContainer? {
 
     commands.forEach {
         val tmp = inCheck(it)
-        tmp?.let {
-            return tmp
-        }
+        tmp?.let { return tmp }
     }
     texts.forEach {
         val tmp = inCheck(it)
@@ -47,7 +45,7 @@ internal fun BotCreator.findFather(id: Int): BaseTgContainer? {
         val tmp = inCheck(it)
         tmp?.let { return tmp }
     }
-    videos .forEach {
+    videos.forEach {
         val tmp = inCheck(it)
         tmp?.let { return tmp }
     }
@@ -65,7 +63,7 @@ internal fun BotCreator.findFather(id: Int): BaseTgContainer? {
     }
     return null
 }
-private fun findFatherRec(id: Int, list: List<BaseTgContainer>): BaseTgContainer? {
+private fun findFatherRec(id: Int, list: List<ListenerTgBase>): ListenerTgBase? {
     list.forEach {
         if (it.id == id)
             return it
@@ -76,49 +74,9 @@ private fun findFatherRec(id: Int, list: List<BaseTgContainer>): BaseTgContainer
     }
     return null
 }
-private fun checkChildes(it: BaseTgContainer, id: Int): BaseTgContainer? {
+private fun checkChildes(it: ListenerTgBase, id: Int): ListenerTgBase? {
     it.apply {
-        inAnimation?.let {
-            val tmp = findFatherRec(id, it)
-            tmp?.let { inIt -> return inIt }
-        }
-        inCommand?.let {
-            val tmp = findFatherRec(id, it)
-            tmp?.let { inIt -> return inIt }
-        }
-        inContact?.let {
-            val tmp = findFatherRec(id, it)
-            tmp?.let { inIt -> return inIt }
-        }
-        inDocument?.let {
-            val tmp = findFatherRec(id, it)
-            tmp?.let { inIt -> return inIt }
-        }
-        inLocation?.let {
-            val tmp = findFatherRec(id, it)
-            tmp?.let { inIt -> return inIt }
-        }
-        inPhoto?.let {
-            val tmp = findFatherRec(id, it)
-            tmp?.let { inIt -> return inIt }
-        }
-        inSticker?.let {
-            val tmp = findFatherRec(id, it)
-            tmp?.let { inIt -> return inIt }
-        }
-        inText?.let {
-            val tmp = findFatherRec(id, it)
-            tmp?.let { inIt -> return inIt }
-        }
-        inVideo?.let {
-            val tmp = findFatherRec(id, it)
-            tmp?.let { inIt -> return inIt }
-        }
-        inVoice?.let {
-            val tmp = findFatherRec(id, it)
-            tmp?.let { inIt -> return inIt }
-        }
-        inVideoNote?.let {
+        inListeners?.let {
             val tmp = findFatherRec(id, it)
             tmp?.let { inIt -> return inIt }
         }

@@ -1,6 +1,7 @@
 package com.example.telegrambotcreator.view.fragments.creator_command.helper
 
 import android.os.Build
+import com.example.telegrambotcreator.databinding.FragmentCreatorCommandBinding
 import com.example.telegrambotcreator.view.fragments.creator_command.helper.IsNotGoodFunctions.isNotGoodAnimation
 import com.example.telegrambotcreator.view.fragments.creator_command.helper.IsNotGoodFunctions.isNotGoodAudio
 import com.example.telegrambotcreator.view.fragments.creator_command.helper.IsNotGoodFunctions.isNotGoodContact
@@ -15,15 +16,19 @@ import com.example.telegrambotcreator.view.fragments.creator_command.helper.IsNo
 import com.example.telegrambotcreator.model.creator.BotCreator
 import com.example.telegrambotcreator.model.creator.helper.*
 import com.example.telegrambotcreator.view.fragments.creator_command.CreatorCommandFragment
+import com.example.telegrambotcreator.viewmodel.TelegramViewModel
 import com.github.kotlintelegrambot.entities.TelegramFile
 import java.io.File
 
 // region Answers
 
-internal fun CreatorCommandFragment.stickerAnswer() = with(binding!!) {
-    when(this.spinnerTypeOfAnswer.selectedItem as BotCreator.TypeAnswer){
+internal fun CreatorCommandFragment.stickerAnswer(
+    binding: FragmentCreatorCommandBinding,
+    viewModel: TelegramViewModel
+) = with(binding) {
+    when (this.spinnerTypeOfAnswer.selectedItem as BotCreator.TypeAnswer) {
         BotCreator.TypeAnswer.TEXT -> {
-            if(isNotGoodText(this, requireContext()))
+            if (isNotGoodText(this, requireContext()))
                 return
             viewModel?.chosenBot?.addStickerListener(
                 typeAnswer = BotCreator.TypeAnswer.TEXT,
@@ -31,7 +36,7 @@ internal fun CreatorCommandFragment.stickerAnswer() = with(binding!!) {
             )
         }
         BotCreator.TypeAnswer.ANIMATION -> {
-            if(isNotGoodAnimation(this, requireContext()))
+            if (isNotGoodAnimation(this, requireContext()))
                 return
             viewModel?.chosenBot?.addStickerListener(
                 typeAnswer = BotCreator.TypeAnswer.ANIMATION,
@@ -39,7 +44,7 @@ internal fun CreatorCommandFragment.stickerAnswer() = with(binding!!) {
             )
         }
         BotCreator.TypeAnswer.AUDIO -> {
-            if(isNotGoodAudio(this, requireContext()))
+            if (isNotGoodAudio(this, requireContext()))
                 return
             viewModel?.chosenBot?.addStickerListener(
                 typeAnswer = BotCreator.TypeAnswer.AUDIO,
@@ -47,7 +52,7 @@ internal fun CreatorCommandFragment.stickerAnswer() = with(binding!!) {
             )
         }
         BotCreator.TypeAnswer.DOCUMENT -> {
-            if(isNotGoodDocument(this, requireContext()))
+            if (isNotGoodDocument(this, requireContext()))
                 return
             viewModel?.chosenBot?.addStickerListener(
                 typeAnswer = BotCreator.TypeAnswer.DOCUMENT,
@@ -55,7 +60,7 @@ internal fun CreatorCommandFragment.stickerAnswer() = with(binding!!) {
             )
         }
         BotCreator.TypeAnswer.PHOTO -> {
-            if(isNotGoodPhoto(this, requireContext()))
+            if (isNotGoodPhoto(this, requireContext()))
                 return
             viewModel?.chosenBot?.addStickerListener(
                 typeAnswer = BotCreator.TypeAnswer.PHOTO,
@@ -63,7 +68,7 @@ internal fun CreatorCommandFragment.stickerAnswer() = with(binding!!) {
             )
         }
         BotCreator.TypeAnswer.VIDEO -> {
-            if(isNotGoodVideo(this, requireContext()))
+            if (isNotGoodVideo(this, requireContext()))
                 return
             viewModel?.chosenBot?.addStickerListener(
                 typeAnswer = BotCreator.TypeAnswer.VIDEO,
@@ -71,7 +76,7 @@ internal fun CreatorCommandFragment.stickerAnswer() = with(binding!!) {
             )
         }
         BotCreator.TypeAnswer.VOICE -> {
-            if(isNotGoodVoice(this, requireContext()))
+            if (isNotGoodVoice(this, requireContext()))
                 return
             viewModel?.chosenBot?.addStickerListener(
                 typeAnswer = BotCreator.TypeAnswer.VOICE,
@@ -79,7 +84,7 @@ internal fun CreatorCommandFragment.stickerAnswer() = with(binding!!) {
             )
         }
         BotCreator.TypeAnswer.CONTACT -> {
-            if(isNotGoodContact(this, requireContext()))
+            if (isNotGoodContact(this, requireContext()))
                 return
             viewModel?.chosenBot?.addStickerListener(
                 typeAnswer = BotCreator.TypeAnswer.CONTACT,
@@ -88,7 +93,7 @@ internal fun CreatorCommandFragment.stickerAnswer() = with(binding!!) {
             )
         }
         BotCreator.TypeAnswer.LOCATION -> {
-            if(isNotGoodLocation(this, requireContext()))
+            if (isNotGoodLocation(this, requireContext()))
                 return
             viewModel?.chosenBot?.addStickerListener(
                 typeAnswer = BotCreator.TypeAnswer.LOCATION,
@@ -97,14 +102,14 @@ internal fun CreatorCommandFragment.stickerAnswer() = with(binding!!) {
             )
         }
         BotCreator.TypeAnswer.POLL -> {
-            if(isNotGoodPoll(this, requireContext()))
+            if (isNotGoodPoll(this, requireContext()))
                 return
             val pollList = (this.inputAnswer.text.split(';') as ArrayList)
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
                 pollList.removeIf { it.isBlank() || it.isEmpty() }
             } else {
                 val tmp = arrayListOf<String>()
-                pollList.forEach { if(it.isNotEmpty() && it.isNotBlank()) tmp.add(it) }
+                pollList.forEach { if (it.isNotEmpty() && it.isNotBlank()) tmp.add(it) }
                 pollList.clear()
                 pollList.addAll(tmp)
             }
@@ -115,7 +120,7 @@ internal fun CreatorCommandFragment.stickerAnswer() = with(binding!!) {
             )
         }
         BotCreator.TypeAnswer.VENUE -> {
-            if(isNotGoodVenue(this, requireContext()))
+            if (isNotGoodVenue(this, requireContext()))
                 return
             viewModel?.chosenBot?.addStickerListener(
                 typeAnswer = BotCreator.TypeAnswer.VENUE,
@@ -126,7 +131,7 @@ internal fun CreatorCommandFragment.stickerAnswer() = with(binding!!) {
             )
         }
         BotCreator.TypeAnswer.VIDEO_NOTE -> {
-            if(isNotGoodVideo(this, requireContext()))
+            if (isNotGoodVideo(this, requireContext()))
                 return
             viewModel?.chosenBot?.addStickerListener(
                 typeAnswer = BotCreator.TypeAnswer.VIDEO_NOTE,
@@ -136,10 +141,14 @@ internal fun CreatorCommandFragment.stickerAnswer() = with(binding!!) {
     }
     isSuccess = true
 }
-internal fun CreatorCommandFragment.videoNoteAnswer() = with(binding!!)  {
-    when(this.spinnerTypeOfAnswer.selectedItem as BotCreator.TypeAnswer){
+
+internal fun CreatorCommandFragment.videoNoteAnswer(
+    binding: FragmentCreatorCommandBinding,
+    viewModel: TelegramViewModel
+) = with(binding) {
+    when (this.spinnerTypeOfAnswer.selectedItem as BotCreator.TypeAnswer) {
         BotCreator.TypeAnswer.TEXT -> {
-            if(isNotGoodText(this, requireContext()))
+            if (isNotGoodText(this, requireContext()))
                 return
             viewModel?.chosenBot?.addVideoNotesListener(
                 typeAnswer = BotCreator.TypeAnswer.TEXT,
@@ -147,7 +156,7 @@ internal fun CreatorCommandFragment.videoNoteAnswer() = with(binding!!)  {
             )
         }
         BotCreator.TypeAnswer.ANIMATION -> {
-            if(isNotGoodAnimation(this, requireContext()))
+            if (isNotGoodAnimation(this, requireContext()))
                 return
             viewModel?.chosenBot?.addVideoNotesListener(
                 typeAnswer = BotCreator.TypeAnswer.ANIMATION,
@@ -155,7 +164,7 @@ internal fun CreatorCommandFragment.videoNoteAnswer() = with(binding!!)  {
             )
         }
         BotCreator.TypeAnswer.AUDIO -> {
-            if(isNotGoodAudio(this, requireContext()))
+            if (isNotGoodAudio(this, requireContext()))
                 return
             viewModel?.chosenBot?.addVideoNotesListener(
                 typeAnswer = BotCreator.TypeAnswer.AUDIO,
@@ -163,7 +172,7 @@ internal fun CreatorCommandFragment.videoNoteAnswer() = with(binding!!)  {
             )
         }
         BotCreator.TypeAnswer.DOCUMENT -> {
-            if(isNotGoodDocument(this, requireContext()))
+            if (isNotGoodDocument(this, requireContext()))
                 return
             viewModel?.chosenBot?.addVideoNotesListener(
                 typeAnswer = BotCreator.TypeAnswer.DOCUMENT,
@@ -171,7 +180,7 @@ internal fun CreatorCommandFragment.videoNoteAnswer() = with(binding!!)  {
             )
         }
         BotCreator.TypeAnswer.PHOTO -> {
-            if(isNotGoodPhoto(this, requireContext()))
+            if (isNotGoodPhoto(this, requireContext()))
                 return
             viewModel?.chosenBot?.addVideoNotesListener(
                 typeAnswer = BotCreator.TypeAnswer.PHOTO,
@@ -179,7 +188,7 @@ internal fun CreatorCommandFragment.videoNoteAnswer() = with(binding!!)  {
             )
         }
         BotCreator.TypeAnswer.VIDEO -> {
-            if(isNotGoodVideo(this, requireContext()))
+            if (isNotGoodVideo(this, requireContext()))
                 return
             viewModel?.chosenBot?.addVideoNotesListener(
                 typeAnswer = BotCreator.TypeAnswer.VIDEO,
@@ -187,7 +196,7 @@ internal fun CreatorCommandFragment.videoNoteAnswer() = with(binding!!)  {
             )
         }
         BotCreator.TypeAnswer.VOICE -> {
-            if(isNotGoodVoice(this, requireContext()))
+            if (isNotGoodVoice(this, requireContext()))
                 return
             viewModel?.chosenBot?.addVideoNotesListener(
                 typeAnswer = BotCreator.TypeAnswer.VOICE,
@@ -195,7 +204,7 @@ internal fun CreatorCommandFragment.videoNoteAnswer() = with(binding!!)  {
             )
         }
         BotCreator.TypeAnswer.CONTACT -> {
-            if(isNotGoodContact(this, requireContext()))
+            if (isNotGoodContact(this, requireContext()))
                 return
             viewModel?.chosenBot?.addVideoNotesListener(
                 typeAnswer = BotCreator.TypeAnswer.CONTACT,
@@ -204,7 +213,7 @@ internal fun CreatorCommandFragment.videoNoteAnswer() = with(binding!!)  {
             )
         }
         BotCreator.TypeAnswer.LOCATION -> {
-            if(isNotGoodLocation(this, requireContext()))
+            if (isNotGoodLocation(this, requireContext()))
                 return
             viewModel?.chosenBot?.addVideoNotesListener(
                 typeAnswer = BotCreator.TypeAnswer.LOCATION,
@@ -213,14 +222,14 @@ internal fun CreatorCommandFragment.videoNoteAnswer() = with(binding!!)  {
             )
         }
         BotCreator.TypeAnswer.POLL -> {
-            if(isNotGoodPoll(this, requireContext()))
+            if (isNotGoodPoll(this, requireContext()))
                 return
             val pollList = (this.inputAnswer.text.split(';') as ArrayList)
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
                 pollList.removeIf { it.isBlank() || it.isEmpty() }
             } else {
                 val tmp = arrayListOf<String>()
-                pollList.forEach { if(it.isNotEmpty() && it.isNotBlank()) tmp.add(it) }
+                pollList.forEach { if (it.isNotEmpty() && it.isNotBlank()) tmp.add(it) }
                 pollList.clear()
                 pollList.addAll(tmp)
             }
@@ -231,7 +240,7 @@ internal fun CreatorCommandFragment.videoNoteAnswer() = with(binding!!)  {
             )
         }
         BotCreator.TypeAnswer.VENUE -> {
-            if(isNotGoodVenue(this, requireContext()))
+            if (isNotGoodVenue(this, requireContext()))
                 return
             viewModel?.chosenBot?.addVideoNotesListener(
                 typeAnswer = BotCreator.TypeAnswer.VENUE,
@@ -242,7 +251,7 @@ internal fun CreatorCommandFragment.videoNoteAnswer() = with(binding!!)  {
             )
         }
         BotCreator.TypeAnswer.VIDEO_NOTE -> {
-            if(isNotGoodVideo(this, requireContext()))
+            if (isNotGoodVideo(this, requireContext()))
                 return
             viewModel?.chosenBot?.addVideoNotesListener(
                 typeAnswer = BotCreator.TypeAnswer.VIDEO_NOTE,
@@ -252,10 +261,14 @@ internal fun CreatorCommandFragment.videoNoteAnswer() = with(binding!!)  {
     }
     isSuccess = true
 }
-internal fun CreatorCommandFragment.locationAnswer() = with(binding!!)  {
-    when(this.spinnerTypeOfAnswer.selectedItem as BotCreator.TypeAnswer){
+
+internal fun CreatorCommandFragment.locationAnswer(
+    binding: FragmentCreatorCommandBinding,
+    viewModel: TelegramViewModel
+) = with(binding) {
+    when (this.spinnerTypeOfAnswer.selectedItem as BotCreator.TypeAnswer) {
         BotCreator.TypeAnswer.TEXT -> {
-            if(isNotGoodText(this, requireContext()))
+            if (isNotGoodText(this, requireContext()))
                 return
             viewModel?.chosenBot?.addLocationsListener(
                 typeAnswer = BotCreator.TypeAnswer.TEXT,
@@ -263,7 +276,7 @@ internal fun CreatorCommandFragment.locationAnswer() = with(binding!!)  {
             )
         }
         BotCreator.TypeAnswer.ANIMATION -> {
-            if(isNotGoodAnimation(this, requireContext()))
+            if (isNotGoodAnimation(this, requireContext()))
                 return
             viewModel?.chosenBot?.addLocationsListener(
                 typeAnswer = BotCreator.TypeAnswer.ANIMATION,
@@ -271,7 +284,7 @@ internal fun CreatorCommandFragment.locationAnswer() = with(binding!!)  {
             )
         }
         BotCreator.TypeAnswer.AUDIO -> {
-            if(isNotGoodAudio(this, requireContext()))
+            if (isNotGoodAudio(this, requireContext()))
                 return
             viewModel?.chosenBot?.addLocationsListener(
                 typeAnswer = BotCreator.TypeAnswer.AUDIO,
@@ -279,7 +292,7 @@ internal fun CreatorCommandFragment.locationAnswer() = with(binding!!)  {
             )
         }
         BotCreator.TypeAnswer.DOCUMENT -> {
-            if(isNotGoodDocument(this, requireContext()))
+            if (isNotGoodDocument(this, requireContext()))
                 return
             viewModel?.chosenBot?.addLocationsListener(
                 typeAnswer = BotCreator.TypeAnswer.DOCUMENT,
@@ -287,7 +300,7 @@ internal fun CreatorCommandFragment.locationAnswer() = with(binding!!)  {
             )
         }
         BotCreator.TypeAnswer.PHOTO -> {
-            if(isNotGoodPhoto(this, requireContext()))
+            if (isNotGoodPhoto(this, requireContext()))
                 return
             viewModel?.chosenBot?.addLocationsListener(
                 typeAnswer = BotCreator.TypeAnswer.PHOTO,
@@ -295,7 +308,7 @@ internal fun CreatorCommandFragment.locationAnswer() = with(binding!!)  {
             )
         }
         BotCreator.TypeAnswer.VIDEO -> {
-            if(isNotGoodVideo(this, requireContext()))
+            if (isNotGoodVideo(this, requireContext()))
                 return
             viewModel?.chosenBot?.addLocationsListener(
                 typeAnswer = BotCreator.TypeAnswer.VIDEO,
@@ -303,7 +316,7 @@ internal fun CreatorCommandFragment.locationAnswer() = with(binding!!)  {
             )
         }
         BotCreator.TypeAnswer.VOICE -> {
-            if(isNotGoodVoice(this, requireContext()))
+            if (isNotGoodVoice(this, requireContext()))
                 return
             viewModel?.chosenBot?.addLocationsListener(
                 typeAnswer = BotCreator.TypeAnswer.VOICE,
@@ -311,7 +324,7 @@ internal fun CreatorCommandFragment.locationAnswer() = with(binding!!)  {
             )
         }
         BotCreator.TypeAnswer.CONTACT -> {
-            if(isNotGoodContact(this, requireContext()))
+            if (isNotGoodContact(this, requireContext()))
                 return
             viewModel?.chosenBot?.addLocationsListener(
                 typeAnswer = BotCreator.TypeAnswer.CONTACT,
@@ -320,7 +333,7 @@ internal fun CreatorCommandFragment.locationAnswer() = with(binding!!)  {
             )
         }
         BotCreator.TypeAnswer.LOCATION -> {
-            if(isNotGoodLocation(this, requireContext()))
+            if (isNotGoodLocation(this, requireContext()))
                 return
             viewModel?.chosenBot?.addLocationsListener(
                 typeAnswer = BotCreator.TypeAnswer.LOCATION,
@@ -329,14 +342,14 @@ internal fun CreatorCommandFragment.locationAnswer() = with(binding!!)  {
             )
         }
         BotCreator.TypeAnswer.POLL -> {
-            if(isNotGoodPoll(this, requireContext()))
+            if (isNotGoodPoll(this, requireContext()))
                 return
             val pollList = (this.inputAnswer.text.split(';') as ArrayList)
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
                 pollList.removeIf { it.isBlank() || it.isEmpty() }
             } else {
                 val tmp = arrayListOf<String>()
-                pollList.forEach { if(it.isNotEmpty() && it.isNotBlank()) tmp.add(it) }
+                pollList.forEach { if (it.isNotEmpty() && it.isNotBlank()) tmp.add(it) }
                 pollList.clear()
                 pollList.addAll(tmp)
             }
@@ -347,7 +360,7 @@ internal fun CreatorCommandFragment.locationAnswer() = with(binding!!)  {
             )
         }
         BotCreator.TypeAnswer.VENUE -> {
-            if(isNotGoodVenue(this, requireContext()))
+            if (isNotGoodVenue(this, requireContext()))
                 return
             viewModel?.chosenBot?.addLocationsListener(
                 typeAnswer = BotCreator.TypeAnswer.VENUE,
@@ -358,7 +371,7 @@ internal fun CreatorCommandFragment.locationAnswer() = with(binding!!)  {
             )
         }
         BotCreator.TypeAnswer.VIDEO_NOTE -> {
-            if(isNotGoodVideo(this, requireContext()))
+            if (isNotGoodVideo(this, requireContext()))
                 return
             viewModel?.chosenBot?.addLocationsListener(
                 typeAnswer = BotCreator.TypeAnswer.VIDEO_NOTE,
@@ -368,10 +381,14 @@ internal fun CreatorCommandFragment.locationAnswer() = with(binding!!)  {
     }
     isSuccess = true
 }
-internal fun CreatorCommandFragment.contactAnswer() = with(binding!!)  {
-    when(this.spinnerTypeOfAnswer.selectedItem as BotCreator.TypeAnswer){
+
+internal fun CreatorCommandFragment.contactAnswer(
+    binding: FragmentCreatorCommandBinding,
+    viewModel: TelegramViewModel
+) = with(binding) {
+    when (this.spinnerTypeOfAnswer.selectedItem as BotCreator.TypeAnswer) {
         BotCreator.TypeAnswer.TEXT -> {
-            if(isNotGoodText(this, requireContext()))
+            if (isNotGoodText(this, requireContext()))
                 return
             viewModel?.chosenBot?.addContactsListener(
                 typeAnswer = BotCreator.TypeAnswer.TEXT,
@@ -379,7 +396,7 @@ internal fun CreatorCommandFragment.contactAnswer() = with(binding!!)  {
             )
         }
         BotCreator.TypeAnswer.ANIMATION -> {
-            if(isNotGoodAnimation(this, requireContext()))
+            if (isNotGoodAnimation(this, requireContext()))
                 return
             viewModel?.chosenBot?.addContactsListener(
                 typeAnswer = BotCreator.TypeAnswer.ANIMATION,
@@ -387,7 +404,7 @@ internal fun CreatorCommandFragment.contactAnswer() = with(binding!!)  {
             )
         }
         BotCreator.TypeAnswer.AUDIO -> {
-            if(isNotGoodAudio(this, requireContext()))
+            if (isNotGoodAudio(this, requireContext()))
                 return
             viewModel?.chosenBot?.addContactsListener(
                 typeAnswer = BotCreator.TypeAnswer.AUDIO,
@@ -395,7 +412,7 @@ internal fun CreatorCommandFragment.contactAnswer() = with(binding!!)  {
             )
         }
         BotCreator.TypeAnswer.DOCUMENT -> {
-            if(isNotGoodDocument(this, requireContext()))
+            if (isNotGoodDocument(this, requireContext()))
                 return
             viewModel?.chosenBot?.addContactsListener(
                 typeAnswer = BotCreator.TypeAnswer.DOCUMENT,
@@ -403,7 +420,7 @@ internal fun CreatorCommandFragment.contactAnswer() = with(binding!!)  {
             )
         }
         BotCreator.TypeAnswer.PHOTO -> {
-            if(isNotGoodPhoto(this, requireContext()))
+            if (isNotGoodPhoto(this, requireContext()))
                 return
             viewModel?.chosenBot?.addContactsListener(
                 typeAnswer = BotCreator.TypeAnswer.PHOTO,
@@ -411,7 +428,7 @@ internal fun CreatorCommandFragment.contactAnswer() = with(binding!!)  {
             )
         }
         BotCreator.TypeAnswer.VIDEO -> {
-            if(isNotGoodVideo(this, requireContext()))
+            if (isNotGoodVideo(this, requireContext()))
                 return
             viewModel?.chosenBot?.addContactsListener(
                 typeAnswer = BotCreator.TypeAnswer.VIDEO,
@@ -419,7 +436,7 @@ internal fun CreatorCommandFragment.contactAnswer() = with(binding!!)  {
             )
         }
         BotCreator.TypeAnswer.VOICE -> {
-            if(isNotGoodVoice(this, requireContext()))
+            if (isNotGoodVoice(this, requireContext()))
                 return
             viewModel?.chosenBot?.addContactsListener(
                 typeAnswer = BotCreator.TypeAnswer.VOICE,
@@ -427,7 +444,7 @@ internal fun CreatorCommandFragment.contactAnswer() = with(binding!!)  {
             )
         }
         BotCreator.TypeAnswer.CONTACT -> {
-            if(isNotGoodContact(this, requireContext()))
+            if (isNotGoodContact(this, requireContext()))
                 return
             viewModel?.chosenBot?.addContactsListener(
                 typeAnswer = BotCreator.TypeAnswer.CONTACT,
@@ -436,7 +453,7 @@ internal fun CreatorCommandFragment.contactAnswer() = with(binding!!)  {
             )
         }
         BotCreator.TypeAnswer.LOCATION -> {
-            if(isNotGoodLocation(this, requireContext()))
+            if (isNotGoodLocation(this, requireContext()))
                 return
             viewModel?.chosenBot?.addContactsListener(
                 typeAnswer = BotCreator.TypeAnswer.LOCATION,
@@ -445,14 +462,14 @@ internal fun CreatorCommandFragment.contactAnswer() = with(binding!!)  {
             )
         }
         BotCreator.TypeAnswer.POLL -> {
-            if(isNotGoodPoll(this, requireContext()))
+            if (isNotGoodPoll(this, requireContext()))
                 return
             val pollList = (this.inputAnswer.text.split(';') as ArrayList)
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
                 pollList.removeIf { it.isBlank() || it.isEmpty() }
             } else {
                 val tmp = arrayListOf<String>()
-                pollList.forEach { if(it.isNotEmpty() && it.isNotBlank()) tmp.add(it) }
+                pollList.forEach { if (it.isNotEmpty() && it.isNotBlank()) tmp.add(it) }
                 pollList.clear()
                 pollList.addAll(tmp)
             }
@@ -463,7 +480,7 @@ internal fun CreatorCommandFragment.contactAnswer() = with(binding!!)  {
             )
         }
         BotCreator.TypeAnswer.VENUE -> {
-            if(isNotGoodVenue(this, requireContext()))
+            if (isNotGoodVenue(this, requireContext()))
                 return
             viewModel?.chosenBot?.addContactsListener(
                 typeAnswer = BotCreator.TypeAnswer.VENUE,
@@ -474,7 +491,7 @@ internal fun CreatorCommandFragment.contactAnswer() = with(binding!!)  {
             )
         }
         BotCreator.TypeAnswer.VIDEO_NOTE -> {
-            if(isNotGoodVideo(this, requireContext()))
+            if (isNotGoodVideo(this, requireContext()))
                 return
             viewModel?.chosenBot?.addContactsListener(
                 typeAnswer = BotCreator.TypeAnswer.VIDEO_NOTE,
@@ -484,10 +501,14 @@ internal fun CreatorCommandFragment.contactAnswer() = with(binding!!)  {
     }
     isSuccess = true
 }
-internal fun CreatorCommandFragment.voiceAnswer() = with(binding!!)  {
-    when(this.spinnerTypeOfAnswer.selectedItem as BotCreator.TypeAnswer){
+
+internal fun CreatorCommandFragment.voiceAnswer(
+    binding: FragmentCreatorCommandBinding,
+    viewModel: TelegramViewModel
+) = with(binding) {
+    when (this.spinnerTypeOfAnswer.selectedItem as BotCreator.TypeAnswer) {
         BotCreator.TypeAnswer.TEXT -> {
-            if(isNotGoodText(this, requireContext()))
+            if (isNotGoodText(this, requireContext()))
                 return
             viewModel?.chosenBot?.addVoicesListener(
                 typeAnswer = BotCreator.TypeAnswer.TEXT,
@@ -495,7 +516,7 @@ internal fun CreatorCommandFragment.voiceAnswer() = with(binding!!)  {
             )
         }
         BotCreator.TypeAnswer.ANIMATION -> {
-            if(isNotGoodAnimation(this, requireContext()))
+            if (isNotGoodAnimation(this, requireContext()))
                 return
             viewModel?.chosenBot?.addVoicesListener(
                 typeAnswer = BotCreator.TypeAnswer.ANIMATION,
@@ -503,7 +524,7 @@ internal fun CreatorCommandFragment.voiceAnswer() = with(binding!!)  {
             )
         }
         BotCreator.TypeAnswer.AUDIO -> {
-            if(isNotGoodAudio(this, requireContext()))
+            if (isNotGoodAudio(this, requireContext()))
                 return
             viewModel?.chosenBot?.addVoicesListener(
                 typeAnswer = BotCreator.TypeAnswer.AUDIO,
@@ -511,7 +532,7 @@ internal fun CreatorCommandFragment.voiceAnswer() = with(binding!!)  {
             )
         }
         BotCreator.TypeAnswer.DOCUMENT -> {
-            if(isNotGoodDocument(this, requireContext()))
+            if (isNotGoodDocument(this, requireContext()))
                 return
             viewModel?.chosenBot?.addVoicesListener(
                 typeAnswer = BotCreator.TypeAnswer.DOCUMENT,
@@ -519,7 +540,7 @@ internal fun CreatorCommandFragment.voiceAnswer() = with(binding!!)  {
             )
         }
         BotCreator.TypeAnswer.PHOTO -> {
-            if(isNotGoodPhoto(this, requireContext()))
+            if (isNotGoodPhoto(this, requireContext()))
                 return
             viewModel?.chosenBot?.addVoicesListener(
                 typeAnswer = BotCreator.TypeAnswer.PHOTO,
@@ -527,7 +548,7 @@ internal fun CreatorCommandFragment.voiceAnswer() = with(binding!!)  {
             )
         }
         BotCreator.TypeAnswer.VIDEO -> {
-            if(isNotGoodVideo(this, requireContext()))
+            if (isNotGoodVideo(this, requireContext()))
                 return
             viewModel?.chosenBot?.addVoicesListener(
                 typeAnswer = BotCreator.TypeAnswer.VIDEO,
@@ -535,7 +556,7 @@ internal fun CreatorCommandFragment.voiceAnswer() = with(binding!!)  {
             )
         }
         BotCreator.TypeAnswer.VOICE -> {
-            if(isNotGoodVoice(this, requireContext()))
+            if (isNotGoodVoice(this, requireContext()))
                 return
             viewModel?.chosenBot?.addVoicesListener(
                 typeAnswer = BotCreator.TypeAnswer.VOICE,
@@ -543,7 +564,7 @@ internal fun CreatorCommandFragment.voiceAnswer() = with(binding!!)  {
             )
         }
         BotCreator.TypeAnswer.CONTACT -> {
-            if(isNotGoodContact(this, requireContext()))
+            if (isNotGoodContact(this, requireContext()))
                 return
             viewModel?.chosenBot?.addVoicesListener(
                 typeAnswer = BotCreator.TypeAnswer.CONTACT,
@@ -552,7 +573,7 @@ internal fun CreatorCommandFragment.voiceAnswer() = with(binding!!)  {
             )
         }
         BotCreator.TypeAnswer.LOCATION -> {
-            if(isNotGoodLocation(this, requireContext()))
+            if (isNotGoodLocation(this, requireContext()))
                 return
             viewModel?.chosenBot?.addVoicesListener(
                 typeAnswer = BotCreator.TypeAnswer.LOCATION,
@@ -561,14 +582,14 @@ internal fun CreatorCommandFragment.voiceAnswer() = with(binding!!)  {
             )
         }
         BotCreator.TypeAnswer.POLL -> {
-            if(isNotGoodPoll(this, requireContext()))
+            if (isNotGoodPoll(this, requireContext()))
                 return
             val pollList = (this.inputAnswer.text.split(';') as ArrayList)
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
                 pollList.removeIf { it.isBlank() || it.isEmpty() }
             } else {
                 val tmp = arrayListOf<String>()
-                pollList.forEach { if(it.isNotEmpty() && it.isNotBlank()) tmp.add(it) }
+                pollList.forEach { if (it.isNotEmpty() && it.isNotBlank()) tmp.add(it) }
                 pollList.clear()
                 pollList.addAll(tmp)
             }
@@ -579,7 +600,7 @@ internal fun CreatorCommandFragment.voiceAnswer() = with(binding!!)  {
             )
         }
         BotCreator.TypeAnswer.VENUE -> {
-            if(isNotGoodVenue(this, requireContext()))
+            if (isNotGoodVenue(this, requireContext()))
                 return
             viewModel?.chosenBot?.addVoicesListener(
                 typeAnswer = BotCreator.TypeAnswer.VENUE,
@@ -590,7 +611,7 @@ internal fun CreatorCommandFragment.voiceAnswer() = with(binding!!)  {
             )
         }
         BotCreator.TypeAnswer.VIDEO_NOTE -> {
-            if(isNotGoodVideo(this, requireContext()))
+            if (isNotGoodVideo(this, requireContext()))
                 return
             viewModel?.chosenBot?.addVoicesListener(
                 typeAnswer = BotCreator.TypeAnswer.VIDEO_NOTE,
@@ -600,10 +621,14 @@ internal fun CreatorCommandFragment.voiceAnswer() = with(binding!!)  {
     }
     isSuccess = true
 }
-internal fun CreatorCommandFragment.videoAnswer() = with(binding!!)  {
-    when(this.spinnerTypeOfAnswer.selectedItem as BotCreator.TypeAnswer){
+
+internal fun CreatorCommandFragment.videoAnswer(
+    binding: FragmentCreatorCommandBinding,
+    viewModel: TelegramViewModel
+) = with(binding) {
+    when (this.spinnerTypeOfAnswer.selectedItem as BotCreator.TypeAnswer) {
         BotCreator.TypeAnswer.TEXT -> {
-            if(isNotGoodText(this, requireContext()))
+            if (isNotGoodText(this, requireContext()))
                 return
             viewModel?.chosenBot?.addVideosListener(
                 typeAnswer = BotCreator.TypeAnswer.TEXT,
@@ -611,7 +636,7 @@ internal fun CreatorCommandFragment.videoAnswer() = with(binding!!)  {
             )
         }
         BotCreator.TypeAnswer.ANIMATION -> {
-            if(isNotGoodAnimation(this, requireContext()))
+            if (isNotGoodAnimation(this, requireContext()))
                 return
             viewModel?.chosenBot?.addVideosListener(
                 typeAnswer = BotCreator.TypeAnswer.ANIMATION,
@@ -619,7 +644,7 @@ internal fun CreatorCommandFragment.videoAnswer() = with(binding!!)  {
             )
         }
         BotCreator.TypeAnswer.AUDIO -> {
-            if(isNotGoodAudio(this, requireContext()))
+            if (isNotGoodAudio(this, requireContext()))
                 return
             viewModel?.chosenBot?.addVideosListener(
                 typeAnswer = BotCreator.TypeAnswer.AUDIO,
@@ -627,7 +652,7 @@ internal fun CreatorCommandFragment.videoAnswer() = with(binding!!)  {
             )
         }
         BotCreator.TypeAnswer.DOCUMENT -> {
-            if(isNotGoodDocument(this, requireContext()))
+            if (isNotGoodDocument(this, requireContext()))
                 return
             viewModel?.chosenBot?.addVideosListener(
                 typeAnswer = BotCreator.TypeAnswer.DOCUMENT,
@@ -635,7 +660,7 @@ internal fun CreatorCommandFragment.videoAnswer() = with(binding!!)  {
             )
         }
         BotCreator.TypeAnswer.PHOTO -> {
-            if(isNotGoodPhoto(this, requireContext()))
+            if (isNotGoodPhoto(this, requireContext()))
                 return
             viewModel?.chosenBot?.addVideosListener(
                 typeAnswer = BotCreator.TypeAnswer.PHOTO,
@@ -643,7 +668,7 @@ internal fun CreatorCommandFragment.videoAnswer() = with(binding!!)  {
             )
         }
         BotCreator.TypeAnswer.VIDEO -> {
-            if(isNotGoodVideo(this, requireContext()))
+            if (isNotGoodVideo(this, requireContext()))
                 return
             viewModel?.chosenBot?.addVideosListener(
                 typeAnswer = BotCreator.TypeAnswer.VIDEO,
@@ -651,7 +676,7 @@ internal fun CreatorCommandFragment.videoAnswer() = with(binding!!)  {
             )
         }
         BotCreator.TypeAnswer.VOICE -> {
-            if(isNotGoodVoice(this, requireContext()))
+            if (isNotGoodVoice(this, requireContext()))
                 return
             viewModel?.chosenBot?.addVideosListener(
                 typeAnswer = BotCreator.TypeAnswer.VOICE,
@@ -659,7 +684,7 @@ internal fun CreatorCommandFragment.videoAnswer() = with(binding!!)  {
             )
         }
         BotCreator.TypeAnswer.CONTACT -> {
-            if(isNotGoodContact(this, requireContext()))
+            if (isNotGoodContact(this, requireContext()))
                 return
             viewModel?.chosenBot?.addVideosListener(
                 typeAnswer = BotCreator.TypeAnswer.CONTACT,
@@ -668,7 +693,7 @@ internal fun CreatorCommandFragment.videoAnswer() = with(binding!!)  {
             )
         }
         BotCreator.TypeAnswer.LOCATION -> {
-            if(isNotGoodLocation(this, requireContext()))
+            if (isNotGoodLocation(this, requireContext()))
                 return
             viewModel?.chosenBot?.addVideosListener(
                 typeAnswer = BotCreator.TypeAnswer.LOCATION,
@@ -677,14 +702,14 @@ internal fun CreatorCommandFragment.videoAnswer() = with(binding!!)  {
             )
         }
         BotCreator.TypeAnswer.POLL -> {
-            if(isNotGoodPoll(this, requireContext()))
+            if (isNotGoodPoll(this, requireContext()))
                 return
             val pollList = (this.inputAnswer.text.split(';') as ArrayList)
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
                 pollList.removeIf { it.isBlank() || it.isEmpty() }
             } else {
                 val tmp = arrayListOf<String>()
-                pollList.forEach { if(it.isNotEmpty() && it.isNotBlank()) tmp.add(it) }
+                pollList.forEach { if (it.isNotEmpty() && it.isNotBlank()) tmp.add(it) }
                 pollList.clear()
                 pollList.addAll(tmp)
             }
@@ -695,7 +720,7 @@ internal fun CreatorCommandFragment.videoAnswer() = with(binding!!)  {
             )
         }
         BotCreator.TypeAnswer.VENUE -> {
-            if(isNotGoodVenue(this, requireContext()))
+            if (isNotGoodVenue(this, requireContext()))
                 return
             viewModel?.chosenBot?.addVideosListener(
                 typeAnswer = BotCreator.TypeAnswer.VENUE,
@@ -706,7 +731,7 @@ internal fun CreatorCommandFragment.videoAnswer() = with(binding!!)  {
             )
         }
         BotCreator.TypeAnswer.VIDEO_NOTE -> {
-            if(isNotGoodVideo(this, requireContext()))
+            if (isNotGoodVideo(this, requireContext()))
                 return
             viewModel?.chosenBot?.addVideosListener(
                 typeAnswer = BotCreator.TypeAnswer.VIDEO_NOTE,
@@ -716,10 +741,14 @@ internal fun CreatorCommandFragment.videoAnswer() = with(binding!!)  {
     }
     isSuccess = true
 }
-internal fun CreatorCommandFragment.photoAnswer() = with(binding!!)  {
-    when(this.spinnerTypeOfAnswer.selectedItem as BotCreator.TypeAnswer){
+
+internal fun CreatorCommandFragment.photoAnswer(
+    binding: FragmentCreatorCommandBinding,
+    viewModel: TelegramViewModel
+) = with(binding) {
+    when (this.spinnerTypeOfAnswer.selectedItem as BotCreator.TypeAnswer) {
         BotCreator.TypeAnswer.TEXT -> {
-            if(isNotGoodText(this, requireContext()))
+            if (isNotGoodText(this, requireContext()))
                 return
             viewModel?.chosenBot?.addPhotosListener(
                 typeAnswer = BotCreator.TypeAnswer.TEXT,
@@ -727,7 +756,7 @@ internal fun CreatorCommandFragment.photoAnswer() = with(binding!!)  {
             )
         }
         BotCreator.TypeAnswer.ANIMATION -> {
-            if(isNotGoodAnimation(this, requireContext()))
+            if (isNotGoodAnimation(this, requireContext()))
                 return
             viewModel?.chosenBot?.addPhotosListener(
                 typeAnswer = BotCreator.TypeAnswer.ANIMATION,
@@ -735,7 +764,7 @@ internal fun CreatorCommandFragment.photoAnswer() = with(binding!!)  {
             )
         }
         BotCreator.TypeAnswer.AUDIO -> {
-            if(isNotGoodAudio(this, requireContext()))
+            if (isNotGoodAudio(this, requireContext()))
                 return
             viewModel?.chosenBot?.addPhotosListener(
                 typeAnswer = BotCreator.TypeAnswer.AUDIO,
@@ -743,7 +772,7 @@ internal fun CreatorCommandFragment.photoAnswer() = with(binding!!)  {
             )
         }
         BotCreator.TypeAnswer.DOCUMENT -> {
-            if(isNotGoodDocument(this, requireContext()))
+            if (isNotGoodDocument(this, requireContext()))
                 return
             viewModel?.chosenBot?.addPhotosListener(
                 typeAnswer = BotCreator.TypeAnswer.DOCUMENT,
@@ -751,7 +780,7 @@ internal fun CreatorCommandFragment.photoAnswer() = with(binding!!)  {
             )
         }
         BotCreator.TypeAnswer.PHOTO -> {
-            if(isNotGoodPhoto(this, requireContext()))
+            if (isNotGoodPhoto(this, requireContext()))
                 return
             viewModel?.chosenBot?.addPhotosListener(
                 typeAnswer = BotCreator.TypeAnswer.PHOTO,
@@ -759,7 +788,7 @@ internal fun CreatorCommandFragment.photoAnswer() = with(binding!!)  {
             )
         }
         BotCreator.TypeAnswer.VIDEO -> {
-            if(isNotGoodVideo(this, requireContext()))
+            if (isNotGoodVideo(this, requireContext()))
                 return
             viewModel?.chosenBot?.addPhotosListener(
                 typeAnswer = BotCreator.TypeAnswer.VIDEO,
@@ -767,7 +796,7 @@ internal fun CreatorCommandFragment.photoAnswer() = with(binding!!)  {
             )
         }
         BotCreator.TypeAnswer.VOICE -> {
-            if(isNotGoodVoice(this, requireContext()))
+            if (isNotGoodVoice(this, requireContext()))
                 return
             viewModel?.chosenBot?.addPhotosListener(
                 typeAnswer = BotCreator.TypeAnswer.VOICE,
@@ -775,7 +804,7 @@ internal fun CreatorCommandFragment.photoAnswer() = with(binding!!)  {
             )
         }
         BotCreator.TypeAnswer.CONTACT -> {
-            if(isNotGoodContact(this, requireContext()))
+            if (isNotGoodContact(this, requireContext()))
                 return
             viewModel?.chosenBot?.addPhotosListener(
                 typeAnswer = BotCreator.TypeAnswer.CONTACT,
@@ -784,7 +813,7 @@ internal fun CreatorCommandFragment.photoAnswer() = with(binding!!)  {
             )
         }
         BotCreator.TypeAnswer.LOCATION -> {
-            if(isNotGoodLocation(this, requireContext()))
+            if (isNotGoodLocation(this, requireContext()))
                 return
             viewModel?.chosenBot?.addPhotosListener(
                 typeAnswer = BotCreator.TypeAnswer.LOCATION,
@@ -793,14 +822,14 @@ internal fun CreatorCommandFragment.photoAnswer() = with(binding!!)  {
             )
         }
         BotCreator.TypeAnswer.POLL -> {
-            if(isNotGoodPoll(this, requireContext()))
+            if (isNotGoodPoll(this, requireContext()))
                 return
             val pollList = (this.inputAnswer.text.split(';') as ArrayList)
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
                 pollList.removeIf { it.isBlank() || it.isEmpty() }
             } else {
                 val tmp = arrayListOf<String>()
-                pollList.forEach { if(it.isNotEmpty() && it.isNotBlank()) tmp.add(it) }
+                pollList.forEach { if (it.isNotEmpty() && it.isNotBlank()) tmp.add(it) }
                 pollList.clear()
                 pollList.addAll(tmp)
             }
@@ -811,7 +840,7 @@ internal fun CreatorCommandFragment.photoAnswer() = with(binding!!)  {
             )
         }
         BotCreator.TypeAnswer.VENUE -> {
-            if(isNotGoodVenue(this, requireContext()))
+            if (isNotGoodVenue(this, requireContext()))
                 return
             viewModel?.chosenBot?.addPhotosListener(
                 typeAnswer = BotCreator.TypeAnswer.VENUE,
@@ -822,7 +851,7 @@ internal fun CreatorCommandFragment.photoAnswer() = with(binding!!)  {
             )
         }
         BotCreator.TypeAnswer.VIDEO_NOTE -> {
-            if(isNotGoodVideo(this, requireContext()))
+            if (isNotGoodVideo(this, requireContext()))
                 return
             viewModel?.chosenBot?.addPhotosListener(
                 typeAnswer = BotCreator.TypeAnswer.VIDEO_NOTE,
@@ -832,10 +861,14 @@ internal fun CreatorCommandFragment.photoAnswer() = with(binding!!)  {
     }
     isSuccess = true
 }
-internal fun CreatorCommandFragment.documentAnswer() = with(binding!!)  {
-    when(this.spinnerTypeOfAnswer.selectedItem as BotCreator.TypeAnswer){
+
+internal fun CreatorCommandFragment.documentAnswer(
+    binding: FragmentCreatorCommandBinding,
+    viewModel: TelegramViewModel
+) = with(binding) {
+    when (this.spinnerTypeOfAnswer.selectedItem as BotCreator.TypeAnswer) {
         BotCreator.TypeAnswer.TEXT -> {
-            if(isNotGoodText(this, requireContext()))
+            if (isNotGoodText(this, requireContext()))
                 return
             viewModel?.chosenBot?.addDocumentListener(
                 typeAnswer = BotCreator.TypeAnswer.TEXT,
@@ -843,7 +876,7 @@ internal fun CreatorCommandFragment.documentAnswer() = with(binding!!)  {
             )
         }
         BotCreator.TypeAnswer.ANIMATION -> {
-            if(isNotGoodAnimation(this, requireContext()))
+            if (isNotGoodAnimation(this, requireContext()))
                 return
             viewModel?.chosenBot?.addDocumentListener(
                 typeAnswer = BotCreator.TypeAnswer.ANIMATION,
@@ -851,7 +884,7 @@ internal fun CreatorCommandFragment.documentAnswer() = with(binding!!)  {
             )
         }
         BotCreator.TypeAnswer.AUDIO -> {
-            if(isNotGoodAudio(this, requireContext()))
+            if (isNotGoodAudio(this, requireContext()))
                 return
             viewModel?.chosenBot?.addDocumentListener(
                 typeAnswer = BotCreator.TypeAnswer.AUDIO,
@@ -859,7 +892,7 @@ internal fun CreatorCommandFragment.documentAnswer() = with(binding!!)  {
             )
         }
         BotCreator.TypeAnswer.DOCUMENT -> {
-            if(isNotGoodDocument(this, requireContext()))
+            if (isNotGoodDocument(this, requireContext()))
                 return
             viewModel?.chosenBot?.addDocumentListener(
                 typeAnswer = BotCreator.TypeAnswer.DOCUMENT,
@@ -867,7 +900,7 @@ internal fun CreatorCommandFragment.documentAnswer() = with(binding!!)  {
             )
         }
         BotCreator.TypeAnswer.PHOTO -> {
-            if(isNotGoodPhoto(this, requireContext()))
+            if (isNotGoodPhoto(this, requireContext()))
                 return
             viewModel?.chosenBot?.addDocumentListener(
                 typeAnswer = BotCreator.TypeAnswer.PHOTO,
@@ -875,7 +908,7 @@ internal fun CreatorCommandFragment.documentAnswer() = with(binding!!)  {
             )
         }
         BotCreator.TypeAnswer.VIDEO -> {
-            if(isNotGoodVideo(this, requireContext()))
+            if (isNotGoodVideo(this, requireContext()))
                 return
             viewModel?.chosenBot?.addDocumentListener(
                 typeAnswer = BotCreator.TypeAnswer.VIDEO,
@@ -883,7 +916,7 @@ internal fun CreatorCommandFragment.documentAnswer() = with(binding!!)  {
             )
         }
         BotCreator.TypeAnswer.VOICE -> {
-            if(isNotGoodVoice(this, requireContext()))
+            if (isNotGoodVoice(this, requireContext()))
                 return
             viewModel?.chosenBot?.addDocumentListener(
                 typeAnswer = BotCreator.TypeAnswer.VOICE,
@@ -891,7 +924,7 @@ internal fun CreatorCommandFragment.documentAnswer() = with(binding!!)  {
             )
         }
         BotCreator.TypeAnswer.CONTACT -> {
-            if(isNotGoodContact(this, requireContext()))
+            if (isNotGoodContact(this, requireContext()))
                 return
             viewModel?.chosenBot?.addDocumentListener(
                 typeAnswer = BotCreator.TypeAnswer.CONTACT,
@@ -900,7 +933,7 @@ internal fun CreatorCommandFragment.documentAnswer() = with(binding!!)  {
             )
         }
         BotCreator.TypeAnswer.LOCATION -> {
-            if(isNotGoodLocation(this, requireContext()))
+            if (isNotGoodLocation(this, requireContext()))
                 return
             viewModel?.chosenBot?.addDocumentListener(
                 typeAnswer = BotCreator.TypeAnswer.LOCATION,
@@ -909,14 +942,14 @@ internal fun CreatorCommandFragment.documentAnswer() = with(binding!!)  {
             )
         }
         BotCreator.TypeAnswer.POLL -> {
-            if(isNotGoodPoll(this, requireContext()))
+            if (isNotGoodPoll(this, requireContext()))
                 return
             val pollList = (this.inputAnswer.text.split(';') as ArrayList)
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
                 pollList.removeIf { it.isBlank() || it.isEmpty() }
             } else {
                 val tmp = arrayListOf<String>()
-                pollList.forEach { if(it.isNotEmpty() && it.isNotBlank()) tmp.add(it) }
+                pollList.forEach { if (it.isNotEmpty() && it.isNotBlank()) tmp.add(it) }
                 pollList.clear()
                 pollList.addAll(tmp)
             }
@@ -927,7 +960,7 @@ internal fun CreatorCommandFragment.documentAnswer() = with(binding!!)  {
             )
         }
         BotCreator.TypeAnswer.VENUE -> {
-            if(isNotGoodVenue(this, requireContext()))
+            if (isNotGoodVenue(this, requireContext()))
                 return
             viewModel?.chosenBot?.addDocumentListener(
                 typeAnswer = BotCreator.TypeAnswer.VENUE,
@@ -938,7 +971,7 @@ internal fun CreatorCommandFragment.documentAnswer() = with(binding!!)  {
             )
         }
         BotCreator.TypeAnswer.VIDEO_NOTE -> {
-            if(isNotGoodVideo(this, requireContext()))
+            if (isNotGoodVideo(this, requireContext()))
                 return
             viewModel?.chosenBot?.addDocumentListener(
                 typeAnswer = BotCreator.TypeAnswer.VIDEO_NOTE,
@@ -948,10 +981,14 @@ internal fun CreatorCommandFragment.documentAnswer() = with(binding!!)  {
     }
     isSuccess = true
 }
-internal fun CreatorCommandFragment.animationAnswer() = with(binding!!)  {
-    when(this.spinnerTypeOfAnswer.selectedItem as BotCreator.TypeAnswer){
+
+internal fun CreatorCommandFragment.animationAnswer(
+    binding: FragmentCreatorCommandBinding,
+    viewModel: TelegramViewModel
+) = with(binding) {
+    when (this.spinnerTypeOfAnswer.selectedItem as BotCreator.TypeAnswer) {
         BotCreator.TypeAnswer.TEXT -> {
-            if(isNotGoodText(this, requireContext()))
+            if (isNotGoodText(this, requireContext()))
                 return
             viewModel?.chosenBot?.addAnimationListener(
                 typeAnswer = BotCreator.TypeAnswer.TEXT,
@@ -959,7 +996,7 @@ internal fun CreatorCommandFragment.animationAnswer() = with(binding!!)  {
             )
         }
         BotCreator.TypeAnswer.ANIMATION -> {
-            if(isNotGoodAnimation(this, requireContext()))
+            if (isNotGoodAnimation(this, requireContext()))
                 return
             viewModel?.chosenBot?.addAnimationListener(
                 typeAnswer = BotCreator.TypeAnswer.ANIMATION,
@@ -967,7 +1004,7 @@ internal fun CreatorCommandFragment.animationAnswer() = with(binding!!)  {
             )
         }
         BotCreator.TypeAnswer.AUDIO -> {
-            if(isNotGoodAudio(this, requireContext()))
+            if (isNotGoodAudio(this, requireContext()))
                 return
             viewModel?.chosenBot?.addAnimationListener(
                 typeAnswer = BotCreator.TypeAnswer.AUDIO,
@@ -975,7 +1012,7 @@ internal fun CreatorCommandFragment.animationAnswer() = with(binding!!)  {
             )
         }
         BotCreator.TypeAnswer.DOCUMENT -> {
-            if(isNotGoodDocument(this, requireContext()))
+            if (isNotGoodDocument(this, requireContext()))
                 return
             viewModel?.chosenBot?.addAnimationListener(
                 typeAnswer = BotCreator.TypeAnswer.DOCUMENT,
@@ -983,7 +1020,7 @@ internal fun CreatorCommandFragment.animationAnswer() = with(binding!!)  {
             )
         }
         BotCreator.TypeAnswer.PHOTO -> {
-            if(isNotGoodPhoto(this, requireContext()))
+            if (isNotGoodPhoto(this, requireContext()))
                 return
             viewModel?.chosenBot?.addAnimationListener(
                 typeAnswer = BotCreator.TypeAnswer.PHOTO,
@@ -991,7 +1028,7 @@ internal fun CreatorCommandFragment.animationAnswer() = with(binding!!)  {
             )
         }
         BotCreator.TypeAnswer.VIDEO -> {
-            if(isNotGoodVideo(this, requireContext()))
+            if (isNotGoodVideo(this, requireContext()))
                 return
             viewModel?.chosenBot?.addAnimationListener(
                 typeAnswer = BotCreator.TypeAnswer.VIDEO,
@@ -999,7 +1036,7 @@ internal fun CreatorCommandFragment.animationAnswer() = with(binding!!)  {
             )
         }
         BotCreator.TypeAnswer.VOICE -> {
-            if(isNotGoodVoice(this, requireContext()))
+            if (isNotGoodVoice(this, requireContext()))
                 return
             viewModel?.chosenBot?.addAnimationListener(
                 typeAnswer = BotCreator.TypeAnswer.VOICE,
@@ -1007,7 +1044,7 @@ internal fun CreatorCommandFragment.animationAnswer() = with(binding!!)  {
             )
         }
         BotCreator.TypeAnswer.CONTACT -> {
-            if(isNotGoodContact(this, requireContext()))
+            if (isNotGoodContact(this, requireContext()))
                 return
             viewModel?.chosenBot?.addAnimationListener(
                 typeAnswer = BotCreator.TypeAnswer.CONTACT,
@@ -1016,7 +1053,7 @@ internal fun CreatorCommandFragment.animationAnswer() = with(binding!!)  {
             )
         }
         BotCreator.TypeAnswer.LOCATION -> {
-            if(isNotGoodLocation(this, requireContext()))
+            if (isNotGoodLocation(this, requireContext()))
                 return
             viewModel?.chosenBot?.addAnimationListener(
                 typeAnswer = BotCreator.TypeAnswer.LOCATION,
@@ -1025,14 +1062,14 @@ internal fun CreatorCommandFragment.animationAnswer() = with(binding!!)  {
             )
         }
         BotCreator.TypeAnswer.POLL -> {
-            if(isNotGoodPoll(this, requireContext()))
+            if (isNotGoodPoll(this, requireContext()))
                 return
             val pollList = (this.inputAnswer.text.split(';') as ArrayList)
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
                 pollList.removeIf { it.isBlank() || it.isEmpty() }
             } else {
                 val tmp = arrayListOf<String>()
-                pollList.forEach { if(it.isNotEmpty() && it.isNotBlank()) tmp.add(it) }
+                pollList.forEach { if (it.isNotEmpty() && it.isNotBlank()) tmp.add(it) }
                 pollList.clear()
                 pollList.addAll(tmp)
             }
@@ -1043,7 +1080,7 @@ internal fun CreatorCommandFragment.animationAnswer() = with(binding!!)  {
             )
         }
         BotCreator.TypeAnswer.VENUE -> {
-            if(isNotGoodVenue(this, requireContext()))
+            if (isNotGoodVenue(this, requireContext()))
                 return
             viewModel?.chosenBot?.addAnimationListener(
                 typeAnswer = BotCreator.TypeAnswer.VENUE,
@@ -1054,7 +1091,7 @@ internal fun CreatorCommandFragment.animationAnswer() = with(binding!!)  {
             )
         }
         BotCreator.TypeAnswer.VIDEO_NOTE -> {
-            if(isNotGoodVideo(this, requireContext()))
+            if (isNotGoodVideo(this, requireContext()))
                 return
             viewModel?.chosenBot?.addAnimationListener(
                 typeAnswer = BotCreator.TypeAnswer.VIDEO_NOTE,
@@ -1064,10 +1101,14 @@ internal fun CreatorCommandFragment.animationAnswer() = with(binding!!)  {
     }
     isSuccess = true
 }
-internal fun CreatorCommandFragment.commandAnswer() = with(binding!!)  {
-    when(this.spinnerTypeOfAnswer.selectedItem as BotCreator.TypeAnswer){
+
+internal fun CreatorCommandFragment.commandAnswer(
+    binding: FragmentCreatorCommandBinding,
+    viewModel: TelegramViewModel
+) = with(binding) {
+    when (this.spinnerTypeOfAnswer.selectedItem as BotCreator.TypeAnswer) {
         BotCreator.TypeAnswer.TEXT -> {
-            if(isNotGoodText(this, requireContext()))
+            if (isNotGoodText(this, requireContext()))
                 return
             viewModel?.chosenBot?.addCommandListener(
                 command = this.inputCommand.text.toString(),
@@ -1076,7 +1117,7 @@ internal fun CreatorCommandFragment.commandAnswer() = with(binding!!)  {
             )
         }
         BotCreator.TypeAnswer.ANIMATION -> {
-            if(isNotGoodAnimation(this, requireContext()))
+            if (isNotGoodAnimation(this, requireContext()))
                 return
             viewModel?.chosenBot?.addCommandListener(
                 command = this.inputCommand.text.toString(),
@@ -1085,7 +1126,7 @@ internal fun CreatorCommandFragment.commandAnswer() = with(binding!!)  {
             )
         }
         BotCreator.TypeAnswer.AUDIO -> {
-            if(isNotGoodAudio(this, requireContext()))
+            if (isNotGoodAudio(this, requireContext()))
                 return
             viewModel?.chosenBot?.addCommandListener(
                 command = this.inputCommand.text.toString(),
@@ -1094,7 +1135,7 @@ internal fun CreatorCommandFragment.commandAnswer() = with(binding!!)  {
             )
         }
         BotCreator.TypeAnswer.DOCUMENT -> {
-            if(isNotGoodDocument(this, requireContext()))
+            if (isNotGoodDocument(this, requireContext()))
                 return
             viewModel?.chosenBot?.addCommandListener(
                 command = this.inputCommand.text.toString(),
@@ -1103,7 +1144,7 @@ internal fun CreatorCommandFragment.commandAnswer() = with(binding!!)  {
             )
         }
         BotCreator.TypeAnswer.PHOTO -> {
-            if(isNotGoodPhoto(this, requireContext()))
+            if (isNotGoodPhoto(this, requireContext()))
                 return
             viewModel?.chosenBot?.addCommandListener(
                 command = this.inputCommand.text.toString(),
@@ -1112,7 +1153,7 @@ internal fun CreatorCommandFragment.commandAnswer() = with(binding!!)  {
             )
         }
         BotCreator.TypeAnswer.VIDEO -> {
-            if(isNotGoodVideo(this, requireContext()))
+            if (isNotGoodVideo(this, requireContext()))
                 return
             viewModel?.chosenBot?.addCommandListener(
                 command = this.inputCommand.text.toString(),
@@ -1121,7 +1162,7 @@ internal fun CreatorCommandFragment.commandAnswer() = with(binding!!)  {
             )
         }
         BotCreator.TypeAnswer.VOICE -> {
-            if(isNotGoodVoice(this, requireContext()))
+            if (isNotGoodVoice(this, requireContext()))
                 return
             viewModel?.chosenBot?.addCommandListener(
                 command = this.inputCommand.text.toString(),
@@ -1130,7 +1171,7 @@ internal fun CreatorCommandFragment.commandAnswer() = with(binding!!)  {
             )
         }
         BotCreator.TypeAnswer.CONTACT -> {
-            if(isNotGoodContact(this, requireContext()))
+            if (isNotGoodContact(this, requireContext()))
                 return
             viewModel?.chosenBot?.addCommandListener(
                 command = this.inputCommand.text.toString(),
@@ -1140,7 +1181,7 @@ internal fun CreatorCommandFragment.commandAnswer() = with(binding!!)  {
             )
         }
         BotCreator.TypeAnswer.LOCATION -> {
-            if(isNotGoodLocation(this, requireContext()))
+            if (isNotGoodLocation(this, requireContext()))
                 return
             viewModel?.chosenBot?.addCommandListener(
                 command = this.inputCommand.text.toString(),
@@ -1150,14 +1191,14 @@ internal fun CreatorCommandFragment.commandAnswer() = with(binding!!)  {
             )
         }
         BotCreator.TypeAnswer.POLL -> {
-            if(isNotGoodPoll(this, requireContext()))
+            if (isNotGoodPoll(this, requireContext()))
                 return
             val pollList = (this.inputAnswer.text.split(';') as ArrayList)
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
                 pollList.removeIf { it.isBlank() || it.isEmpty() }
             } else {
                 val tmp = arrayListOf<String>()
-                pollList.forEach { if(it.isNotEmpty() && it.isNotBlank()) tmp.add(it) }
+                pollList.forEach { if (it.isNotEmpty() && it.isNotBlank()) tmp.add(it) }
                 pollList.clear()
                 pollList.addAll(tmp)
             }
@@ -1169,7 +1210,7 @@ internal fun CreatorCommandFragment.commandAnswer() = with(binding!!)  {
             )
         }
         BotCreator.TypeAnswer.VENUE -> {
-            if(isNotGoodVenue(this, requireContext()))
+            if (isNotGoodVenue(this, requireContext()))
                 return
             viewModel?.chosenBot?.addCommandListener(
                 command = this.inputCommand.text.toString(),
@@ -1181,7 +1222,7 @@ internal fun CreatorCommandFragment.commandAnswer() = with(binding!!)  {
             )
         }
         BotCreator.TypeAnswer.VIDEO_NOTE -> {
-            if(isNotGoodVideo(this, requireContext()))
+            if (isNotGoodVideo(this, requireContext()))
                 return
             viewModel?.chosenBot?.addCommandListener(
                 command = this.inputCommand.text.toString(),
@@ -1192,10 +1233,14 @@ internal fun CreatorCommandFragment.commandAnswer() = with(binding!!)  {
     }
     isSuccess = true
 }
-internal fun CreatorCommandFragment.textAnswer() = with(binding!!) {
-    when(this.spinnerTypeOfAnswer.selectedItem as BotCreator.TypeAnswer){
+
+internal fun CreatorCommandFragment.textAnswer(
+    binding: FragmentCreatorCommandBinding,
+    viewModel: TelegramViewModel
+) = with(binding) {
+    when (this.spinnerTypeOfAnswer.selectedItem as BotCreator.TypeAnswer) {
         BotCreator.TypeAnswer.TEXT -> {
-            if(isNotGoodText(this, requireContext()))
+            if (isNotGoodText(this, requireContext()))
                 return
             viewModel?.chosenBot?.addTextListener(
                 text = this.inputCommand.text.toString(),
@@ -1204,7 +1249,7 @@ internal fun CreatorCommandFragment.textAnswer() = with(binding!!) {
             )
         }
         BotCreator.TypeAnswer.ANIMATION -> {
-            if(isNotGoodAnimation(this, requireContext()))
+            if (isNotGoodAnimation(this, requireContext()))
                 return
             viewModel?.chosenBot?.addTextListener(
                 text = this.inputCommand.text.toString(),
@@ -1213,7 +1258,7 @@ internal fun CreatorCommandFragment.textAnswer() = with(binding!!) {
             )
         }
         BotCreator.TypeAnswer.AUDIO -> {
-            if(isNotGoodAudio(this, requireContext()))
+            if (isNotGoodAudio(this, requireContext()))
                 return
             viewModel?.chosenBot?.addTextListener(
                 text = this.inputCommand.text.toString(),
@@ -1222,7 +1267,7 @@ internal fun CreatorCommandFragment.textAnswer() = with(binding!!) {
             )
         }
         BotCreator.TypeAnswer.DOCUMENT -> {
-            if(isNotGoodDocument(this, requireContext()))
+            if (isNotGoodDocument(this, requireContext()))
                 return
             viewModel?.chosenBot?.addTextListener(
                 text = this.inputCommand.text.toString(),
@@ -1231,7 +1276,7 @@ internal fun CreatorCommandFragment.textAnswer() = with(binding!!) {
             )
         }
         BotCreator.TypeAnswer.PHOTO -> {
-            if(isNotGoodPhoto(this, requireContext()))
+            if (isNotGoodPhoto(this, requireContext()))
                 return
             viewModel?.chosenBot?.addTextListener(
                 text = this.inputCommand.text.toString(),
@@ -1240,7 +1285,7 @@ internal fun CreatorCommandFragment.textAnswer() = with(binding!!) {
             )
         }
         BotCreator.TypeAnswer.VIDEO -> {
-            if(isNotGoodVideo(this, requireContext()))
+            if (isNotGoodVideo(this, requireContext()))
                 return
             viewModel?.chosenBot?.addTextListener(
                 text = this.inputCommand.text.toString(),
@@ -1249,7 +1294,7 @@ internal fun CreatorCommandFragment.textAnswer() = with(binding!!) {
             )
         }
         BotCreator.TypeAnswer.VOICE -> {
-            if(isNotGoodVoice(this, requireContext()))
+            if (isNotGoodVoice(this, requireContext()))
                 return
             viewModel?.chosenBot?.addTextListener(
                 text = this.inputCommand.text.toString(),
@@ -1258,7 +1303,7 @@ internal fun CreatorCommandFragment.textAnswer() = with(binding!!) {
             )
         }
         BotCreator.TypeAnswer.CONTACT -> {
-            if(isNotGoodContact(this, requireContext()))
+            if (isNotGoodContact(this, requireContext()))
                 return
             viewModel?.chosenBot?.addTextListener(
                 text = this.inputCommand.text.toString(),
@@ -1268,7 +1313,7 @@ internal fun CreatorCommandFragment.textAnswer() = with(binding!!) {
             )
         }
         BotCreator.TypeAnswer.LOCATION -> {
-            if(isNotGoodLocation(this, requireContext()))
+            if (isNotGoodLocation(this, requireContext()))
                 return
             viewModel?.chosenBot?.addTextListener(
                 text = this.inputCommand.text.toString(),
@@ -1278,14 +1323,14 @@ internal fun CreatorCommandFragment.textAnswer() = with(binding!!) {
             )
         }
         BotCreator.TypeAnswer.POLL -> {
-            if(isNotGoodPoll(this, requireContext()))
+            if (isNotGoodPoll(this, requireContext()))
                 return
             val pollList = (this.inputAnswer.text.split(';') as ArrayList)
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
                 pollList.removeIf { it.isBlank() || it.isEmpty() }
             } else {
                 val tmp = arrayListOf<String>()
-                pollList.forEach { if(it.isNotEmpty() && it.isNotBlank()) tmp.add(it) }
+                pollList.forEach { if (it.isNotEmpty() && it.isNotBlank()) tmp.add(it) }
                 pollList.clear()
                 pollList.addAll(tmp)
             }
@@ -1297,7 +1342,7 @@ internal fun CreatorCommandFragment.textAnswer() = with(binding!!) {
             )
         }
         BotCreator.TypeAnswer.VENUE -> {
-            if(isNotGoodVenue(this, requireContext()))
+            if (isNotGoodVenue(this, requireContext()))
                 return
             viewModel?.chosenBot?.addTextListener(
                 text = this.inputCommand.text.toString(),
@@ -1309,7 +1354,7 @@ internal fun CreatorCommandFragment.textAnswer() = with(binding!!) {
             )
         }
         BotCreator.TypeAnswer.VIDEO_NOTE -> {
-            if(isNotGoodVideo(this, requireContext()))
+            if (isNotGoodVideo(this, requireContext()))
                 return
             viewModel?.chosenBot?.addTextListener(
                 text = this.inputCommand.text.toString(),

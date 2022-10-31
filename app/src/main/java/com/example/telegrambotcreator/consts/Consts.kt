@@ -8,7 +8,6 @@ import com.google.gson.reflect.TypeToken
 import java.lang.reflect.Type
 
 object Consts {
-
     const val TEST_API_TG_TOKEN = "5471488149:AAEnVX-doHCIoQDgrC8N5ITawrpi1k92s6E"
     const val REQUEST_CODE = 101
     const val CHANNEL_ID = 102

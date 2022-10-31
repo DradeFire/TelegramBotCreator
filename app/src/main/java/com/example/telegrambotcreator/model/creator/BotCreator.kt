@@ -11,7 +11,7 @@ import java.util.HashSet
 
 class BotCreator {
 
-    enum class TypeCommand{
+    enum class TypeCommand {
         COMMAND,
         TEXT,
         ANIMATION,
@@ -24,7 +24,8 @@ class BotCreator {
         VIDEO_NOTE,
         STICKER
     }
-    enum class TypeAnswer{
+
+    enum class TypeAnswer {
         TEXT,
         ANIMATION,
         AUDIO,
@@ -38,13 +39,14 @@ class BotCreator {
         VENUE,
         VIDEO_NOTE
     }
-    enum class TypeCallback{
+
+    enum class TypeCallback {
         INLINE,
         REPLY
     }
 
-    private val IDs = hashSetOf<Int>()
-    fun getIDs() = IDs
+    private val iDs = hashSetOf<Int>()
+    fun getIDs() = iDs
     internal val callbackIDs = hashSetOf<Int>()
     //fun getCallbackIDs() = callbackIDs
 
@@ -73,7 +75,8 @@ class BotCreator {
         nameOfBot = name
         this.description = description
     }
-    internal fun createNewID(container: HashSet<Int> = IDs): Int {
+
+    internal fun createNewID(container: HashSet<Int> = iDs): Int {
         var id = SecureRandom().nextInt()
         while (container.contains(id)) id = SecureRandom().nextInt()
 
@@ -92,18 +95,18 @@ class BotCreator {
     }
 
     private fun dispatchNow(dispatcher: Dispatcher) = with(dispatcher) {
-            addCommands(this, commands)
-            addText(this, texts)
-            addAnimation(this, animations)
-            addDocument(this, documents)
-            addSticker(this, stickers)
-            addVoices(this, voices)
-            addVideoNotes(this, videoNotes)
-            addVideos(this, videos)
-            addPhotos(this, photos)
-            addLocations(this, locations)
-            addContacts(this, contacts)
-        }
+        commands.forEach { addCommands(this, it) }
+        texts.forEach { addText(this, it) }
+        animations.forEach { addAnimation(this, it) }
+        documents.forEach { addDocument(this, it) }
+        stickers.forEach { addSticker(this, it) }
+        voices.forEach { addVoices(this, it) }
+        videoNotes.forEach { addVideoNotes(this, it) }
+        videos.forEach { addVideos(this, it) }
+        photos.forEach { addPhotos(this, it) }
+        locations.forEach { addLocations(this, it) }
+        contacts.forEach { addContacts(this, it) }
+    }
     // endregion
 
 }

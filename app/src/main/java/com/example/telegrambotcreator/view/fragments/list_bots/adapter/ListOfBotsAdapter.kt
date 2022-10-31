@@ -10,16 +10,20 @@ import com.example.telegrambotcreator.model.datebase.model.BotDbModel
 import com.example.telegrambotcreator.view.screens.Screens
 import com.example.telegrambotcreator.viewmodel.TelegramViewModel
 
-class ListOfBotsAdapter(outBots: List<BotDbModel>, private val viewModel: TelegramViewModel): RecyclerView.Adapter<ListOfBotsAdapter.ViewHolder>() {
+class ListOfBotsAdapter(
+    outBots: List<BotDbModel>,
+    private val viewModel: TelegramViewModel
+) : RecyclerView.Adapter<ListOfBotsAdapter.ViewHolder>() {
 
     private val bots: List<BotDbModel> = outBots
 
-    class ViewHolder(private val binding: ItemListOfBotsBinding): RecyclerView.ViewHolder(binding.root) {
+    class ViewHolder(private val binding: ItemListOfBotsBinding) :
+        RecyclerView.ViewHolder(binding.root) {
 
         @SuppressLint("SetTextI18n")
         fun bind(botDbModel: BotDbModel, viewModel: TelegramViewModel) = with(binding) {
             txNameOfBot.text = botDbModel.nameBot
-            txCountOfCommands.text = "Count of commands:  ${botDbModel.countOfCommands}"
+            txCountOfCommands.text = "Count of commands: ${botDbModel.countOfCommands}"
             btOpenBot.setOnClickListener {
                 viewModel.chosenBot.restoreBot(botDbModel)
                 viewModel.router?.navigateTo(Screens.InformationBotFrag())
@@ -29,7 +33,13 @@ class ListOfBotsAdapter(outBots: List<BotDbModel>, private val viewModel: Telegr
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder =
-        ViewHolder(ItemListOfBotsBinding.inflate(LayoutInflater.from(parent.context), parent, false))
+        ViewHolder(
+            ItemListOfBotsBinding.inflate(
+                LayoutInflater.from(parent.context),
+                parent,
+                false
+            )
+        )
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.bind(bots[position], viewModel)

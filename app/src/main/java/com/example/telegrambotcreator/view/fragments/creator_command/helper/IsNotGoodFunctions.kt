@@ -3,10 +3,10 @@ package com.example.telegrambotcreator.view.fragments.creator_command.helper
 import android.content.Context
 import android.util.Patterns
 import android.widget.Toast
-import com.example.telegrambotcreator.datathis.FragmentCreatorCommandthis
+import com.example.telegrambotcreator.databinding.FragmentCreatorCommandBinding
 
 object IsNotGoodFunctions {
-    fun isNotGoodVenue(this: FragmentCreatorCommandthis, context: Context): Boolean {
+    fun isNotGoodVenue(binding: FragmentCreatorCommandBinding, context: Context): Boolean = with(binding!!) {
         val ans = this.inputLat.text.isNullOrEmpty()
                 || this.inputLat.text.isNullOrBlank()
                 || this.inputLat.text.toString().toIntOrNull() == null
@@ -23,7 +23,7 @@ object IsNotGoodFunctions {
             Toast.makeText(context, "Empty fields or lat/lon aren't number", Toast.LENGTH_SHORT).show()
         return ans
     }
-    fun isNotGoodPoll(this: FragmentCreatorCommandthis, context: Context): Boolean {
+    fun isNotGoodPoll(binding: FragmentCreatorCommandBinding, context: Context): Boolean = with(binding!!) {
         val ans = this.inputQuestion.text.isNullOrEmpty()
                 || this.inputQuestion.text.isNullOrBlank()
                 || this.inputAnswer.text.isNullOrEmpty()
@@ -32,7 +32,7 @@ object IsNotGoodFunctions {
             Toast.makeText(context, "Empty fields", Toast.LENGTH_SHORT).show()
         return ans
     }
-    fun isNotGoodLocation(this: FragmentCreatorCommandthis, context: Context): Boolean {
+    fun isNotGoodLocation(binding: FragmentCreatorCommandBinding, context: Context): Boolean = with(binding!!) {
         val ans = this.inputLat.text.isNullOrEmpty()
                 || this.inputLat.text.isNullOrBlank()
                 || this.inputLat.text.toString().toIntOrNull() == null
@@ -45,7 +45,7 @@ object IsNotGoodFunctions {
             Toast.makeText(context, "Empty fields or lat/lon aren't number", Toast.LENGTH_SHORT).show()
         return ans
     }
-    fun isNotGoodContact(this: FragmentCreatorCommandthis, context: Context): Boolean {
+    fun isNotGoodContact(binding: FragmentCreatorCommandBinding, context: Context): Boolean = with(binding!!) {
         val ans = this.inputFirstName.text.isNullOrEmpty()
                 || this.inputFirstName.text.isNullOrBlank()
                 || this.inputPhone.text.isNullOrEmpty()
@@ -54,37 +54,37 @@ object IsNotGoodFunctions {
             Toast.makeText(context, "Empty fields or there is no number", Toast.LENGTH_SHORT).show()
         return ans
     }
-    fun isNotGoodPhoto(this: FragmentCreatorCommandthis, context: Context): Boolean {
+    fun isNotGoodPhoto(binding: FragmentCreatorCommandBinding, context: Context): Boolean = with(binding!!) {
         val ans = this.btAddSrc.text.equals("Add image")
         if(ans)
             Toast.makeText(context, "No image added", Toast.LENGTH_SHORT).show()
         return ans
     }
-    fun isNotGoodVoice(this: FragmentCreatorCommandthis, context: Context): Boolean {
+    fun isNotGoodVoice(binding: FragmentCreatorCommandBinding, context: Context): Boolean = with(binding!!) {
         val ans = this.btAddSrc.text.equals("Add voice")
         if(ans)
             Toast.makeText(context, "No voice added", Toast.LENGTH_SHORT).show()
         return ans
     }
-    fun isNotGoodDocument(this: FragmentCreatorCommandthis, context: Context): Boolean {
+    fun isNotGoodDocument(binding: FragmentCreatorCommandBinding, context: Context): Boolean = with(binding!!) {
         val ans = this.btAddSrc.text.equals("Add document")
         if(ans)
             Toast.makeText(context, "No document added", Toast.LENGTH_SHORT).show()
         return ans
     }
-    fun isNotGoodVideo(this: FragmentCreatorCommandthis, context: Context): Boolean {
+    fun isNotGoodVideo(binding: FragmentCreatorCommandBinding, context: Context): Boolean = with(binding!!) {
         val ans = this.btAddSrc.text.equals("Add video")
         if(ans)
             Toast.makeText(context, "No video added", Toast.LENGTH_SHORT).show()
         return ans
     }
-    fun isNotGoodAudio(this: FragmentCreatorCommandthis, context: Context): Boolean {
+    fun isNotGoodAudio(binding: FragmentCreatorCommandBinding, context: Context): Boolean = with(binding!!) {
         val ans = this.btAddSrc.text.equals("Add audio")
         if(ans)
             Toast.makeText(context, "No audio added", Toast.LENGTH_SHORT).show()
         return ans
     }
-    fun isNotGoodAnimation(this: FragmentCreatorCommandthis, context: Context): Boolean {
+    fun isNotGoodAnimation(binding: FragmentCreatorCommandBinding, context: Context): Boolean = with(binding!!) {
         val ans = this.inputAnswer.text.isNullOrEmpty()
                 || this.inputAnswer.text.isNullOrBlank()
                 || !Patterns.WEB_URL.matcher(this.inputAnswer.text).matches()
@@ -92,7 +92,7 @@ object IsNotGoodFunctions {
             Toast.makeText(context, "Empty fields or there is no url", Toast.LENGTH_SHORT).show()
         return ans
     }
-    fun isNotGoodText(this: FragmentCreatorCommandthis, context: Context): Boolean {
+    fun isNotGoodText(binding: FragmentCreatorCommandBinding, context: Context): Boolean = with(binding!!) {
         val ans = this.inputAnswer.text.isNullOrEmpty()
                 || this.inputAnswer.text.isNullOrBlank()
         if(ans)
