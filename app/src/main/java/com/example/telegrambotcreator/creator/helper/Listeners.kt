@@ -8,6 +8,21 @@ import com.github.kotlintelegrambot.entities.TelegramFile
 
 // region Command
 
+/**
+ * Добавляет листенер команд
+ * @param command Команда листенера, для пользователя буде выглядеть "/команда"
+ * @param typeAnswer Тип ответа
+ * @param answerText Текст ответа
+ * @param answerTGFile Файл ответа
+ * @param lat Географическая ширина (Latitude)
+ * @param lon Географическая долгота (Longitude)
+ * @param question Вопрос опроса
+ * @param pollList Варианты ответов опроса
+ * @param title Заголовок адреса
+ * @param address Адрес
+ * @param phoneNumber Номер телефона
+ * @param firstName Имя владельца телефона
+ */
 fun BotCreator.addCommandListener(
     command: String,
     typeAnswer: BotCreator.TypeAnswer,
@@ -22,7 +37,7 @@ fun BotCreator.addCommandListener(
     phoneNumber: String? = null,
     firstName: String? = null
 ) = apply {
-    val answerTGFileIn = answerTGFile?.convertToString()
+    val answerTGFileIn = answerTGFile?.convertTgFileToString()
     commands.add(
         CommandTG(
             createNewID(), command, typeAnswer.convertFromType(), null,
@@ -53,6 +68,21 @@ internal fun BotCreator.addCommands(dispatcher: Dispatcher, command: CommandTG):
 
 // endregion
 // region Text
+/**
+ * Добавляет листенер обычного текста
+ * @param text Команда листенера, для пользователя буде выглядеть "команда"
+ * @param typeAnswer Тип ответа
+ * @param answerText Текст ответа
+ * @param answerTGFile Файл ответа
+ * @param lat Географическая ширина (Latitude)
+ * @param lon Географическая долгота (Longitude)
+ * @param question Вопрос опроса
+ * @param pollList Варианты ответов опроса
+ * @param title Заголовок адреса
+ * @param address Адрес
+ * @param phoneNumber Номер телефона
+ * @param firstName Имя владельца телефона
+ */
 fun BotCreator.addTextListener(
     text: String,
     typeAnswer: BotCreator.TypeAnswer,
@@ -67,7 +97,7 @@ fun BotCreator.addTextListener(
     phoneNumber: String? = null,
     firstName: String? = null
 ) = apply {
-    val answerTGFileIn = answerTGFile?.convertToString()
+    val answerTGFileIn = answerTGFile?.convertTgFileToString()
     texts.add(
         TextTG(
             createNewID(), text, typeAnswer.convertFromType(), null,
@@ -98,6 +128,20 @@ internal fun BotCreator.addText(dispatcher: Dispatcher, command: TextTG): Boolea
 
 // endregion
 // region Animation
+/**
+ * Добавляет листенер анимации
+ * @param typeAnswer Тип ответа
+ * @param answerText Текст ответа
+ * @param answerTGFile Файл ответа
+ * @param lat Географическая ширина (Latitude)
+ * @param lon Географическая долгота (Longitude)
+ * @param question Вопрос опроса
+ * @param pollList Варианты ответов опроса
+ * @param title Заголовок адреса
+ * @param address Адрес
+ * @param phoneNumber Номер телефона
+ * @param firstName Имя владельца телефона
+ */
 fun BotCreator.addAnimationListener(
     typeAnswer: BotCreator.TypeAnswer,
     answerText: String? = null,
@@ -111,7 +155,7 @@ fun BotCreator.addAnimationListener(
     phoneNumber: String? = null,
     firstName: String? = null
 ) = apply {
-    val answerTGFileIn = answerTGFile?.convertToString()
+    val answerTGFileIn = answerTGFile?.convertTgFileToString()
     animations.add(
         AnimationTG(
             createNewID(), typeAnswer.convertFromType(), null,
@@ -142,6 +186,20 @@ internal fun BotCreator.addAnimation(dispatcher: Dispatcher, command: AnimationT
 
 // endregion
 // region Document
+/**
+ * Добавляет листенер документа
+ * @param typeAnswer Тип ответа
+ * @param answerText Текст ответа
+ * @param answerTGFile Файл ответа
+ * @param lat Географическая ширина (Latitude)
+ * @param lon Географическая долгота (Longitude)
+ * @param question Вопрос опроса
+ * @param pollList Варианты ответов опроса
+ * @param title Заголовок адреса
+ * @param address Адрес
+ * @param phoneNumber Номер телефона
+ * @param firstName Имя владельца телефона
+ */
 fun BotCreator.addDocumentListener(
     typeAnswer: BotCreator.TypeAnswer,
     answerText: String? = null,
@@ -155,7 +213,7 @@ fun BotCreator.addDocumentListener(
     phoneNumber: String? = null,
     firstName: String? = null
 ) = apply {
-    val answerTGFileIn = answerTGFile?.convertToString()
+    val answerTGFileIn = answerTGFile?.convertTgFileToString()
     documents.add(
         DocumentTG(
             createNewID(), typeAnswer.convertFromType(), null,
@@ -186,6 +244,20 @@ internal fun BotCreator.addDocument(dispatcher: Dispatcher, com: ListenerTgBase)
 
 // endregion
 // region Sticker
+/**
+ * Добавляет листенер стикера
+ * @param typeAnswer Тип ответа
+ * @param answerText Текст ответа
+ * @param answerTGFile Файл ответа
+ * @param lat Географическая ширина (Latitude)
+ * @param lon Географическая долгота (Longitude)
+ * @param question Вопрос опроса
+ * @param pollList Варианты ответов опроса
+ * @param title Заголовок адреса
+ * @param address Адрес
+ * @param phoneNumber Номер телефона
+ * @param firstName Имя владельца телефона
+ */
 fun BotCreator.addStickerListener(
     typeAnswer: BotCreator.TypeAnswer,
     answerText: String? = null,
@@ -199,7 +271,7 @@ fun BotCreator.addStickerListener(
     phoneNumber: String? = null,
     firstName: String? = null
 ) = apply {
-    val answerTGFileIn = answerTGFile?.convertToString()
+    val answerTGFileIn = answerTGFile?.convertTgFileToString()
     stickers.add(
         StickerTG(
             createNewID(), typeAnswer.convertFromType(), null,
@@ -221,6 +293,20 @@ internal fun BotCreator.addSticker(dispatcher: Dispatcher, com: ListenerTgBase):
 
 // endregion
 // region Voice
+/**
+ * Добавляет листенер голосового сообщения
+ * @param typeAnswer Тип ответа
+ * @param answerText Текст ответа
+ * @param answerTGFile Файл ответа
+ * @param lat Географическая ширина (Latitude)
+ * @param lon Географическая долгота (Longitude)
+ * @param question Вопрос опроса
+ * @param pollList Варианты ответов опроса
+ * @param title Заголовок адреса
+ * @param address Адрес
+ * @param phoneNumber Номер телефона
+ * @param firstName Имя владельца телефона
+ */
 fun BotCreator.addVoicesListener(
     typeAnswer: BotCreator.TypeAnswer,
     answerText: String? = null,
@@ -234,7 +320,7 @@ fun BotCreator.addVoicesListener(
     phoneNumber: String? = null,
     firstName: String? = null
 ) = apply {
-    val answerTGFileIn = answerTGFile?.convertToString()
+    val answerTGFileIn = answerTGFile?.convertTgFileToString()
     voices.add(
         VoiceTG(
             createNewID(), typeAnswer.convertFromType(), null,
@@ -265,6 +351,20 @@ internal fun BotCreator.addVoices(dispatcher: Dispatcher, com: ListenerTgBase): 
 
 // endregion
 // region VideoNote
+/**
+ * Добавляет листенер видео кружочка
+ * @param typeAnswer Тип ответа
+ * @param answerText Текст ответа
+ * @param answerTGFile Файл ответа
+ * @param lat Географическая ширина (Latitude)
+ * @param lon Географическая долгота (Longitude)
+ * @param question Вопрос опроса
+ * @param pollList Варианты ответов опроса
+ * @param title Заголовок адреса
+ * @param address Адрес
+ * @param phoneNumber Номер телефона
+ * @param firstName Имя владельца телефона
+ */
 fun BotCreator.addVideoNotesListener(
     typeAnswer: BotCreator.TypeAnswer,
     answerText: String? = null,
@@ -278,7 +378,7 @@ fun BotCreator.addVideoNotesListener(
     phoneNumber: String? = null,
     firstName: String? = null
 ) = apply {
-    val answerTGFileIn = answerTGFile?.convertToString()
+    val answerTGFileIn = answerTGFile?.convertTgFileToString()
     videoNotes.add(
         VideoNoteTG(
             createNewID(), typeAnswer.convertFromType(), null,
@@ -309,6 +409,20 @@ internal fun BotCreator.addVideoNotes(dispatcher: Dispatcher, com: ListenerTgBas
 
 // endregion
 // region Videos
+/**
+ * Добавляет листенер видео
+ * @param typeAnswer Тип ответа
+ * @param answerText Текст ответа
+ * @param answerTGFile Файл ответа
+ * @param lat Географическая ширина (Latitude)
+ * @param lon Географическая долгота (Longitude)
+ * @param question Вопрос опроса
+ * @param pollList Варианты ответов опроса
+ * @param title Заголовок адреса
+ * @param address Адрес
+ * @param phoneNumber Номер телефона
+ * @param firstName Имя владельца телефона
+ */
 fun BotCreator.addVideosListener(
     typeAnswer: BotCreator.TypeAnswer,
     answerText: String? = null,
@@ -322,7 +436,7 @@ fun BotCreator.addVideosListener(
     phoneNumber: String? = null,
     firstName: String? = null
 ) = apply {
-    val answerTGFileIn = answerTGFile?.convertToString()
+    val answerTGFileIn = answerTGFile?.convertTgFileToString()
     videos.add(
         VideoTG(
             createNewID(), typeAnswer.convertFromType(), null,
@@ -353,6 +467,20 @@ internal fun BotCreator.addVideos(dispatcher: Dispatcher, com: ListenerTgBase): 
 
 // endregion
 // region Photos
+/**
+ * Добавляет листенер изображения
+ * @param typeAnswer Тип ответа
+ * @param answerText Текст ответа
+ * @param answerTGFile Файл ответа
+ * @param lat Географическая ширина (Latitude)
+ * @param lon Географическая долгота (Longitude)
+ * @param question Вопрос опроса
+ * @param pollList Варианты ответов опроса
+ * @param title Заголовок адреса
+ * @param address Адрес
+ * @param phoneNumber Номер телефона
+ * @param firstName Имя владельца телефона
+ */
 fun BotCreator.addPhotosListener(
     typeAnswer: BotCreator.TypeAnswer,
     answerText: String? = null,
@@ -366,7 +494,7 @@ fun BotCreator.addPhotosListener(
     phoneNumber: String? = null,
     firstName: String? = null
 ) = apply {
-    val answerTGFileIn = answerTGFile?.convertToString()
+    val answerTGFileIn = answerTGFile?.convertTgFileToString()
     photos.add(
         PhotoTG(
             createNewID(), typeAnswer.convertFromType(), null,
@@ -397,6 +525,20 @@ internal fun BotCreator.addPhotos(dispatcher: Dispatcher, com: ListenerTgBase): 
 
 // endregion
 // region Locations
+/**
+ * Добавляет листенер локации
+ * @param typeAnswer Тип ответа
+ * @param answerText Текст ответа
+ * @param answerTGFile Файл ответа
+ * @param lat Географическая ширина (Latitude)
+ * @param lon Географическая долгота (Longitude)
+ * @param question Вопрос опроса
+ * @param pollList Варианты ответов опроса
+ * @param title Заголовок адреса
+ * @param address Адрес
+ * @param phoneNumber Номер телефона
+ * @param firstName Имя владельца телефона
+ */
 fun BotCreator.addLocationsListener(
     typeAnswer: BotCreator.TypeAnswer,
     answerText: String? = null,
@@ -410,7 +552,7 @@ fun BotCreator.addLocationsListener(
     phoneNumber: String? = null,
     firstName: String? = null
 ) = apply {
-    val answerTGFileIn = answerTGFile?.convertToString()
+    val answerTGFileIn = answerTGFile?.convertTgFileToString()
     locations.add(
         LocationTG(
             createNewID(), typeAnswer.convertFromType(), null,
@@ -441,6 +583,20 @@ internal fun BotCreator.addLocations(dispatcher: Dispatcher, com: ListenerTgBase
 
 // endregion
 // region Contact
+/**
+ * Добавляет листенер контакта
+ * @param typeAnswer Тип ответа
+ * @param answerText Текст ответа
+ * @param answerTGFile Файл ответа
+ * @param lat Географическая ширина (Latitude)
+ * @param lon Географическая долгота (Longitude)
+ * @param question Вопрос опроса
+ * @param pollList Варианты ответов опроса
+ * @param title Заголовок адреса
+ * @param address Адрес
+ * @param phoneNumber Номер телефона
+ * @param firstName Имя владельца телефона
+ */
 fun BotCreator.addContactsListener(
     typeAnswer: BotCreator.TypeAnswer,
     answerText: String? = null,
@@ -454,7 +610,7 @@ fun BotCreator.addContactsListener(
     phoneNumber: String? = null,
     firstName: String? = null
 ) = apply {
-    val answerTGFileIn = answerTGFile?.convertToString()
+    val answerTGFileIn = answerTGFile?.convertTgFileToString()
     contacts.add(
         ContactTG(
             createNewID(), typeAnswer.convertFromType(), null,
@@ -483,13 +639,4 @@ internal fun BotCreator.addContacts(dispatcher: Dispatcher, com: ListenerTgBase)
         return true
     }
 
-internal fun TelegramFile.convertToString(): String? {
-    return when(this) {
-        is TelegramFile.ByUrl -> this.url
-        is TelegramFile.ByFile -> this.file.absolutePath
-        is TelegramFile.ByByteArray -> this.fileBytes.toString()
-        is TelegramFile.ByFileId -> this.fileId
-        else -> null
-    }
-}
 // endregion

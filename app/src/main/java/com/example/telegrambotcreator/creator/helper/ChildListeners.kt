@@ -6,6 +6,22 @@ import com.example.telegrambotcreator.creator.model.ifelse.IfElseTG
 import com.example.telegrambotcreator.creator.model.listeners.*
 import com.github.kotlintelegrambot.entities.TelegramFile
 
+/**
+ * Добавляет дочерний листенер команд
+ * @param command Команда листенера, для пользователя буде выглядеть "/команда"
+ * @param fatherId Id материнского элемента
+ * @param typeAnswer Тип ответа
+ * @param answerText Текст ответа
+ * @param answerTGFile Файл ответа
+ * @param lat Географическая ширина (Latitude)
+ * @param lon Географическая долгота (Longitude)
+ * @param question Вопрос опроса
+ * @param pollList Варианты ответов опроса
+ * @param title Заголовок адреса
+ * @param address Адрес
+ * @param phoneNumber Номер телефона
+ * @param firstName Имя владельца телефона
+ */
 fun BotCreator.addChildCommandListener(
     command: String,
     fatherId: Int?,
@@ -41,6 +57,22 @@ fun BotCreator.addChildCommandListener(
     }
 }
 
+/**
+ * Добавляет дочерний листенер обычного текста
+ * @param text Команда листенера, для пользователя буде выглядеть "команда"
+ * @param fatherId Id материнского элемента
+ * @param typeAnswer Тип ответа
+ * @param answerText Текст ответа
+ * @param answerTGFile Файл ответа
+ * @param lat Географическая ширина (Latitude)
+ * @param lon Географическая долгота (Longitude)
+ * @param question Вопрос опроса
+ * @param pollList Варианты ответов опроса
+ * @param title Заголовок адреса
+ * @param address Адрес
+ * @param phoneNumber Номер телефона
+ * @param firstName Имя владельца телефона
+ */
 fun BotCreator.addChildTextListener(
     text: String,
     fatherId: Int?,
@@ -76,6 +108,21 @@ fun BotCreator.addChildTextListener(
     }
 }
 
+/**
+ * Добавляет дочерний листенер анимации
+ * @param fatherId Id материнского элемента
+ * @param typeAnswer Тип ответа
+ * @param answerText Текст ответа
+ * @param answerTGFile Файл ответа
+ * @param lat Географическая ширина (Latitude)
+ * @param lon Географическая долгота (Longitude)
+ * @param question Вопрос опроса
+ * @param pollList Варианты ответов опроса
+ * @param title Заголовок адреса
+ * @param address Адрес
+ * @param phoneNumber Номер телефона
+ * @param firstName Имя владельца телефона
+ */
 fun BotCreator.addChildAnimationListener(
     fatherId: Int?,
     typeAnswer: BotCreator.TypeAnswer,
@@ -110,6 +157,21 @@ fun BotCreator.addChildAnimationListener(
     }
 }
 
+/**
+ * Добавляет дочерний листенер документа
+ * @param fatherId Id материнского элемента
+ * @param typeAnswer Тип ответа
+ * @param answerText Текст ответа
+ * @param answerTGFile Файл ответа
+ * @param lat Географическая ширина (Latitude)
+ * @param lon Географическая долгота (Longitude)
+ * @param question Вопрос опроса
+ * @param pollList Варианты ответов опроса
+ * @param title Заголовок адреса
+ * @param address Адрес
+ * @param phoneNumber Номер телефона
+ * @param firstName Имя владельца телефона
+ */
 fun BotCreator.addChildDocumentListener(
     fatherId: Int?,
     typeAnswer: BotCreator.TypeAnswer,
@@ -144,6 +206,21 @@ fun BotCreator.addChildDocumentListener(
     }
 }
 
+/**
+ * Добавляет дочерний листенер стикера
+ * @param fatherId Id материнского элемента
+ * @param typeAnswer Тип ответа
+ * @param answerText Текст ответа
+ * @param answerTGFile Файл ответа
+ * @param lat Географическая ширина (Latitude)
+ * @param lon Географическая долгота (Longitude)
+ * @param question Вопрос опроса
+ * @param pollList Варианты ответов опроса
+ * @param title Заголовок адреса
+ * @param address Адрес
+ * @param phoneNumber Номер телефона
+ * @param firstName Имя владельца телефона
+ */
 fun BotCreator.addChildStickerListener(
     fatherId: Int?,
     typeAnswer: BotCreator.TypeAnswer,
@@ -178,6 +255,21 @@ fun BotCreator.addChildStickerListener(
     }
 }
 
+/**
+ * Добавляет дочерний листенер голосового сообщения
+ * @param fatherId Id материнского элемента
+ * @param typeAnswer Тип ответа
+ * @param answerText Текст ответа
+ * @param answerTGFile Файл ответа
+ * @param lat Географическая ширина (Latitude)
+ * @param lon Географическая долгота (Longitude)
+ * @param question Вопрос опроса
+ * @param pollList Варианты ответов опроса
+ * @param title Заголовок адреса
+ * @param address Адрес
+ * @param phoneNumber Номер телефона
+ * @param firstName Имя владельца телефона
+ */
 fun BotCreator.addChildVoiceListener(
     fatherId: Int?,
     typeAnswer: BotCreator.TypeAnswer,
@@ -212,6 +304,21 @@ fun BotCreator.addChildVoiceListener(
     }
 }
 
+/**
+ * Добавляет дочерний листенер видео кружочка
+ * @param fatherId Id материнского элемента
+ * @param typeAnswer Тип ответа
+ * @param answerText Текст ответа
+ * @param answerTGFile Файл ответа
+ * @param lat Географическая ширина (Latitude)
+ * @param lon Географическая долгота (Longitude)
+ * @param question Вопрос опроса
+ * @param pollList Варианты ответов опроса
+ * @param title Заголовок адреса
+ * @param address Адрес
+ * @param phoneNumber Номер телефона
+ * @param firstName Имя владельца телефона
+ */
 fun BotCreator.addChildVideoNoteListener(
     fatherId: Int?,
     typeAnswer: BotCreator.TypeAnswer,
@@ -246,6 +353,21 @@ fun BotCreator.addChildVideoNoteListener(
     }
 }
 
+/**
+ * Добавляет дочерний листенер видео
+ * @param fatherId Id материнского элемента
+ * @param typeAnswer Тип ответа
+ * @param answerText Текст ответа
+ * @param answerTGFile Файл ответа
+ * @param lat Географическая ширина (Latitude)
+ * @param lon Географическая долгота (Longitude)
+ * @param question Вопрос опроса
+ * @param pollList Варианты ответов опроса
+ * @param title Заголовок адреса
+ * @param address Адрес
+ * @param phoneNumber Номер телефона
+ * @param firstName Имя владельца телефона
+ */
 fun BotCreator.addChildVideoListener(
     fatherId: Int?,
     typeAnswer: BotCreator.TypeAnswer,
@@ -280,6 +402,21 @@ fun BotCreator.addChildVideoListener(
     }
 }
 
+/**
+ * Добавляет дочерний листенер изображения
+ * @param fatherId Id материнского элемента
+ * @param typeAnswer Тип ответа
+ * @param answerText Текст ответа
+ * @param answerTGFile Файл ответа
+ * @param lat Географическая ширина (Latitude)
+ * @param lon Географическая долгота (Longitude)
+ * @param question Вопрос опроса
+ * @param pollList Варианты ответов опроса
+ * @param title Заголовок адреса
+ * @param address Адрес
+ * @param phoneNumber Номер телефона
+ * @param firstName Имя владельца телефона
+ */
 fun BotCreator.addChildPhotoListener(
     fatherId: Int?,
     typeAnswer: BotCreator.TypeAnswer,
@@ -314,6 +451,21 @@ fun BotCreator.addChildPhotoListener(
     }
 }
 
+/**
+ * Добавляет дочерний листенер локации
+ * @param fatherId Id материнского элемента
+ * @param typeAnswer Тип ответа
+ * @param answerText Текст ответа
+ * @param answerTGFile Файл ответа
+ * @param lat Географическая ширина (Latitude)
+ * @param lon Географическая долгота (Longitude)
+ * @param question Вопрос опроса
+ * @param pollList Варианты ответов опроса
+ * @param title Заголовок адреса
+ * @param address Адрес
+ * @param phoneNumber Номер телефона
+ * @param firstName Имя владельца телефона
+ */
 fun BotCreator.addChildLocationListener(
     fatherId: Int?,
     typeAnswer: BotCreator.TypeAnswer,
@@ -348,6 +500,21 @@ fun BotCreator.addChildLocationListener(
     }
 }
 
+/**
+ * Добавляет дочерний листенер контакта
+ * @param fatherId Id материнского элемента
+ * @param typeAnswer Тип ответа
+ * @param answerText Текст ответа
+ * @param answerTGFile Файл ответа
+ * @param lat Географическая ширина (Latitude)
+ * @param lon Географическая долгота (Longitude)
+ * @param question Вопрос опроса
+ * @param pollList Варианты ответов опроса
+ * @param title Заголовок адреса
+ * @param address Адрес
+ * @param phoneNumber Номер телефона
+ * @param firstName Имя владельца телефона
+ */
 fun BotCreator.addChildContactListener(
     fatherId: Int?,
     typeAnswer: BotCreator.TypeAnswer,
@@ -389,6 +556,9 @@ fun addingNewListeners(baseTgContainer: ListenerTgBase, obj: ListenerTgBase) {
         (baseTgContainer.inListeners as ArrayList<ListenerTgBase>).add(obj)
 }
 
+/**
+ * #Тестируется#
+ */
 fun BotCreator.addIfElseListener(
     obj: ListenerTgBase,
     value: String,
@@ -400,7 +570,7 @@ fun BotCreator.addIfElseListener(
     val answerTGFileIn = when (val type =
         obj.action?.answerTGFile?.convertToTgType(obj?.action?.tgFileType.toString())) {
         is TelegramFile.ByUrl -> type.url
-        is TelegramFile.ByFile -> type.file?.absolutePath
+        is TelegramFile.ByFile -> type.file.absolutePath
         is TelegramFile.ByByteArray -> type.fileBytes.toString()
         is TelegramFile.ByFileId -> type.fileId
         else -> null

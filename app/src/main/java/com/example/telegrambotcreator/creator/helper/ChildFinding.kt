@@ -4,6 +4,10 @@ import com.example.telegrambotcreator.creator.BotCreator
 import com.example.telegrambotcreator.creator.model.listeners.ListenerTgBase
 
 // region Child Finding
+
+/**
+ * Ищет отцовский листенер
+ */
 internal fun BotCreator.findFather(id: Int): ListenerTgBase? {
     fun inCheck(it: ListenerTgBase): ListenerTgBase?{
         if (id == it.id){

@@ -17,6 +17,9 @@ import com.google.gson.Gson
 
 // region Database Manipulations
 
+/**
+ * Конвертирует бота в модель, валидную для хранения в БД
+ */
 fun BotCreator.saveBot(): BotDatabaseModel = BotDatabaseModel(
     if (botId == null) 0 else botId!!,
     nameOfBot,
@@ -38,6 +41,9 @@ fun BotCreator.saveBot(): BotDatabaseModel = BotDatabaseModel(
     Gson().toJson(voices)
 )
 
+/**
+ * Восстанавливает модель бота из модели хранения бота в БД
+ */
 fun BotCreator.restoreBot(bot: BotDatabaseModel) {
     botId = bot.id
     nameOfBot = bot.nameBot

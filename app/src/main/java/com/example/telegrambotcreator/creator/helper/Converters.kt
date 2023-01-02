@@ -6,9 +6,12 @@ import java.io.File
 
 // region Converters
 
-internal fun String.convertToType(): BotCreator.TypeAnswer = when(this) {
+/**
+ * Конвертирует строку в тип ответа
+ */
+internal fun String.convertToType(): BotCreator.TypeAnswer = when (this) {
     "TEXT" -> BotCreator.TypeAnswer.TEXT
-    "ANIMATION"  -> BotCreator.TypeAnswer.ANIMATION
+    "ANIMATION" -> BotCreator.TypeAnswer.ANIMATION
     "AUDIO" -> BotCreator.TypeAnswer.AUDIO
     "DOCUMENT" -> BotCreator.TypeAnswer.DOCUMENT
     "PHOTO" -> BotCreator.TypeAnswer.PHOTO
@@ -20,7 +23,11 @@ internal fun String.convertToType(): BotCreator.TypeAnswer = when(this) {
     "VENUE" -> BotCreator.TypeAnswer.VENUE
     else -> BotCreator.TypeAnswer.VIDEO_NOTE
 }
-internal fun BotCreator.TypeAnswer.convertFromType(): String = when(this){
+
+/**
+ * Конвертирует тип ответа в строку
+ */
+internal fun BotCreator.TypeAnswer.convertFromType(): String = when (this) {
     BotCreator.TypeAnswer.TEXT -> "TEXT"
     BotCreator.TypeAnswer.ANIMATION -> "ANIMATION"
     BotCreator.TypeAnswer.AUDIO -> "AUDIO"
@@ -34,23 +41,50 @@ internal fun BotCreator.TypeAnswer.convertFromType(): String = when(this){
     BotCreator.TypeAnswer.VENUE -> "VENUE"
     else -> "VIDEO_NOTE"
 }
-internal fun String.convertToTgType(fileOrSmth: String): TelegramFile = when(this){
+
+/**
+ * Конвертирует строку в вариант получения телеграм файла
+ */
+internal fun String.convertToTgType(fileOrSmth: String): TelegramFile = when (this) {
     "ByFile" -> TelegramFile.ByFile(File(fileOrSmth))
     "ByUrl" -> TelegramFile.ByUrl(fileOrSmth)
     "ByByteArray" -> TelegramFile.ByByteArray(fileOrSmth.toByteArray())
     else -> TelegramFile.ByFileId(fileOrSmth)
 }
-internal fun TelegramFile.convertFromTgType(): String = when(this){
+
+/**
+ * Конвертирует вариант получения телеграм файла в строку
+ */
+internal fun TelegramFile.convertFromTgType(): String = when (this) {
     is TelegramFile.ByFile -> "ByFile"
     is TelegramFile.ByUrl -> "ByUrl"
     is TelegramFile.ByByteArray -> "ByByteArray"
     else -> "ByFileId"
 }
-internal fun String.convertToCallbackType(): BotCreator.TypeCallback = when(this){
+
+/**
+ * Конвертирует содержание файла в строку
+ */
+internal fun TelegramFile.convertTgFileToString(): String? = when(this) {
+        is TelegramFile.ByUrl -> this.url
+        is TelegramFile.ByFile -> this.file.absolutePath
+        is TelegramFile.ByByteArray -> this.fileBytes.toString()
+        is TelegramFile.ByFileId -> this.fileId
+        else -> null
+    }
+
+/**
+ * Конвертирует строку в тип кнопки
+ */
+internal fun String.convertToCallbackType(): BotCreator.TypeCallback = when (this) {
     "INLINE" -> BotCreator.TypeCallback.INLINE
     else -> BotCreator.TypeCallback.REPLY
 }
-internal fun BotCreator.TypeCallback.convertFromCallbackType(): String = when(this){
+
+/**
+ * Конвертирует тип кнопки в строку
+ */
+internal fun BotCreator.TypeCallback.convertFromCallbackType(): String = when (this) {
     BotCreator.TypeCallback.INLINE -> "INLINE"
     else -> "REPLY"
 }

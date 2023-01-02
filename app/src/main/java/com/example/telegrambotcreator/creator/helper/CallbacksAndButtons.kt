@@ -12,7 +12,23 @@ import com.github.kotlintelegrambot.entities.keyboard.KeyboardButton
 
     // region Callback and Buttons
 
-    fun BotCreator.addInlineButtonToMessage(
+/**
+ * Добавляет кнопку на ответ
+ * @param textButton Текст кнопки
+ * @param fatherId Id материнского элемента
+ * @param typeAnswer Тип ответа
+ * @param answerText Текст ответа
+ * @param answerTGFile Файл ответа
+ * @param lat Географическая ширина (Latitude)
+ * @param lon Географическая долгота (Longitude)
+ * @param question Вопрос опроса
+ * @param pollList Варианты ответов опроса
+ * @param title Заголовок адреса
+ * @param address Адрес
+ * @param phoneNumber Номер телефона
+ * @param firstName Имя владельца телефона
+ */
+fun BotCreator.addInlineButtonToMessage(
         textButton: String,
         fatherId: Int?,
         typeAnswer: BotCreator.TypeAnswer,
@@ -47,6 +63,23 @@ import com.github.kotlintelegrambot.entities.keyboard.KeyboardButton
         }
 
     }
+
+/**
+ * Добавляет кнопку под клавиатуру
+ * @param textButton Текст кнопки
+ * @param fatherId Id материнского элемента
+ * @param typeAnswer Тип ответа
+ * @param answerText Текст ответа
+ * @param answerTGFile Файл ответа
+ * @param lat Географическая ширина (Latitude)
+ * @param lon Географическая долгота (Longitude)
+ * @param question Вопрос опроса
+ * @param pollList Варианты ответов опроса
+ * @param title Заголовок адреса
+ * @param address Адрес
+ * @param phoneNumber Номер телефона
+ * @param firstName Имя владельца телефона
+ */
     fun BotCreator.addReplyButtonToMessage(
         textButton: String,
         fatherId: Int?,

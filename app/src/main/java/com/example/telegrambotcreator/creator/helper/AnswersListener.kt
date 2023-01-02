@@ -7,6 +7,10 @@ import com.github.kotlintelegrambot.Bot
 import com.github.kotlintelegrambot.dispatcher.Dispatcher
 import com.github.kotlintelegrambot.entities.*
 
+/**
+ * Отправляет ответ, задаёт кнопки и задаёт листенеры для вложенных ответов
+ * @param obj Листенер
+ */
 internal fun BotCreator.answerListener(
     obj: ListenerTgBase,
     bot: Bot,
@@ -55,6 +59,12 @@ internal fun BotCreator.answerListener(
 //    obj.inCommand?.let { addCommands(dispatcher, it) }
 }
 
+/**
+ * Отправляет ответ пользователю
+ * @param obj Листенер
+ * @param action Отправляемое сообщение
+ * @param inL Кнопка
+ */
 fun sendAnswer(
     obj: ListenerTgBase,
     action: ActionTG?,

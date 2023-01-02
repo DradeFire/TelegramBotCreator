@@ -5,7 +5,11 @@ import com.example.telegrambotcreator.creator.model.listeners.*
 import com.github.kotlintelegrambot.Bot
 import com.github.kotlintelegrambot.dispatcher.Dispatcher
 import com.github.kotlintelegrambot.entities.Message
-
+/**
+ * Создаёт дублирующийся ответ пользователю
+ * @param listenResult Листенер с ответом
+ * @param countRepeat Количество повторов ответа
+ */
 fun BotCreator.repeaterListener(
     listenResult: ListenerTgBase,
     countRepeat: Int,

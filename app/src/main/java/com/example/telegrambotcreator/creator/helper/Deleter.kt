@@ -3,6 +3,9 @@ package com.example.telegrambotcreator.creator.helper
 import com.example.telegrambotcreator.creator.BotCreator
 import com.example.telegrambotcreator.creator.model.listeners.ListenerTgBase
 
+/**
+ * Удаляет кнопку или листенер
+ */
 internal fun BotCreator.deleteCommand(id: Int, fatherId: Int? = null) {
     if (fatherId != null){
         val father = findFather(fatherId)

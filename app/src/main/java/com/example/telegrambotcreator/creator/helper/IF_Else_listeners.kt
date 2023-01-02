@@ -7,6 +7,9 @@ import com.github.kotlintelegrambot.dispatcher.Dispatcher
 import com.github.kotlintelegrambot.entities.*
 import kotlin.Exception
 
+/**
+ * #Тестируется#
+ */
 fun <E> BotCreator.ifElseListener(
     listenResult: ListenerTgBase,
     comparableValue: E,
