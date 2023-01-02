@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".view.fragments.creator_command.CreatorCommandFragment">
+    tools:context=".clean.presentation.fragments.creator_command.CreatorCommandFragment">
 
     <ScrollView
         android:layout_width="match_parent"
@@ -16,13 +16,73 @@
             android:orientation="vertical"
             android:padding="8dp">
 
+
+            <TextView
+                android:id="@+id/txTypeOfVars"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="4dp"
+                android:text="Type of vars:"
+                android:textSize="16sp"
+                android:visibility="gone" />
+
+            <Spinner
+                android:id="@+id/spinnerTypeOfVar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="4dp"
+                android:ems="10"
+                android:text="Name"
+                android:visibility="gone" />
+
+            <TextView
+                android:id="@+id/txVar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="4dp"
+                android:text="Var 1:"
+                android:textSize="16sp"
+                android:visibility="gone" />
+
+            <EditText
+                android:id="@+id/inputVar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="4dp"
+                android:background="@drawable/input_background"
+                android:ems="10"
+                android:hint="var"
+                android:inputType="textPersonName"
+                android:visibility="gone" />
+
+            <TextView
+                android:id="@+id/txVar2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="4dp"
+                android:text="Var 2:"
+                android:textSize="16sp"
+                android:visibility="gone" />
+
+            <EditText
+                android:id="@+id/inputVar2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="4dp"
+                android:background="@drawable/input_background"
+                android:ems="10"
+                android:hint="var"
+                android:inputType="textPersonName"
+                android:visibility="gone" />
+
             <TextView
                 android:id="@+id/txTypeOfCommand"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="4dp"
                 android:text="Type of command:"
-                android:textSize="16sp" />
+                android:textSize="16sp"
+                android:visibility="visible" />
 
             <Spinner
                 android:id="@+id/spinnerTypeOfCommand"
@@ -30,7 +90,8 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="4dp"
                 android:ems="10"
-                android:text="Name" />
+                android:text="Name"
+                android:visibility="visible" />
 
             <TextView
                 android:id="@+id/txCommand"
@@ -38,7 +99,8 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="4dp"
                 android:text="Command:"
-                android:textSize="16sp" />
+                android:textSize="16sp"
+                android:visibility="visible" />
 
             <EditText
                 android:id="@+id/inputCommand"
@@ -48,7 +110,8 @@
                 android:background="@drawable/input_background"
                 android:ems="10"
                 android:hint="command"
-                android:inputType="textPersonName" />
+                android:inputType="textPersonName"
+                android:visibility="visible" />
 
             <TextView
                 android:id="@+id/txTypeOfAnswer"
@@ -75,6 +138,17 @@
                 android:text="Answer:"
                 android:textSize="16sp" />
 
+            <EditText
+                android:id="@+id/inputAnswer"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="4dp"
+                android:background="@drawable/input_background"
+                android:ems="10"
+                android:hint="answer"
+                android:inputType="textPersonName"
+                android:visibility="visible" />
+
             <Button
                 android:id="@+id/btAddSrc"
                 android:layout_width="wrap_content"
@@ -94,16 +168,44 @@
                 android:inputType="textPersonName"
                 android:visibility="gone" />
 
+            <TextView
+                android:id="@+id/txTypeOfElseAnswer"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="4dp"
+                android:text="Type of else answer:"
+                android:textSize="16sp"
+                android:visibility="gone" />
+
+            <Spinner
+                android:id="@+id/spinnerTypeOfElseAnswer"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="4dp"
+                android:ems="10"
+                android:inputType="textPersonName"
+                android:text="Name"
+                android:visibility="gone" />
+
+            <TextView
+                android:id="@+id/txElseAnswer"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="4dp"
+                android:text="Else answer:"
+                android:textSize="16sp"
+                android:visibility="gone" />
+
             <EditText
-                android:id="@+id/inputAnswer"
+                android:id="@+id/inputElseAnswer"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="4dp"
                 android:background="@drawable/input_background"
                 android:ems="10"
-                android:hint="answer"
+                android:hint="else answer"
                 android:inputType="textPersonName"
-                android:visibility="visible" />
+                android:visibility="gone" />
 
             <EditText
                 android:id="@+id/inputPhone"

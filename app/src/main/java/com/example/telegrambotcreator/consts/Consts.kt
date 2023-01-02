@@ -3,10 +3,11 @@ package com.example.telegrambotcreator.consts
 import android.app.Activity
 import android.app.ActivityManager
 import android.content.Context
-import com.example.telegrambotcreator.model.creator.model.*
+import com.example.telegrambotcreator.creator.model.listeners.*
 import com.google.gson.reflect.TypeToken
 import java.lang.reflect.Type
 
+// TODO: Вынести Типы и [isServiceRunning]
 object Consts {
     const val TEST_API_TG_TOKEN = "5471488149:AAEnVX-doHCIoQDgrC8N5ITawrpi1k92s6E"
     const val REQUEST_CODE = 101

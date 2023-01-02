@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".view.fragments.information_command.InformationCommandFragment">
+    tools:context=".clean.presentation.fragments.information_command.InformationCommandFragment">
 
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
@@ -119,9 +119,9 @@
                 android:layout_margin="6dp"
                 android:paddingStart="8dp"
                 android:text="Количество команд: N"
-                android:textColor="#000000"
-                android:textSize="16sp"
-                android:textStyle="italic" />
+                android:textColor="#00ACC1"
+                android:textSize="18sp"
+                android:textStyle="italic|bold" />
 
             <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/btAddButton"
@@ -140,6 +140,16 @@
                 android:layout_margin="10dp"
                 android:background="@drawable/create_button"
                 android:text="Add command"
+                android:textColor="#FFFFFF"
+                android:textSize="18sp" />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btAddIfElse"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:background="@drawable/create_button"
+                android:text="Add if-else"
                 android:textColor="#FFFFFF"
                 android:textSize="18sp" />
 

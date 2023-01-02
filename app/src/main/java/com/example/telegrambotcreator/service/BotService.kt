@@ -11,13 +11,16 @@ import android.widget.Toast
 import androidx.annotation.RequiresApi
 import com.example.telegrambotcreator.R
 import com.example.telegrambotcreator.consts.Consts.CHANNEL_ID
-import com.example.telegrambotcreator.model.creator.BotCreator
-import com.example.telegrambotcreator.model.creator.helper.restoreBot
-import com.example.telegrambotcreator.model.datebase.model.BotDbModel
-import com.example.telegrambotcreator.model.repository.Repository
+import com.example.telegrambotcreator.creator.BotCreator
+import com.example.telegrambotcreator.creator.helper.restoreBot
+import com.example.telegrambotcreator.creator.model.database.BotDatabaseModel
+import com.example.telegrambotcreator.repository.Repository
 import com.google.gson.Gson
 import java.lang.Exception
 
+/**
+ * Используется для нотификации при запуске бота
+ */
 class BotService: Service() {
 
     private var chosenBot: BotCreator? = null
@@ -48,7 +51,7 @@ class BotService: Service() {
             Toast.makeText(this, "Bot started", Toast.LENGTH_SHORT).show()
             val bot = intent!!.extras!!.getString("bot")
             chosenBot = Repository().getBotCreator().apply {
-                restoreBot(Gson().fromJson(bot, BotDbModel::class.java) )
+                restoreBot(Gson().fromJson(bot, BotDatabaseModel::class.java) )
             }
             chosenBot?.build()?.builtBot?.startPolling()
 
