@@ -12,14 +12,16 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import com.example.telegrambotcreator.consts.Consts.isServiceRunning
 import com.example.telegrambotcreator.databinding.FragmentInformationCommandBinding
-import com.example.telegrambotcreator.creator.helper.*
-import com.example.telegrambotcreator.creator.helper.convertToCallbackType
-import com.example.telegrambotcreator.creator.helper.findFather
+import com.example.telegrambotcreator.creator.helper.converters.convertToCallbackType
+import com.example.telegrambotcreator.creator.helper.finding.findFather
 import com.example.telegrambotcreator.service.BotService
 import com.example.telegrambotcreator.clean.presentation.base.BaseFragment
 import com.example.telegrambotcreator.clean.presentation.screens.Screens
 import com.example.telegrambotcreator.clean.presentation.fragments.information_bot.adapter.CommandsAdapter
 import com.example.telegrambotcreator.creator.BotCreator
+import com.example.telegrambotcreator.creator.helper.converters.convertToType
+import com.example.telegrambotcreator.creator.helper.database.saveBot
+import com.example.telegrambotcreator.creator.helper.listeners.delete.deleteCommand
 import com.example.telegrambotcreator.creator.model.listeners.*
 import java.io.File
 

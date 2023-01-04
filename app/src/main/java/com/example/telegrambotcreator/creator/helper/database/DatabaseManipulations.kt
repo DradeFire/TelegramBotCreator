@@ -1,4 +1,4 @@
-package com.example.telegrambotcreator.creator.helper
+package com.example.telegrambotcreator.creator.helper.database
 
 import com.example.telegrambotcreator.consts.Consts.animationsType
 import com.example.telegrambotcreator.consts.Consts.commandType

@@ -1,4 +1,4 @@
-package com.example.telegrambotcreator.creator.helper
+package com.example.telegrambotcreator.creator.helper.converters
 
 import com.example.telegrambotcreator.creator.BotCreator
 import com.github.kotlintelegrambot.entities.TelegramFile

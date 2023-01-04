@@ -12,7 +12,7 @@ import androidx.annotation.RequiresApi
 import com.example.telegrambotcreator.R
 import com.example.telegrambotcreator.consts.Consts.CHANNEL_ID
 import com.example.telegrambotcreator.creator.BotCreator
-import com.example.telegrambotcreator.creator.helper.restoreBot
+import com.example.telegrambotcreator.creator.helper.database.restoreBot
 import com.example.telegrambotcreator.creator.model.database.BotDatabaseModel
 import com.example.telegrambotcreator.repository.Repository
 import com.google.gson.Gson

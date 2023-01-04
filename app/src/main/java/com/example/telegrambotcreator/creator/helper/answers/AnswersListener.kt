@@ -1,6 +1,17 @@
-package com.example.telegrambotcreator.creator.helper
+package com.example.telegrambotcreator.creator.helper.answers
 
 import com.example.telegrambotcreator.creator.BotCreator
+import com.example.telegrambotcreator.creator.helper.listeners.buttons.addCallback
+import com.example.telegrambotcreator.creator.helper.listeners.buttons.bindInlineButtons
+import com.example.telegrambotcreator.creator.helper.listeners.buttons.bindReplyButtons
+import com.example.telegrambotcreator.creator.helper.converters.convertToCallbackType
+import com.example.telegrambotcreator.creator.helper.converters.convertToTgType
+import com.example.telegrambotcreator.creator.helper.converters.convertToType
+import com.example.telegrambotcreator.creator.helper.listeners.base.*
+import com.example.telegrambotcreator.creator.helper.listeners.base.addAnimation
+import com.example.telegrambotcreator.creator.helper.listeners.base.addCommands
+import com.example.telegrambotcreator.creator.helper.listeners.base.addDocument
+import com.example.telegrambotcreator.creator.helper.listeners.base.addText
 import com.example.telegrambotcreator.creator.model.*
 import com.example.telegrambotcreator.creator.model.listeners.*
 import com.github.kotlintelegrambot.Bot

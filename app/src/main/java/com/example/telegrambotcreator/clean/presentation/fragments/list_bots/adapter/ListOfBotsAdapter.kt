@@ -5,7 +5,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.telegrambotcreator.databinding.ItemListOfBotsBinding
-import com.example.telegrambotcreator.creator.helper.restoreBot
+import com.example.telegrambotcreator.creator.helper.database.restoreBot
 import com.example.telegrambotcreator.creator.model.database.BotDatabaseModel
 import com.example.telegrambotcreator.clean.presentation.screens.Screens
 import com.example.telegrambotcreator.clean.presentation.activity.viewmodel.TelegramViewModel

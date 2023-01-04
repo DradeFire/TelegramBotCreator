@@ -24,10 +24,10 @@ import com.example.telegrambotcreator.clean.presentation.fragments.modification_
 import com.example.telegrambotcreator.clean.presentation.fragments.modification_command.helper.IsNotGoodFunctions.isNotGoodVoice
 import com.example.telegrambotcreator.databinding.FragmentModificationCommandBinding
 import com.example.telegrambotcreator.creator.BotCreator
-import com.example.telegrambotcreator.creator.helper.convertToCallbackType
-import com.example.telegrambotcreator.creator.helper.convertToType
-import com.example.telegrambotcreator.creator.helper.findFather
-import com.example.telegrambotcreator.creator.helper.saveBot
+import com.example.telegrambotcreator.creator.helper.converters.convertToCallbackType
+import com.example.telegrambotcreator.creator.helper.converters.convertToType
+import com.example.telegrambotcreator.creator.helper.finding.findFather
+import com.example.telegrambotcreator.creator.helper.database.saveBot
 import com.example.telegrambotcreator.clean.presentation.base.BaseFragment
 import com.example.telegrambotcreator.creator.model.listeners.*
 import com.hbisoft.pickit.PickiT

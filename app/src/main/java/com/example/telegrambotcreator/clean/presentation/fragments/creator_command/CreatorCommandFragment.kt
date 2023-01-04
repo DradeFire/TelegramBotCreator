@@ -13,8 +13,8 @@ import androidx.appcompat.app.AppCompatActivity
 import com.example.telegrambotcreator.consts.Consts.REQUEST_CODE
 import com.example.telegrambotcreator.databinding.FragmentCreatorCommandBinding
 import com.example.telegrambotcreator.creator.BotCreator
-import com.example.telegrambotcreator.creator.helper.findFather
-import com.example.telegrambotcreator.creator.helper.saveBot
+import com.example.telegrambotcreator.creator.helper.finding.findFather
+import com.example.telegrambotcreator.creator.helper.database.saveBot
 import com.example.telegrambotcreator.creator.model.listeners.ListenerTgBase
 import com.example.telegrambotcreator.clean.presentation.base.BaseFragment
 import com.example.telegrambotcreator.clean.presentation.fragments.creator_command.helper.*

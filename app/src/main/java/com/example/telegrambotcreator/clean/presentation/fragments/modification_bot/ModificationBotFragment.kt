@@ -4,7 +4,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.Toast
 import com.example.telegrambotcreator.databinding.FragmentModificationBotBinding
-import com.example.telegrambotcreator.creator.helper.saveBot
+import com.example.telegrambotcreator.creator.helper.database.saveBot
 import com.example.telegrambotcreator.clean.presentation.base.BaseFragment
 
 class ModificationBotFragment : BaseFragment<FragmentModificationBotBinding>() {

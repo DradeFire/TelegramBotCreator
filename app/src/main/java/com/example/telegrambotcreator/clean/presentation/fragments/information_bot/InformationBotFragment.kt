@@ -23,7 +23,7 @@ import com.example.telegrambotcreator.consts.Consts.videoNotesType
 import com.example.telegrambotcreator.consts.Consts.videosType
 import com.example.telegrambotcreator.consts.Consts.voicesType
 import com.example.telegrambotcreator.databinding.FragmentInformationBotBinding
-import com.example.telegrambotcreator.creator.helper.saveBot
+import com.example.telegrambotcreator.creator.helper.database.saveBot
 import com.example.telegrambotcreator.creator.model.database.BotDatabaseModel
 import com.example.telegrambotcreator.service.BotService
 import com.example.telegrambotcreator.clean.presentation.base.BaseFragment

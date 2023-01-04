@@ -1,6 +1,12 @@
-package com.example.telegrambotcreator.creator.helper
+package com.example.telegrambotcreator.creator.helper.listeners.ifelse
 
 import com.example.telegrambotcreator.creator.BotCreator
+import com.example.telegrambotcreator.creator.helper.answers.answerListener
+import com.example.telegrambotcreator.creator.helper.listeners.base.*
+import com.example.telegrambotcreator.creator.helper.listeners.base.addAnimation
+import com.example.telegrambotcreator.creator.helper.listeners.base.addCommands
+import com.example.telegrambotcreator.creator.helper.listeners.base.addVideos
+import com.example.telegrambotcreator.creator.helper.listeners.base.addVoices
 import com.example.telegrambotcreator.creator.model.listeners.*
 import com.github.kotlintelegrambot.Bot
 import com.github.kotlintelegrambot.dispatcher.Dispatcher
@@ -58,7 +64,7 @@ fun <E> BotCreator.ifElseListener(
 sealed class CompareOperation<T> {
     abstract fun doWork(v1: T, v2: T, inIf: () -> Unit, inElse: () -> Unit)
 
-    class Eq<T : Comparable<T>> : CompareOperation<T>() {
+    class Equal<T : Comparable<T>> : CompareOperation<T>() {
         override fun doWork(v1: T, v2: T, inIf: () -> Unit, inElse: () -> Unit) {
             if (v1 == v2) {
                 inIf()
@@ -68,7 +74,7 @@ sealed class CompareOperation<T> {
         }
     }
 
-    class NotEq<T : Comparable<T>> : CompareOperation<T>() {
+    class NotEqual<T : Comparable<T>> : CompareOperation<T>() {
         override fun doWork(v1: T, v2: T, inIf: () -> Unit, inElse: () -> Unit) {
             if (v1 != v2) {
                 inIf()
@@ -98,7 +104,7 @@ sealed class CompareOperation<T> {
         }
     }
 
-    class MoreOrEq<T : Comparable<T>> : CompareOperation<T>() {
+    class MoreOrEqual<T : Comparable<T>> : CompareOperation<T>() {
         override fun doWork(v1: T, v2: T, inIf: () -> Unit, inElse: () -> Unit) {
             if (v1 >= v2) {
                 inIf()
@@ -108,7 +114,7 @@ sealed class CompareOperation<T> {
         }
     }
 
-    class LessOrEq<T : Comparable<T>> : CompareOperation<T>() {
+    class LessOrEqual<T : Comparable<T>> : CompareOperation<T>() {
         override fun doWork(v1: T, v2: T, inIf: () -> Unit, inElse: () -> Unit) {
             if (v1 <= v2) {
                 inIf()

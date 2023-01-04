@@ -9,9 +9,9 @@ import androidx.lifecycle.ViewModelProvider
 import com.example.telegrambotcreator.consts.Consts.REQUEST_CODE
 import com.example.telegrambotcreator.databinding.ActivityMainBinding
 import com.example.telegrambotcreator.creator.BotCreator
-import com.example.telegrambotcreator.creator.helper.addChildCommandListener
-import com.example.telegrambotcreator.creator.helper.addCommandListener
-import com.example.telegrambotcreator.creator.helper.saveBot
+import com.example.telegrambotcreator.creator.helper.listeners.base.addChildCommandListener
+import com.example.telegrambotcreator.creator.helper.listeners.base.addCommandListener
+import com.example.telegrambotcreator.creator.helper.database.saveBot
 import com.example.telegrambotcreator.repository.Repository
 import com.example.telegrambotcreator.App
 import com.example.telegrambotcreator.clean.presentation.screens.Screens

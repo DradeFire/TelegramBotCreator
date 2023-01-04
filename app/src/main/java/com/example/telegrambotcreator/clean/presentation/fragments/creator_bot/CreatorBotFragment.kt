@@ -5,7 +5,7 @@ import android.view.ViewGroup
 import android.widget.Toast
 import com.example.telegrambotcreator.consts.Consts.TEST_API_TG_TOKEN
 import com.example.telegrambotcreator.databinding.FragmentCreatorBotBinding
-import com.example.telegrambotcreator.creator.helper.saveBot
+import com.example.telegrambotcreator.creator.helper.database.saveBot
 import com.example.telegrambotcreator.repository.Repository
 import com.example.telegrambotcreator.clean.presentation.base.BaseFragment
 

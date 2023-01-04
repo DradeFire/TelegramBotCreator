@@ -1,7 +1,11 @@
 package com.example.telegrambotcreator.creator
 
 import com.example.telegrambotcreator.consts.Consts.TEST_API_TG_TOKEN
-import com.example.telegrambotcreator.creator.helper.*
+import com.example.telegrambotcreator.creator.helper.listeners.base.*
+import com.example.telegrambotcreator.creator.helper.listeners.base.addAnimation
+import com.example.telegrambotcreator.creator.helper.listeners.base.addCommands
+import com.example.telegrambotcreator.creator.helper.listeners.base.addDocument
+import com.example.telegrambotcreator.creator.helper.listeners.base.addText
 import com.example.telegrambotcreator.creator.model.listeners.*
 import com.github.kotlintelegrambot.Bot
 import com.github.kotlintelegrambot.dispatch

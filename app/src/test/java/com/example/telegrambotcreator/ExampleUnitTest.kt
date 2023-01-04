@@ -1,9 +1,9 @@
 package com.example.telegrambotcreator
 
 import com.example.telegrambotcreator.creator.BotCreator
-import com.example.telegrambotcreator.creator.helper.addChildCommandListener
-import com.example.telegrambotcreator.creator.helper.addCommandListener
-import com.example.telegrambotcreator.creator.helper.addInlineButtonToMessage
+import com.example.telegrambotcreator.creator.helper.listeners.base.addChildCommandListener
+import com.example.telegrambotcreator.creator.helper.listeners.base.addCommandListener
+import com.example.telegrambotcreator.creator.helper.listeners.buttons.addInlineButtonToMessage
 import com.example.telegrambotcreator.repository.Repository
 import org.junit.Test
 

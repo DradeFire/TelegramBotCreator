@@ -7,7 +7,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.telegrambotcreator.databinding.ItemListOfCommandsBinding
 import com.example.telegrambotcreator.creator.BotCreator
-import com.example.telegrambotcreator.creator.helper.convertToCallbackType
+import com.example.telegrambotcreator.creator.helper.converters.convertToCallbackType
 import com.example.telegrambotcreator.clean.presentation.screens.Screens
 import com.example.telegrambotcreator.clean.presentation.activity.viewmodel.TelegramViewModel
 import com.example.telegrambotcreator.creator.model.listeners.*

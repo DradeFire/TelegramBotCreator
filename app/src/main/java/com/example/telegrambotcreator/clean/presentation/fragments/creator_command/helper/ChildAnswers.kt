@@ -5,7 +5,6 @@ package com.example.telegrambotcreator.clean.presentation.fragments.creator_comm
 import android.os.Build
 import com.example.telegrambotcreator.databinding.FragmentCreatorCommandBinding
 import com.example.telegrambotcreator.creator.BotCreator
-import com.example.telegrambotcreator.creator.helper.*
 import com.example.telegrambotcreator.clean.presentation.fragments.creator_command.helper.IsNotGoodFunctions.isNotGoodAnimation
 import com.example.telegrambotcreator.clean.presentation.fragments.creator_command.helper.IsNotGoodFunctions.isNotGoodAudio
 import com.example.telegrambotcreator.clean.presentation.fragments.creator_command.helper.IsNotGoodFunctions.isNotGoodContact
@@ -19,6 +18,9 @@ import com.example.telegrambotcreator.clean.presentation.fragments.creator_comma
 import com.example.telegrambotcreator.clean.presentation.fragments.creator_command.helper.IsNotGoodFunctions.isNotGoodVoice
 import com.example.telegrambotcreator.clean.presentation.fragments.creator_command.CreatorCommandFragment
 import com.example.telegrambotcreator.clean.presentation.activity.viewmodel.TelegramViewModel
+import com.example.telegrambotcreator.creator.helper.listeners.base.*
+import com.example.telegrambotcreator.creator.helper.listeners.buttons.addInlineButtonToMessage
+import com.example.telegrambotcreator.creator.helper.listeners.buttons.addReplyButtonToMessage
 import com.github.kotlintelegrambot.entities.TelegramFile
 import java.io.File
 

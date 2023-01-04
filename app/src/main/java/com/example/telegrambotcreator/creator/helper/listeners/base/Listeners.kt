@@ -1,6 +1,10 @@
-package com.example.telegrambotcreator.creator.helper
+package com.example.telegrambotcreator.creator.helper.listeners.base
 
 import com.example.telegrambotcreator.creator.BotCreator
+import com.example.telegrambotcreator.creator.helper.answers.answerListener
+import com.example.telegrambotcreator.creator.helper.converters.convertFromTgType
+import com.example.telegrambotcreator.creator.helper.converters.convertFromType
+import com.example.telegrambotcreator.creator.helper.converters.convertTgFileToString
 import com.example.telegrambotcreator.creator.model.*
 import com.example.telegrambotcreator.creator.model.listeners.*
 import com.github.kotlintelegrambot.dispatcher.*
